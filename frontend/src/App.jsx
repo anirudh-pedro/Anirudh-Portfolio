@@ -9,6 +9,7 @@ import Navbar from './Components/Nav/Navbar';
 import ParticleBackground from './Components/ParticleBackground';
 import Loader from './Components/Loader';
 import './App.css';
+import UndergroundBackground from './Components/ParticleBackground';
 
 function App() {
   // State for loading screen
@@ -68,8 +69,8 @@ function App() {
       </AnimatePresence>
       
       {/* Fixed particle background */}
-      <ParticleBackground />
-      
+      {/* <UndergroundBackground /> */}
+
       {/* Global Navigation with animated entrance */}
       <AnimatePresence>
         {!loading && (
@@ -113,7 +114,7 @@ function App() {
               className="min-h-screen"
               variants={sectionVariants}
             >
-              <Projects />
+              <p>projects</p>
             </motion.section>
 
             <motion.section 

@@ -27,6 +27,7 @@ const Navbar = () => {
       
       // Determine which section is currently visible
       const sections = document.querySelectorAll('section[id], div[id]');
+      let foundActive = false;
       
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -38,8 +39,14 @@ const Navbar = () => {
         if (window.scrollY >= sectionTop - navHeight && 
             window.scrollY < sectionTop + sectionHeight - navHeight) {
           setActiveSection(section.getAttribute('id'));
+          foundActive = true;
         }
       });
+      
+      // Default to home if no section is active
+      if (!foundActive && sections.length > 0) {
+        setActiveSection('home');
+      }
     };
     
     // Attach scroll listener

@@ -53,7 +53,7 @@ const SocialIcons = () => {
     },
     {
     name: 'LeetCode',
-    url: 'https://leetcode.com/yourusername',
+    url: 'https://leetcode.com/u/Anirudh_pedro/',
     color: '#FFA116',
     hoverColor: '#FFA116',
     icon: (

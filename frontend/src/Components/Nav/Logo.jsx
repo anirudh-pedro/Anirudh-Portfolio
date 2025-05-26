@@ -39,6 +39,15 @@ const Logo = () => {
         onClick={(e) => {
           e.preventDefault();
           scrollToTop();
+          
+          // Also update any active section indicators
+          const homeSection = document.getElementById('home');
+          if (homeSection) {
+            const event = new CustomEvent('scrolledToSection', {
+              detail: { sectionId: 'home' }
+            });
+            document.dispatchEvent(event);
+          }
         }}
         className="inline-block"
         aria-label="Go to home section"
