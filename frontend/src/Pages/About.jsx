@@ -9,7 +9,6 @@ import AboutInterests from '../Components/About/AboutInterests';
 import TechnicalExpertise from '../Components/About/TechnicalExpertise';
 
 const About = () => {
-  // Animation variants for page elements
   const pageVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -29,7 +28,6 @@ const About = () => {
     }
   };
 
-  // ...existing code...
 
 return (
   <section id="about" className="py-6 sm:py-8 md:py-12 overflow-hidden w-full">
@@ -38,18 +36,15 @@ return (
       initial="hidden"
       whileInView="visible"
       variants={pageVariants}
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={{ once: true, amount: 0.01 }}
     >
       {/* Header with better mobile responsiveness */}
       <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
         <AboutHeader />
       </motion.div>
       
-      {/* Main content using flexbox with reduced gaps */}
       <div className="flex flex-col gap-3 w-full">
-        {/* Two-column layout with reduced gap between columns */}
         <div className="flex flex-col lg:flex-row w-full gap-5">
-          {/* Left column */}
           <motion.div 
             variants={itemVariants} 
             className="w-full lg:w-2/3 flex flex-col gap-0"
@@ -67,7 +62,6 @@ return (
             </div>
           </motion.div>
           
-          {/* Right column */}
           <motion.div 
             variants={itemVariants} 
             className="w-full lg:w-1/3 flex flex-col gap-5"

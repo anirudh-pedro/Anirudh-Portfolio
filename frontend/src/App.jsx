@@ -10,6 +10,7 @@ import ParticleBackground from './Components/ParticleBackground';
 import Loader from './Components/Loader';
 import './App.css';
 import UndergroundBackground from './Components/ParticleBackground';
+import SpaceBackground from './Components/Background';
 
 function App() {
   // State for loading screen
@@ -70,7 +71,7 @@ function App() {
       
       {/* Fixed particle background */}
       {/* <UndergroundBackground /> */}
-
+        <SpaceBackground />
       {/* Global Navigation with animated entrance */}
       <AnimatePresence>
         {!loading && (

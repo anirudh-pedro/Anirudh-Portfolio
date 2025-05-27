@@ -425,7 +425,7 @@ const SpaceBackground = () => {
                 />
               );
             })}
-          </div>
+          </div>  
         </>
       )}
       
