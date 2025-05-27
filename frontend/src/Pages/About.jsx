@@ -29,61 +29,68 @@ const About = () => {
     }
   };
 
-  return (
-    <section id="about" className="py-12 md:py-16 overflow-x-hidden">
-      <motion.div 
-        className="container mx-auto px-4 sm:px-6 max-w-6xl"
-        initial="hidden"
-        whileInView="visible"
-        variants={pageVariants}
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        {/* Header with better mobile responsiveness */}
-        <motion.div variants={itemVariants} className="mb-5">
-          <AboutHeader />
-        </motion.div>
-        
-        {/* Main content using flexbox with minimal gap */}
-        <div className="flex flex-col gap-4">
-          {/* Top section: Bio on left, Technical Expertise on right */}
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Bio section with LeetCode stats directly underneath */}
-            <motion.div variants={itemVariants} className="lg:w-2/3 flex flex-col ">
-              <AboutBio />
-              <div className="mt-4"> {/* Increased negative margin to pull stats up more */}
-                <LeetCodeStats />
-              </div>
-            </motion.div>
-            
-            {/* Technical Expertise and Education on the right */}
-            <motion.div variants={itemVariants} className="lg:w-1/3 flex flex-col space-y-5 mt-2">
-              <TechnicalExpertise />
-              <AboutEducation />
-            </motion.div>
-          </div>
-          
-          {/* Bottom section with GitHub and Interests */}
-          <div className="flex flex-col lg:flex-row gap-6"> {/* Small negative margin for tighter layout */}
-            {/* Left column - GitHub Stats */}
-            <motion.div 
-              className="lg:w-2/3"
-              variants={itemVariants}
-            >
-              <GitHubStats />
-            </motion.div>
-            
-            {/* Right column - Interests */}
-            <motion.div 
-              className="lg:w-1/3"
-              variants={itemVariants}
-            >
-              <AboutInterests />
-            </motion.div>
-          </div>
-        </div>
+  // ...existing code...
+
+return (
+  <section id="about" className="py-6 sm:py-8 md:py-12 overflow-hidden w-full">
+    <motion.div 
+      className="container mx-auto px-2 sm:px-3 md:px-4 max-w-6xl"
+      initial="hidden"
+      whileInView="visible"
+      variants={pageVariants}
+      viewport={{ once: true, amount: 0.05 }}
+    >
+      {/* Header with better mobile responsiveness */}
+      <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
+        <AboutHeader />
       </motion.div>
-    </section>
-  );
+      
+      {/* Main content using flexbox with reduced gaps */}
+      <div className="flex flex-col gap-3 w-full">
+        {/* Two-column layout with reduced gap between columns */}
+        <div className="flex flex-col lg:flex-row w-full gap-5">
+          {/* Left column */}
+          <motion.div 
+            variants={itemVariants} 
+            className="w-full lg:w-2/3 flex flex-col gap-0"
+          >
+            <div className="w-full">
+              <AboutBio />
+            </div>
+            
+            <div className="w-full">
+              <LeetCodeStats />
+            </div>
+            
+            <div className="w-full *:">
+              <GitHubStats />
+            </div>
+          </motion.div>
+          
+          {/* Right column */}
+          <motion.div 
+            variants={itemVariants} 
+            className="w-full lg:w-1/3 flex flex-col gap-5"
+          >
+            <div className="w-full">
+              <TechnicalExpertise />
+            </div>
+            
+            <div className="w-full">
+              <AboutEducation />
+            </div>
+            
+            <div className="w-full">
+              <AboutInterests />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
+  </section>
+);
+
+// ...existing code...
 };
 
 export default About;

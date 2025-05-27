@@ -30,7 +30,7 @@ const GitHubStats = () => {
         // <GlowingBorder>
 
     <motion.div
-      className="bg-black/20 backdrop-blur-md p-8 rounded-2xl border border-white/10 mt-10"
+      className="bg-black/20 backdrop-blur-md p-8 rounded-2xl border border-white/10 mt-6"
       variants={containerVariants}
     >
       <h3 className="text-2xl font-bold mb-6 text-white flex items-center">
