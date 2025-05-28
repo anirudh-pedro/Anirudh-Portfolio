@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
 import NavItems from './NavItems';
@@ -8,7 +8,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const initialRenderRef = useRef(true);
   
   // Toggle mobile menu
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -18,12 +17,6 @@ const Navbar = () => {
 
   // Handle scroll events for navbar appearance
   useEffect(() => {
-    // Force active section to be 'home' on initial render
-    if (initialRenderRef.current) {
-      setActiveSection('home');
-      initialRenderRef.current = false;
-    }
-    
     const handleScroll = () => {
       // Check if page is scrolled
       if (window.scrollY > 50) {
@@ -37,9 +30,6 @@ const Navbar = () => {
       let foundActive = false;
       
       sections.forEach(section => {
-        const sectionId = section.getAttribute('id');
-        if (!sectionId) return; // Skip elements without ID
-        
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
         
@@ -48,56 +38,28 @@ const Navbar = () => {
         
         if (window.scrollY >= sectionTop - navHeight && 
             window.scrollY < sectionTop + sectionHeight - navHeight) {
-          setActiveSection(sectionId);
+          setActiveSection(section.getAttribute('id'));
           foundActive = true;
         }
       });
       
-      // Default to home if no section is active or at the very top
-      if ((!foundActive && sections.length > 0) || window.scrollY < 50) {
+      // Default to home if no section is active
+      if (!foundActive && sections.length > 0) {
         setActiveSection('home');
       }
     };
     
-    // Attach scroll listener with throttling for performance
-    let throttleTimeout;
-    const throttledScrollHandler = () => {
-      if (!throttleTimeout) {
-        throttleTimeout = setTimeout(() => {
-          handleScroll();
-          throttleTimeout = null;
-        }, 100);
-      }
-    };
-    
-    window.addEventListener('scroll', throttledScrollHandler);
+    // Attach scroll listener
+    window.addEventListener('scroll', handleScroll);
     
     // Run once on mount to set initial active section
-    // Use setTimeout to ensure DOM is fully rendered
-    setTimeout(handleScroll, 100);
+    handleScroll();
     
-    // Run again after a longer delay to catch any layout shifts
-    setTimeout(handleScroll, 500);
-    
-    // Clean up
+    // Clean up event listener
     return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
-      if (throttleTimeout) clearTimeout(throttleTimeout);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  
-  // Handle manual section navigation
-  const navigateToSection = (sectionId) => {
-  const section = document.getElementById(sectionId);
-  if (section) {
-    setActiveSection(sectionId);
-    setTimeout(() => {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }, 100); // Delay to ensure DOM is rendered
-    if (isOpen) closeMenu();
-  }
-};
-
   
   // Disable body scroll when mobile menu is open
   useEffect(() => {
@@ -130,10 +92,7 @@ const Navbar = () => {
             <Logo />
             
             {/* Desktop Navigation */}
-            <NavItems 
-              activeSection={activeSection}
-              navigateToSection={navigateToSection}
-            />
+            <NavItems activeSection={activeSection} />
             
             {/* Mobile Menu Button */}
             <motion.button
@@ -224,12 +183,7 @@ const Navbar = () => {
               </motion.div>
               
               {/* Navigation Items */}
-              <NavItems 
-                isMobile={true} 
-                closeMenu={closeMenu} 
-                activeSection={activeSection} 
-                navigateToSection={navigateToSection}
-              />
+              <NavItems isMobile={true} closeMenu={closeMenu} activeSection={activeSection} />
               
               {/* Social Icons */}
               <motion.div 
