@@ -71,7 +71,7 @@ function App() {
       
       {/* Fixed particle background */}
       {/* <UndergroundBackground /> */}
-      <div className="fixed top-0 left-0 w-screen h-screen -z-10 pointer-events-none ">
+      <div className="w-full absolute h-screen -z-10 pointer-events-none ">
   {/* canvas or particles or whatever */}
         <SpaceBackground />
       </div>
