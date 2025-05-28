@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Logo = () => {
+const Logo = ({ onLogoClick }) => {
   const logoVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { 
@@ -15,11 +15,29 @@ const Logo = () => {
   };
 
   // Smooth scroll to top function
-  const scrollToTop = () => {
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    
+    // If parent provided a click handler, use it
+    if (onLogoClick) {
+      onLogoClick();
+      return;
+    }
+    
+    // Otherwise fall back to default behavior
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
+    
+    // Dispatch event to notify navbar about the section change
+    const event = new CustomEvent('navigationClicked', {
+      detail: { sectionId: 'home' }
+    });
+    document.dispatchEvent(event);
+    
+    // Update URL
+    window.history.pushState(null, '', '#home');
   };
 
   return (
@@ -36,19 +54,7 @@ const Logo = () => {
     >
       <a 
         href="#home" 
-        onClick={(e) => {
-          e.preventDefault();
-          scrollToTop();
-          
-          // Also update any active section indicators
-          const homeSection = document.getElementById('home');
-          if (homeSection) {
-            const event = new CustomEvent('scrolledToSection', {
-              detail: { sectionId: 'home' }
-            });
-            document.dispatchEvent(event);
-          }
-        }}
+        onClick={handleLogoClick}
         className="inline-block"
         aria-label="Go to home section"
       >
