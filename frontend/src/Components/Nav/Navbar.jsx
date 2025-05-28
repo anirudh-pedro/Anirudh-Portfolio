@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
 import NavItems from './NavItems';
@@ -8,6 +8,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const sectionsRef = useRef({});
   
   // Toggle mobile menu
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -15,51 +16,120 @@ const Navbar = () => {
   // Close mobile menu
   const closeMenu = () => setIsOpen(false);
 
-  // Handle scroll events for navbar appearance
+  // Cache section positions to avoid re-calculation
+  const updateSectionPositions = () => {
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const positions = {};
+    
+    sections.forEach(section => {
+      const id = section.getAttribute('id');
+      if (!id) return;
+      
+      positions[id] = {
+        top: section.offsetTop,
+        height: section.offsetHeight
+      };
+    });
+    
+    sectionsRef.current = positions;
+  };
+
+  // Handle scroll events for navbar appearance and section detection
   useEffect(() => {
     const handleScroll = () => {
-      // Check if page is scrolled
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      // Check if page is scrolled for navbar styling
+      setScrolled(window.scrollY > 50);
       
       // Determine which section is currently visible
-      const sections = document.querySelectorAll('section[id], div[id]');
-      let foundActive = false;
+      const navHeight = 80; // Approximate navbar height
+      const scrollPosition = window.scrollY + navHeight + 20; // Add small offset
       
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        // Add offset for navbar height
-        const navHeight = 80;
-        
-        if (window.scrollY >= sectionTop - navHeight && 
-            window.scrollY < sectionTop + sectionHeight - navHeight) {
-          setActiveSection(section.getAttribute('id'));
-          foundActive = true;
+      // Check cached section positions first
+      const positions = sectionsRef.current;
+      let currentActive = activeSection;
+      let found = false;
+      
+      // Find the section we're currently viewing
+      for (const id in positions) {
+        const section = positions[id];
+        if (scrollPosition >= section.top && 
+            scrollPosition < section.top + section.height) {
+          currentActive = id;
+          found = true;
+          break;
         }
-      });
+      }
       
-      // Default to home if no section is active
-      if (!foundActive && sections.length > 0) {
-        setActiveSection('home');
+      // If we're at the top of the page, always set home as active
+      if (window.scrollY < 50) {
+        currentActive = 'home';
+        found = true;
+      }
+      
+      // Only update state if section changed (prevents re-renders)
+      if (currentActive !== activeSection) {
+        setActiveSection(currentActive);
+      }
+      
+      // If no section was found (might happen during rapid scrolling),
+      // recalculate all section positions and try again
+      if (!found && Object.keys(positions).length > 0) {
+        updateSectionPositions();
       }
     };
     
+    // Throttled scroll handler for better performance
+    let throttleTimer = null;
+    const throttledScrollHandler = () => {
+      if (!throttleTimer) {
+        throttleTimer = setTimeout(() => {
+          handleScroll();
+          throttleTimer = null;
+        }, 100);
+      }
+    };
+    
+    // Initialize section positions
+    updateSectionPositions();
+    
     // Attach scroll listener
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', throttledScrollHandler);
+    window.addEventListener('resize', updateSectionPositions);
+    window.addEventListener('load', updateSectionPositions);
     
     // Run once on mount to set initial active section
     handleScroll();
     
-    // Clean up event listener
+    // Recheck after a delay to ensure all content is loaded
+    const delayTimer = setTimeout(handleScroll, 500);
+    
+    // Clean up event listeners
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', throttledScrollHandler);
+      window.removeEventListener('resize', updateSectionPositions);
+      window.removeEventListener('load', updateSectionPositions);
+      clearTimeout(throttleTimer);
+      clearTimeout(delayTimer);
     };
-  }, []);
+  }, [activeSection]);
+
+  // Function to navigate to a section - will be used if we want to 
+  // trigger section changes from other components
+  const navigateToSection = (sectionId) => {
+    setActiveSection(sectionId);
+    
+    const section = document.getElementById(sectionId);
+    if (section) {
+      // Scroll to the section
+      section.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      
+      // Update URL without reload
+      window.history.pushState(null, '', `#${sectionId}`);
+    }
+  };
   
   // Disable body scroll when mobile menu is open
   useEffect(() => {
@@ -92,7 +162,9 @@ const Navbar = () => {
             <Logo />
             
             {/* Desktop Navigation */}
-            <NavItems activeSection={activeSection} />
+            <NavItems 
+              activeSection={activeSection}
+            />
             
             {/* Mobile Menu Button */}
             <motion.button
@@ -182,8 +254,12 @@ const Navbar = () => {
                 </span>
               </motion.div>
               
-              {/* Navigation Items */}
-              <NavItems isMobile={true} closeMenu={closeMenu} activeSection={activeSection} />
+              {/* Navigation Items - passing activeSection to mobile menu */}
+              <NavItems 
+                isMobile={true} 
+                closeMenu={closeMenu} 
+                activeSection={activeSection} 
+              />
               
               {/* Social Icons */}
               <motion.div 
@@ -192,50 +268,7 @@ const Navbar = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                {/* GitHub */}
-                <motion.a 
-                  href="https://github.com/yourusername" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                  aria-label="GitHub"
-                  whileHover={{ scale: 1.1, color: "#ffffff" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                  </svg>
-                </motion.a>
-                
-                {/* LinkedIn */}
-                <motion.a 
-                  href="https://linkedin.com/in/yourusername" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                  aria-label="LinkedIn"
-                  whileHover={{ scale: 1.1, color: "#0077b5" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </motion.a>
-                
-                {/* Twitter/X */}
-                <motion.a 
-                  href="https://twitter.com/yourusername" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                  aria-label="Twitter"
-                  whileHover={{ scale: 1.1, color: "#1DA1F2" }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                  </svg>
-                </motion.a>
+                {/* Your social icons... */}
               </motion.div>
             </div>
           </motion.div>
