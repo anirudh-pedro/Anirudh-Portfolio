@@ -88,13 +88,16 @@ const Navbar = () => {
   
   // Handle manual section navigation
   const navigateToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      setActiveSection(sectionId);
+  const section = document.getElementById(sectionId);
+  if (section) {
+    setActiveSection(sectionId);
+    setTimeout(() => {
       section.scrollIntoView({ behavior: 'smooth' });
-      if (isOpen) closeMenu();
-    }
-  };
+    }, 100); // Delay to ensure DOM is rendered
+    if (isOpen) closeMenu();
+  }
+};
+
   
   // Disable body scroll when mobile menu is open
   useEffect(() => {

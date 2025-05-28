@@ -6,10 +6,10 @@ import Projects from './Pages/Projects';
 import Skills from './Pages/Skills';
 import Contact from './Pages/Contact';
 import Navbar from './Components/Nav/Navbar';
-import ParticleBackground from './Components/ParticleBackground';
+// import ParticleBackground from './Components/ParticleBackground';
 import Loader from './Components/Loader';
 import './App.css';
-import UndergroundBackground from './Components/ParticleBackground';
+// import UndergroundBackground from './Components/ParticleBackground';
 import SpaceBackground from './Components/Background';
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
   };
 
   return (
-    <div className="App relative bg-transparent min-h-screen text-white overflow-x-hidden">
+    <div className="App relative bg-black min-h-screen text-white overflow-x-hidden z-0">
       {/* Loading screen with exit animation */}
       <AnimatePresence mode="wait">
         {loading && (
@@ -71,7 +71,11 @@ function App() {
       
       {/* Fixed particle background */}
       {/* <UndergroundBackground /> */}
+      <div className="fixed top-0 left-0 w-screen h-screen -z-10 pointer-events-none overflow-hidden">
+  {/* canvas or particles or whatever */}
         <SpaceBackground />
+      </div>
+
       {/* Global Navigation with animated entrance */}
       <AnimatePresence>
         {!loading && (
