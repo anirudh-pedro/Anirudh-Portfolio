@@ -1,81 +1,8 @@
+// filepath: c:\Users\HP\Desktop\anirudh\AnirudhPortfolio\frontend\src\Components\Nav\NavItems.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
-const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
-  // Add local state to manage active section
-  const [currentSection, setCurrentSection] = useState('home'); 
-  const initialLoadRef = useRef(true);
-  
-  // Force home selection on initial page load
-  useEffect(() => {
-    if (initialLoadRef.current) {
-      // Force home as active on first render
-      setCurrentSection('home');
-      
-      // Scroll to top if no hash in URL
-      if (!window.location.hash) {
-        window.scrollTo(0, 0);
-      }
-      
-      initialLoadRef.current = false;
-    }
-  }, []);
-  
-  // Listen for scroll events to update active section
-  useEffect(() => {
-    const handleScroll = () => {
-      // Get all section elements
-      const sections = navLinks.map(link => {
-        const id = link.href.substring(1);
-        const element = document.getElementById(id);
-        return { id, element };
-      }).filter(item => item.element);
-      
-      // Get current scroll position with a small offset
-      const scrollPosition = window.scrollY + 100;
-      
-      // Find which section is currently in view
-      for (const { id, element } of sections) {
-        const offsetTop = element.offsetTop;
-        const height = element.offsetHeight;
-        
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-          if (currentSection !== id) {
-            setCurrentSection(id);
-          }
-          break;
-        }
-      }
-      
-      // If we're at the very top of the page, always set home as active
-      if (window.scrollY < 50) {
-        setCurrentSection('home');
-      }
-    };
-    
-    // Throttled scroll handler for better performance
-    let throttleTimeout;
-    const throttledScrollHandler = () => {
-      if (!throttleTimeout) {
-        throttleTimeout = setTimeout(() => {
-          handleScroll();
-          throttleTimeout = null;
-        }, 100);
-      }
-    };
-    
-    // Add scroll event listener
-    window.addEventListener('scroll', throttledScrollHandler);
-    
-    // Run once on mount to set initial active state
-    handleScroll();
-    
-    return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
-      if (throttleTimeout) clearTimeout(throttleTimeout);
-    };
-  }, [currentSection]);
-
+const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu, navigateToSection }) => {
   // Navigation links data
   const navLinks = [
     { name: 'Home', href: '#home', icon: 'home' },
@@ -145,21 +72,21 @@ const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
     e.preventDefault();
     const sectionId = href.substring(1);
     
-    // Update current section
-    setCurrentSection(sectionId);
-    
-    // Scroll to section
-    const targetElement = document.querySelector(href);
-    if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: 'smooth'
-      });
-      
-      // Update URL without page reload
-      window.history.pushState(null, '', href);
-      
-      // Close mobile menu if applicable
-      if (closeMenu) closeMenu();
+    // Use the parent navigateToSection function (more reliable)
+    if (navigateToSection) {
+      navigateToSection(sectionId);
+    } else {
+      // Fallback to direct DOM manipulation if navigateToSection isn't provided
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        
+        // Update URL without page reload
+        window.history.pushState(null, '', href);
+        
+        // Close mobile menu if applicable
+        if (closeMenu) closeMenu();
+      }
     }
   };
 
@@ -179,7 +106,7 @@ const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`flex items-center text-2xl font-medium py-2 px-4 rounded-full 
-                  ${currentSection === link.href.substring(1) 
+                  ${activeSection === link.href.substring(1) 
                     ? 'text-white bg-gradient-to-r from-blue-500/40 to-purple-600/40 backdrop-blur-sm border border-white/10 shadow-lg shadow-purple-500/20' 
                     : 'text-gray-300 hover:text-white'
                   } transition-all duration-300`}
@@ -213,25 +140,25 @@ const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative flex items-center px-4 py-2 rounded-full text-sm font-medium group transition-all duration-300
-                  ${currentSection === link.href.substring(1)
+                  ${activeSection === link.href.substring(1)
                     ? 'text-white bg-gradient-to-r from-blue-500/50 to-purple-600/50 backdrop-blur-md'
                     : 'text-white/80 hover:text-white'
                   }`}
-                whileHover={currentSection !== link.href.substring(1) ? {
+                whileHover={activeSection !== link.href.substring(1) ? {
                   backgroundColor: "rgba(255, 255, 255, 0.1)",
                   transition: { duration: 0.2 }
                 } : {}}
                 whileTap={{ scale: 0.97 }}
               >
                 <span className="flex items-center">
-                  <span className={`mr-2 transition-transform duration-300 ${currentSection === link.href.substring(1) ? 'scale-110' : 'group-hover:scale-110'}`}>
+                  <span className={`mr-2 transition-transform duration-300 ${activeSection === link.href.substring(1) ? 'scale-110' : 'group-hover:scale-110'}`}>
                     {renderIcon(link.icon)}
                   </span>
                   {link.name}
                 </span>
                 
                 {/* Subtle glow effect for active item */}
-                {currentSection === link.href.substring(1) && (
+                {activeSection === link.href.substring(1) && (
                   <motion.span
                     className="absolute inset-0 rounded-full bg-white/5"
                     initial={{ opacity: 0 }}
