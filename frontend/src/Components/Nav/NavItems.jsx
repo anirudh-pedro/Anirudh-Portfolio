@@ -6,6 +6,14 @@ const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
   const [currentSection, setCurrentSection] = useState('home'); 
   const initialLoadRef = useRef(true);
   
+  // Navigation links data
+  const navLinks = [
+    { name: 'Home', href: '#home', icon: 'home' },
+    { name: 'About', href: '#about', icon: 'user' },
+    { name: 'Projects', href: '#projects', icon: 'code' },
+    { name: 'Skills', href: '#skills', icon: 'chip' },
+    { name: 'Contact', href: '#contact', icon: 'mail' }
+  ];
   // Force home selection on initial page load
   useEffect(() => {
     if (initialLoadRef.current) {
@@ -76,14 +84,6 @@ const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
     };
   }, [currentSection]);
 
-  // Navigation links data
-  const navLinks = [
-    { name: 'Home', href: '#home', icon: 'home' },
-    { name: 'About', href: '#about', icon: 'user' },
-    { name: 'Projects', href: '#projects', icon: 'code' },
-    { name: 'Skills', href: '#skills', icon: 'chip' },
-    { name: 'Contact', href: '#contact', icon: 'mail' }
-  ];
 
   // Animation variants
   const containerVariants = {
@@ -141,27 +141,30 @@ const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
   };
 
   // Enhanced navigation click handler
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    const sectionId = href.substring(1);
-    
-    // Update current section
-    setCurrentSection(sectionId);
-    
-    // Scroll to section
+const handleNavClick = (e, href) => {
+  e.preventDefault();
+  const sectionId = href.substring(1);
+
+  // Update current section state
+  setCurrentSection(sectionId);
+
+  // Delay scroll to ensure layout is complete
+  setTimeout(() => {
     const targetElement = document.querySelector(href);
     if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: 'smooth'
-      });
-      
-      // Update URL without page reload
+      const yOffset = -60; // adjust based on navbar height
+      const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+
+      // Update URL without reload
       window.history.pushState(null, '', href);
-      
-      // Close mobile menu if applicable
+
+      // Close mobile menu
       if (closeMenu) closeMenu();
     }
-  };
+  }, 100); // delay of 100ms ensures section is rendered
+};
+
 
   // Mobile menu styling
   if (isMobile) {
