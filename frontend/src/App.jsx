@@ -119,7 +119,7 @@ function App() {
               className="min-h-screen"
               variants={sectionVariants}
             >
-              <p>projects</p>
+              <Projects />
             </motion.section>
 
             <motion.section 
