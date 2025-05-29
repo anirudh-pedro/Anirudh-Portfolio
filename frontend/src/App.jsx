@@ -70,13 +70,11 @@ function App() {
       </AnimatePresence>
       
       {/* Fixed particle background */}
-      {/* <UndergroundBackground /> */}
       <div className="w-full absolute h-screen -z-10 pointer-events-none ">
   {/* canvas or particles or whatever */}
         <SpaceBackground />
       </div>
 
-      {/* Global Navigation with animated entrance */}
       <AnimatePresence>
         {!loading && (
           <motion.div
@@ -89,7 +87,6 @@ function App() {
         )}
       </AnimatePresence>
       
-      {/* Main content sections - all on one page */}
       <AnimatePresence>
         {!loading && (
           <motion.main 
@@ -138,7 +135,6 @@ function App() {
               <Contact />
             </motion.section>
             
-            {/* Simple footer with animation */}
             <motion.footer 
               className="py-6 text-center text-gray-400 text-sm"
               initial={{ opacity: 0 }}
