@@ -6,10 +6,9 @@ import Projects from './Pages/Projects';
 import Skills from './Pages/Skills';
 import Contact from './Pages/Contact';
 import Navbar from './Components/Nav/Navbar';
-// import ParticleBackground from './Components/ParticleBackground';
+import Footer from './Pages/Footer';
 import Loader from './Components/Loader';
 import './App.css';
-// import UndergroundBackground from './Components/ParticleBackground';
 import SpaceBackground from './Components/Background';
 
 function App() {
@@ -70,8 +69,7 @@ function App() {
       </AnimatePresence>
       
       {/* Fixed particle background */}
-      <div className="w-full absolute h-screen -z-10 pointer-events-none ">
-  {/* canvas or particles or whatever */}
+      <div className="w-full absolute h-screen -z-10 pointer-events-none">
         <SpaceBackground />
       </div>
 
@@ -135,14 +133,14 @@ function App() {
               <Contact />
             </motion.section>
             
-            <motion.footer 
-              className="py-6 text-center text-gray-400 text-sm"
+            {/* Replace simple footer with new modular Footer component */}
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.5, duration: 0.8 }}
+              transition={{ delay: 1.2, duration: 0.8 }}
             >
-              <p>© {new Date().getFullYear()} Anirudh. All rights reserved.</p>
-            </motion.footer>
+              <Footer />
+            </motion.div>
           </motion.main>
         )}
       </AnimatePresence>
