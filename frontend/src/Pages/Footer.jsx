@@ -37,8 +37,7 @@ const Footer = () => {
 
   return (
     <footer className="relative mt-20 overflow-hidden">
-      {/* Top gradient border */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"></div>
+      {/* Removed the top gradient border div */}
       
       {/* Background decoration */}
       <div className="absolute right-10 top-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
