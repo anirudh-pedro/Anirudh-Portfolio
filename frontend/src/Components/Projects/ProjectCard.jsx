@@ -38,13 +38,27 @@ const ProjectCard = ({ project }) => {
             )
           ))}
         </div>
+        
+        {/* "Featured" badge for highlighted projects */}
+        {project.tags.includes('featured') && (
+          <div className="absolute top-3 right-3">
+            <span className="text-xs px-2 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium">
+              Featured
+            </span>
+          </div>
+        )}
       </div>
       
       {/* Project Content - Right side on md+ screens, bottom on smaller screens */}
       <div className="md:w-3/5 p-5 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
+        <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
         
-        <p className="text-gray-300 text-sm mb-4">{project.description}</p>
+        {/* New: Project subtitle for better description */}
+        {project.subtitle && (
+          <p className="text-sm text-blue-400 mb-3">{project.subtitle}</p>
+        )}
+        
+        <p className="text-gray-300 text-sm mb-4 line-clamp-3">{project.description}</p>
         
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech, index) => (

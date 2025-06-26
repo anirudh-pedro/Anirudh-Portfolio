@@ -14,66 +14,70 @@ const ProjectsList = () => {
     }
   };
 
-  // Project data - you should replace this with your own projects
+  // Updated projects array with your new projects
   const projects = [
     {
-      id: 1,
-      title: "Portfolio Website",
-      description: "A modern portfolio website built with React and Framer Motion, featuring smooth animations and interactive elements.",
-      image: "https://via.placeholder.com/600x400?text=Portfolio+Website",
+      id: "flashchat",
+      title: "FlashChat",
+      description: "A modern, real-time chat application focused on privacy and seamless connectivity. Features include private rooms, proximity-based chat, ephemeral messaging, and real-time communication.",
+      image: "/projects/flashchat.png", // Add this image to your public/projects folder
       tags: ["web", "featured"],
-      technologies: ["React", "Framer Motion", "Tailwind CSS", "Vite"],
-      liveUrl: "https://your-portfolio-url.com",
-      githubUrl: "https://github.com/yourusername/portfolio"
+      technologies: ["React", "Socket.IO", "Express.js", "Node.js", "Tailwind CSS"],
+      liveUrl: "https://flash-chat-phi.vercel.app/join",
+      githubUrl: "https://github.com/anirudh-pedro/FlashChat"
     },
     {
-      id: 2,
-      title: "E-commerce Platform",
-      description: "A full-featured e-commerce platform with product catalog, shopping cart, user authentication, and payment integration using the MERN stack.",
-      image: "https://via.placeholder.com/600x400?text=E-commerce+App",
+      id: "typomaster",
+      title: "TypoMaster",
+      description: "A full-stack typing practice platform designed to help users improve their typing speed and accuracy through interactive tests, real-time feedback, and personalized analytics.",
+      image: "/projects/typomaster.png", // Add this image to your public/projects folder
       tags: ["web", "featured"],
-      technologies: ["MongoDB", "Express", "React", "Node.js", "Redux", "Stripe"],
-      liveUrl: "https://your-ecommerce-demo.com",
-      githubUrl: "https://github.com/yourusername/ecommerce-app"
+      technologies: ["React", "Node.js", "Express", "MongoDB", "Firebase", "Tailwind CSS"],
+      liveUrl: "https://typo-master-alpha.vercel.app/",
+      githubUrl: "https://github.com/anirudh-pedro/TypoMaster"
     },
     {
-      id: 3,
-      title: "AI Image Generator",
-      description: "An AI-powered application that generates custom images based on text descriptions, using OpenAI's DALL-E API and a custom React interface.",
-      image: "https://via.placeholder.com/600x400?text=AI+Image+Generator",
-      tags: ["ai", "web"],
-      technologies: ["React", "Node.js", "OpenAI API", "Canvas API"],
-      liveUrl: "https://ai-image-generator-demo.com",
-      githubUrl: "https://github.com/yourusername/ai-image-generator"
-    },
-    {
-      id: 4,
-      title: "Fitness Tracker Mobile App",
-      description: "A cross-platform mobile application for tracking workouts, nutrition, and fitness goals with customizable plans and progress visualization.",
-      image: "https://via.placeholder.com/600x400?text=Fitness+App",
-      tags: ["mobile"],
-      technologies: ["React Native", "Redux", "Firebase", "HealthKit", "Google Fit API"],
-      githubUrl: "https://github.com/yourusername/fitness-tracker-app"
-    },
-    {
-      id: 5,
-      title: "Task Management System",
-      description: "A collaborative task management system with real-time updates, team workspaces, and project analytics dashboard.",
-      image: "https://via.placeholder.com/600x400?text=Task+Manager",
-      tags: ["web"],
-      technologies: ["React", "Node.js", "Socket.io", "PostgreSQL", "Chart.js"],
-      liveUrl: "https://task-management-demo.com",
-      githubUrl: "https://github.com/yourusername/task-management-system"
-    },
-    {
-      id: 6,
-      title: "Language Learning Game",
-      description: "An interactive game designed to help users learn new languages through gamification, spaced repetition, and speech recognition.",
-      image: "https://via.placeholder.com/600x400?text=Language+Game",
-      tags: ["mobile", "other"],
-      technologies: ["Unity", "C#", "Speech Recognition API", "Firebase"],
-      liveUrl: "https://language-game-demo.com"
+      id: "sentiment-analysis",
+      title: "Advanced Sentiment Analysis",
+      description: "A robust sentiment analysis web app that combines rule-based logic with machine learning to provide nuanced analysis of text sentiment, with an interactive interface for real-time results.",
+      image: "/projects/sentiment-analysis.png", // Add this image to your public/projects folder
+      tags: ["ai", "featured"],
+      technologies: ["Python", "Streamlit", "scikit-learn", "NLTK", "Docker", "Heroku"],
+      liveUrl: "https://sentiment0analyzer.streamlit.app/",
+      githubUrl: "https://github.com/anirudh-pedro/Sentiment-Analysis-App"
     }
+    // You can keep your existing projects below if desired
+    // {
+    //   id: 1,
+    //   title: "Portfolio Website",
+    //   description: "A modern portfolio website built with React and Framer Motion, featuring smooth animations and interactive elements.",
+    //   image: "https://via.placeholder.com/600x400?text=Portfolio+Website",
+    //   tags: ["web", "featured"],
+    //   technologies: ["React", "Framer Motion", "Tailwind CSS", "Vite"],
+    //   liveUrl: "https://your-portfolio-url.com",
+    //   githubUrl: "https://github.com/yourusername/portfolio"
+    // },
+    // {
+    //   id: 2,
+    //   title: "E-commerce Platform",
+    //   description: "A full-featured e-commerce platform with product catalog, shopping cart, user authentication, and payment integration using the MERN stack.",
+    //   image: "https://via.placeholder.com/600x400?text=E-commerce+App",
+    //   tags: ["web", "featured"],
+    //   technologies: ["MongoDB", "Express", "React", "Node.js", "Redux", "Stripe"],
+    //   liveUrl: "https://your-ecommerce-demo.com",
+    //   githubUrl: "https://github.com/yourusername/ecommerce-app"
+    // },
+    // {
+    //   id: 3,
+    //   title: "AI Image Generator",
+    //   description: "An AI-powered application that generates custom images based on text descriptions, using OpenAI's DALL-E API and a custom React interface.",
+    //   image: "https://via.placeholder.com/600x400?text=AI+Image+Generator",
+    //   tags: ["ai", "web"],
+    //   technologies: ["React", "Node.js", "OpenAI API", "Canvas API"],
+    //   liveUrl: "https://ai-image-generator-demo.com",
+    //   githubUrl: "https://github.com/yourusername/ai-image-generator"
+    // }
+    // You can remove or keep the other existing projects as needed
   ];
 
   return (

@@ -51,7 +51,7 @@ function App() {
   };
 
   return (
-    <div className="App relative bg-black min-h-screen text-white overflow-x-hidden z-0">
+    <div className="App relative min-h-screen text-white overflow-x-hidden z-0">
       {/* Loading screen with exit animation */}
       <AnimatePresence mode="wait">
         {loading && (
@@ -69,9 +69,9 @@ function App() {
       </AnimatePresence>
       
       {/* Fixed particle background */}
-      <div className="w-full absolute h-screen -z-10 pointer-events-none">
+      {/* <div className="w-full absolute h-screen -z-10 pointer-events-none">
         <SpaceBackground />
-      </div>
+      </div> */}
 
       <AnimatePresence>
         {!loading && (

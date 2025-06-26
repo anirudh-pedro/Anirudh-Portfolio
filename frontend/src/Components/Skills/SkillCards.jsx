@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SkillProgress from './SkillProgress';
 
 const SkillCards = ({ activeCategory }) => {
-  // Define all your skills with appropriate categories
+  // Define all your skills with appropriate categories and updated icon paths
   const allSkills = [
     // Frontend
     { 
@@ -49,10 +49,37 @@ const SkillCards = ({ activeCategory }) => {
     { 
       id: 6, 
       name: 'Tailwind CSS', 
-      icon: '/assets/skills/tailwind.svg', 
+      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg', // Direct CDN link
       proficiency: 85, 
       category: 'frontend',
       description: 'Utility-first CSS framework for rapid UI development'
+    },
+    // Add Socket.IO for Flash Chat
+    { 
+      id: 101, 
+      name: 'Socket.IO', 
+      icon: '/assets/skills/socketio.svg', 
+      proficiency: 85, 
+      category: 'frontend',
+      description: 'Library for real-time web applications with bidirectional communication'
+    },
+    // Add Firebase for TypoMaster
+    {
+      id: 102,
+      name: 'Firebase',
+      icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg',
+      proficiency: 80,
+      category: 'frontend',
+      description: 'Platform for building web and mobile applications with authentication and databases'
+    },
+    // Add Chart.js for TypoMaster
+    {
+      id: 103,
+      name: 'Chart.js',
+      icon: '/assets/skills/chartjs.svg',
+      proficiency: 80,
+      category: 'frontend',
+      description: 'JavaScript charting library for interactive data visualizations'
     },
     
     // Backend
@@ -72,13 +99,14 @@ const SkillCards = ({ activeCategory }) => {
       category: 'backend',
       description: 'Web application framework for Node.js'
     },
-    { 
-      id: 9, 
-      name: 'Django', 
-      icon: '/assets/skills/django.svg', 
-      proficiency: 75, 
+    // Add Flask as requested
+    {
+      id: 104,
+      name: 'Flask',
+      icon: '/assets/skills/flask.svg',
+      proficiency: 80,
       category: 'backend',
-      description: 'High-level Python web framework'
+      description: 'Lightweight Python web framework for building web applications'
     },
     { 
       id: 10, 
@@ -87,6 +115,15 @@ const SkillCards = ({ activeCategory }) => {
       proficiency: 85, 
       category: 'backend',
       description: 'Design and implementation of RESTful services'
+    },
+    // Add Streamlit for Sentiment Analysis App
+    {
+      id: 105,
+      name: 'Streamlit',
+      icon: '/assets/skills/streamlit.svg',
+      proficiency: 80,
+      category: 'backend',
+      description: 'Python framework for rapidly building data applications'
     },
     
     // Languages
@@ -105,6 +142,15 @@ const SkillCards = ({ activeCategory }) => {
       proficiency: 75, 
       category: 'languages',
       description: 'Object-oriented programming language'
+    },
+    // Add C language as requested
+    {
+      id: 106,
+      name: 'C',
+      icon: '/assets/skills/c.svg',
+      proficiency: 75,
+      category: 'languages',
+      description: 'General-purpose procedural programming language'
     },
     { 
       id: 13, 
@@ -125,14 +171,6 @@ const SkillCards = ({ activeCategory }) => {
       description: 'NoSQL document database for modern applications'
     },
     { 
-      id: 15, 
-      name: 'PostgreSQL', 
-      icon: '/assets/skills/postgresql.svg', 
-      proficiency: 75, 
-      category: 'databases',
-      description: 'Advanced open-source relational database'
-    },
-    { 
       id: 16, 
       name: 'MySQL', 
       icon: '/assets/skills/mysql.svg', 
@@ -150,26 +188,47 @@ const SkillCards = ({ activeCategory }) => {
       category: 'tools',
       description: 'Version control system for tracking code changes'
     },
-    { 
-      id: 18, 
-      name: 'Docker', 
-      icon: '/assets/skills/docker.svg', 
-      proficiency: 70, 
+    // Add Netlify as requested
+    {
+      id: 107,
+      name: 'Netlify',
+      icon: '/assets/skills/netlify.svg',
+      proficiency: 80,
       category: 'tools',
-      description: 'Platform for developing, shipping, and running applications in containers'
+      description: 'Platform for automated deployment, serverless functions, and forms'
     },
-    { 
-      id: 19, 
-      name: 'AWS', 
-      icon: '/assets/skills/aws.svg', 
-      proficiency: 75, 
+    // Add Render as requested
+    {
+      id: 108,
+      name: 'Render',
+      icon: '/assets/skills/render.svg',
+      proficiency: 80,
       category: 'tools',
-      description: 'Cloud computing services for modern applications'
+      description: 'Cloud platform for hosting web services, static sites, and databases'
     },
+
+    // Add other skills from Sentiment Analysis project
+    {
+      id: 110,
+      name: 'Machine Learning',
+      icon: '/assets/skills/machine-learning.svg',
+      proficiency: 75,
+      category: 'tools',
+      description: 'Algorithms and models for predictive analysis and pattern recognition'
+    },
+    {
+      id: 111,
+      name: 'NLP',
+      icon: '/assets/skills/nlp.svg',
+      proficiency: 75,
+      category: 'tools',
+      description: 'Natural Language Processing for text analysis and understanding'
+    },
+    // GitHub Actions
     { 
       id: 20, 
       name: 'GitHub Actions', 
-      icon: '/assets/skills/github-actions.svg', 
+      icon: '/assets/skills/github-actions.svg', // Update this to point to your new saved image
       proficiency: 80, 
       category: 'tools',
       description: 'CI/CD automation directly in GitHub repositories'
@@ -178,6 +237,9 @@ const SkillCards = ({ activeCategory }) => {
 
   // State for filtered skills
   const [filteredSkills, setFilteredSkills] = useState(allSkills);
+  
+  // State to track image loading errors
+  const [imageErrors, setImageErrors] = useState({});
 
   // Filter skills when active category changes
   useEffect(() => {
@@ -187,6 +249,14 @@ const SkillCards = ({ activeCategory }) => {
       setFilteredSkills(allSkills.filter(skill => skill.category === activeCategory));
     }
   }, [activeCategory]);
+
+  // Handle image error and use appropriate fallback
+  const handleImageError = (skillId, skillName) => {
+    setImageErrors(prev => ({
+      ...prev,
+      [skillId]: true
+    }));
+  };
 
   // Animation variants
   const containerVariants = {
@@ -214,6 +284,84 @@ const SkillCards = ({ activeCategory }) => {
     }
   };
 
+  // Get icon based on skill name for fallback
+  const getFallbackIcon = (skillName) => {
+    // Direct mapping for exact skill names - more specific than partial matches
+    const exactIcons = {
+      'Socket.IO': 'https://cdn.simpleicons.org/socketdotio/black/white',
+      'RESTful APIs': 'https://cdn.svgporn.com/logos/postman-icon.svg',
+      'Chart.js': 'https://www.chartjs.org/img/chartjs-logo.svg',
+      'Tailwind CSS': '/assets/skills/tailwind.svg', // Update to your local path
+      'Node.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+      'Machine Learning': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg',
+      'NLP': 'https://cdn.simpleicons.org/openai/10a37f',
+      'GitHub Actions': '/assets/skills/github-actions.svg' // Add this line
+    };
+
+    // If we have an exact match, use that
+    if (exactIcons[skillName]) {
+      return exactIcons[skillName];
+    }
+
+    // Otherwise use the existing partial match logic
+    const cdnIcons = {
+      'react': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+      'javascript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+      'typescript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+      'html5': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+      'css3': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+      'tailwind': '/assets/skills/tailwind.svg', // Update path
+      'nodejs': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+      'express': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg',
+      'flask': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg',
+      'python': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+      'java': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+      'c': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg',
+      'c++': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg',
+      'mongodb': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+      'mysql': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+      'git': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+      'docker': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+      'github': '/assets/skills/github-actions.svg', // Update path
+      'netlify': 'https://cdn.simpleicons.org/netlify/00C7B7',
+      'render': 'https://cdn.simpleicons.org/render/46E3B7',
+      'firebase': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg',
+      'chart': 'https://cdn.simpleicons.org/chartdotjs/FF6384',
+      'socket': 'https://cdn.simpleicons.org/socketdotio/white',
+      'streamlit': 'https://cdn.simpleicons.org/streamlit/FF4B4B',
+      'machine': 'https://cdn.simpleicons.org/tensorflow/FF6F00',
+      'nlp': 'https://cdn.simpleicons.org/openai/10a37f',
+      'api': 'https://cdn.svgporn.com/logos/postman-icon.svg',
+      'rest': 'https://cdn.svgporn.com/logos/postman-icon.svg'
+    };
+    
+    // Try to match the skill name with one of our CDN icons
+    const key = Object.keys(cdnIcons).find(key => 
+      skillName.toLowerCase().includes(key.toLowerCase())
+    );
+    
+    // Return the matched CDN icon or a general placeholder
+    return key 
+      ? cdnIcons[key]
+      : `https://via.placeholder.com/50?text=${skillName.charAt(0)}`;
+  };
+
+  // Preload critical icons
+  useEffect(() => {
+    const criticalIcons = [
+      'https://cdn.simpleicons.org/socketdotio/white',
+      'https://www.chartjs.org/img/chartjs-logo.svg',
+      'https://cdn.svgporn.com/logos/postman-icon.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
+    ];
+    
+    criticalIcons.forEach(iconUrl => {
+      const img = new Image();
+      img.src = iconUrl;
+    });
+  }, []);
+
   return (
     <AnimatePresence mode="wait">
       <motion.div 
@@ -232,14 +380,17 @@ const SkillCards = ({ activeCategory }) => {
             whileHover={{ y: -5 }}
           >
             <div className="flex items-start">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center mr-4 p-2">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center mr-4 p-2 overflow-hidden">
+                {/* First attempt with original icon */}
                 <img 
-                  src={skill.icon} 
-                  alt={skill.name} 
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.target.onerror = null; 
-                    e.target.src = 'https://via.placeholder.com/50?text=' + skill.name[0];
+                  src={imageErrors[skill.id] ? getFallbackIcon(skill.name) : skill.icon} 
+                  alt={`${skill.name} logo`} 
+                  className="w-full h-full object-contain" 
+                  onError={() => handleImageError(skill.id, skill.name)}
+                  style={{ 
+                    filter: skill.name === 'Socket.IO' ? 'invert(1)' : 'none',
+                    maxWidth: '100%',
+                    maxHeight: '100%'
                   }}
                 />
               </div>
