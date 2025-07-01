@@ -10,8 +10,8 @@ const ContactInfo = () => {
         </svg>
       ),
       title: 'Email',
-      value: 'anirudh@example.com',
-      link: 'mailto:anirudh@example.com'
+      value: 'anirudh200503@gmail.com',
+      link: 'mailto:anirudh200503@gmail.com'
     },
     {
       id: 2,
@@ -21,8 +21,8 @@ const ContactInfo = () => {
         </svg>
       ),
       title: 'Phone',
-      value: '+91 9876543210',
-      link: 'tel:+919876543210'
+      value: '+91 9894969187',
+      link: 'tel:+919894969187'
     },
     {
       id: 3,
@@ -33,7 +33,7 @@ const ContactInfo = () => {
         </svg>
       ),
       title: 'Location',
-      value: 'Bangalore, India',
+      value: 'Coimbatore, India',
       link: null
     }
   ];
