@@ -11,13 +11,20 @@ const CertificationCarousel = () => {
   const scrollerRef = useRef(null);
   // State to track if carousel is paused (on hover)
   const [isPaused, setIsPaused] = useState(false);
-  // State to track if user is dragging
+  // State to track if user is dragging/touching
   const [isDragging, setIsDragging] = useState(false);
   // State to track drag start position
   const [dragStart, setDragStart] = useState(0);
   // State to track current scroll position
   const [scrollLeft, setScrollLeft] = useState(0);
+  // State to track if it's a touch device
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   
+  // Check if device supports touch
+  useEffect(() => {
+    setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
+
   // List of your actual certifications
   const certifications = [
     {
@@ -49,32 +56,34 @@ const CertificationCarousel = () => {
   // Clone the certifications array to create a seamless loop
   const duplicatedCertifications = [...certifications, ...certifications];
 
-  // Mouse drag event handlers
+  // Mouse event handlers
   const handleMouseDown = (e) => {
+    if (isTouchDevice) return; // Don't handle mouse events on touch devices
     setIsDragging(true);
-    setIsPaused(true); // Pause auto-scroll when dragging
+    setIsPaused(true);
     setDragStart(e.pageX - scrollerRef.current.offsetLeft);
     setScrollLeft(scrollerRef.current.scrollLeft);
     scrollerRef.current.style.cursor = 'grabbing';
-    e.preventDefault(); // Prevent text selection
+    e.preventDefault();
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isTouchDevice) return;
     e.preventDefault();
     const x = e.pageX - scrollerRef.current.offsetLeft;
-    const walk = (x - dragStart) * 2; // Multiply by 2 for faster scrolling
+    const walk = (x - dragStart) * 2;
     scrollerRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const handleMouseUp = () => {
+    if (isTouchDevice) return;
     setIsDragging(false);
     scrollerRef.current.style.cursor = 'grab';
-    // Resume auto-scroll after a short delay
     setTimeout(() => setIsPaused(false), 1000);
   };
 
   const handleMouseLeave = () => {
+    if (isTouchDevice) return;
     if (isDragging) {
       setIsDragging(false);
       scrollerRef.current.style.cursor = 'grab';
@@ -84,65 +93,76 @@ const CertificationCarousel = () => {
     }
   };
 
+  // Touch event handlers for mobile
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    setIsPaused(true);
+    const touch = e.touches[0];
+    setDragStart(touch.pageX - scrollerRef.current.offsetLeft);
+    setScrollLeft(scrollerRef.current.scrollLeft);
+    e.preventDefault();
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const x = touch.pageX - scrollerRef.current.offsetLeft;
+    const walk = (x - dragStart) * 2;
+    scrollerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    setTimeout(() => setIsPaused(false), 1000);
+  };
+
   // Handle click vs drag distinction
   const handleCardClick = (e, link) => {
     if (isDragging) {
       e.preventDefault();
       return false;
     }
-    // Only navigate if not dragging
     if (link !== "#") {
       window.open(link, '_blank');
     }
   };
 
   useEffect(() => {
-    // This effect handles the automatic scrolling behavior
     const scrollerElement = scrollerRef.current;
     if (!scrollerElement) return;
 
-    // Calculate scroll width and setup variables
     let scrollPosition = scrollerElement.scrollLeft;
     const scrollWidth = scrollerElement.scrollWidth;
     const containerWidth = scrollerElement.clientWidth;
     const halfWidth = scrollWidth / 2;
     
-    // Store animation ID for cleanup
     let animationId = null;
     
-    // Scroll animation function
     const scrollAnimation = () => {
-      // Only scroll if not paused and not dragging
       if (!isPaused && !isDragging) {
-        // Increment scroll position
-        scrollPosition += 0.5; // Adjust speed here (lower = slower)
+        scrollPosition += 0.5;
         
-        // Reset position when we've scrolled through the first set of duplicates
         if (scrollPosition >= halfWidth) {
           scrollPosition = 0;
         }
         
-        // Apply scroll position
         scrollerElement.scrollLeft = scrollPosition;
       } else {
-        // Update scrollPosition to current position when paused
         scrollPosition = scrollerElement.scrollLeft;
       }
       
-      // Continue animation
       animationId = requestAnimationFrame(scrollAnimation);
     };
     
-    // Start animation
     animationId = requestAnimationFrame(scrollAnimation);
     
-    // Clean up animation on component unmount
     return () => {
       if (animationId) {
         cancelAnimationFrame(animationId);
       }
     };
-  }, [isPaused, isDragging]); // Re-run effect when isPaused or isDragging changes
+  }, [isPaused, isDragging]);
 
   return (
     <div className="w-full mt-16 relative overflow-hidden">
@@ -159,16 +179,25 @@ const CertificationCarousel = () => {
       <div className="absolute left-0 top-0 h-full w-12 z-10 bg-gradient-to-r from-black to-transparent pointer-events-none"></div>
       <div className="absolute right-0 top-0 h-full w-12 z-10 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
       
-      {/* Scrolling container with drag functionality */}
+      {/* Scrolling container with touch and mouse support */}
       <div 
         ref={scrollerRef}
         className="flex overflow-x-hidden no-scrollbar py-4 select-none"
-        style={{ cursor: 'grab' }}
+        style={{ 
+          cursor: isTouchDevice ? 'default' : 'grab',
+          touchAction: 'pan-x' // Allow horizontal scrolling on touch devices
+        }}
+        // Mouse events (desktop)
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
-        onMouseEnter={() => !isDragging && setIsPaused(true)}
+        onMouseEnter={() => !isDragging && !isTouchDevice && setIsPaused(true)}
+        // Touch events (mobile)
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         <div className="flex gap-6 px-6">
           {duplicatedCertifications.map((cert, index) => (
@@ -181,16 +210,16 @@ const CertificationCarousel = () => {
               <motion.div 
                 className="w-full h-full bg-gray-900/80 backdrop-blur-sm rounded-xl border border-gray-700/50 overflow-hidden group-hover:border-blue-500/50 transition-all duration-300 shadow-lg flex flex-col"
                 whileHover={{ 
-                  y: isDragging ? 0 : -5, // Don't lift while dragging
+                  y: isDragging ? 0 : -5,
                   transition: { duration: 0.2 }
                 }}
               >
-                {/* Certificate image at the top - 60% of card height */}
+                {/* Certificate image at the top */}
                 <div className="w-full h-64 overflow-hidden border-b border-gray-700/50 bg-gray-800/50 flex items-center justify-center">
                   <img 
                     src={cert.image} 
                     alt={cert.name}
-                    className="w-full h-full object-contain p-3 pointer-events-none" // Prevent image dragging
+                    className="w-full h-full object-contain p-3 pointer-events-none"
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = `https://via.placeholder.com/320x256/${
@@ -203,11 +232,11 @@ const CertificationCarousel = () => {
                       minHeight: '240px',
                       backgroundColor: 'rgba(75, 85, 99, 0.2)'
                     }}
-                    draggable={false} // Prevent default image drag
+                    draggable={false}
                   />
                 </div>
                 
-                {/* Certificate details at the bottom - 40% of card height */}
+                {/* Certificate details at the bottom */}
                 <div className="p-4 flex-1 flex flex-col justify-between h-44">
                   <div>
                     <h4 className="text-base font-bold text-white leading-tight line-clamp-2 mb-2">{cert.name}</h4>
@@ -229,7 +258,7 @@ const CertificationCarousel = () => {
                     </div>
                   </div>
                   
-                  {/* View button - always at bottom */}
+                  {/* View button */}
                   <div className="text-center mt-auto">
                     <span className="inline-block text-sm bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full hover:bg-blue-500/30 transition-colors cursor-pointer">
                       View Certificate →
@@ -242,10 +271,10 @@ const CertificationCarousel = () => {
         </div>
       </div>
       
-      {/* Updated visual indicator */}
+      {/* Updated help text for mobile */}
       <div className="text-center mt-4">
         <span className="text-xs text-gray-500">
-          Hover to pause • Drag to scroll manually
+          {isTouchDevice ? 'Swipe to scroll manually' : 'Hover to pause • Drag to scroll manually'}
         </span>
       </div>
     </div>
