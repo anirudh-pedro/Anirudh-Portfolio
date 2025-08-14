@@ -39,7 +39,7 @@ const About = () => {
         variants={pageVariants}
         viewport={{ once: true, amount: 0.01 }}
       >
-        <div className="bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl p-6 sm:p-8 shadow-xl shadow-black/50">
+        <div className="p-6 sm:p-8">
           {/* Header with better mobile responsiveness */}
           <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
             <AboutHeader />

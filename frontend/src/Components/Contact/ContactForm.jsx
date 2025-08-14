@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import ResumeViewer from '../About/ResumeViewer';
+import { API_CONFIG } from '../../config/api';
 
 const ContactForm = () => {
   // Form state
@@ -77,7 +78,7 @@ const ContactForm = () => {
     
     try {
       // Send form data to backend
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(API_CONFIG.CONTACT_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

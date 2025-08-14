@@ -8,7 +8,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: [
+        'http://localhost:5173', // Local development
+        'https://anirudh-portfolio-one.vercel.app', // Production frontend
+        process.env.FRONTEND_URL // Additional flexibility
+    ].filter(Boolean), // Remove any undefined values
     credentials: true
 }));
 app.use(bodyParser.json());
@@ -137,7 +141,10 @@ app.listen(PORT, async () => {
     console.log(`🚀 Portfolio backend server running on port ${PORT}`);
     console.log(`📧 Contact form endpoint: http://localhost:${PORT}/api/contact`);
     console.log(`❤️ Health check: http://localhost:${PORT}/api/health`);
-    console.log(`🌐 CORS enabled for: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
+    console.log(`🌐 CORS enabled for multiple origins:`);
+    console.log(`   • http://localhost:5173 (local development)`);
+    console.log(`   • https://anirudh-portfolio-one.vercel.app (production)`);
+    console.log(`   • ${process.env.FRONTEND_URL || 'none'} (environment variable)`);
     
     // Test email configuration on startup
     await testEmailConfig();

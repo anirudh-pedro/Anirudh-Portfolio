@@ -249,7 +249,7 @@ const CertificationCarousel = () => {
       </div>
 
       {/* Auto-scroll indicator */}
-      <div className="text-center mt-4">
+      {/* <div className="text-center mt-4">
         <span className="text-xs text-gray-500 flex items-center justify-center gap-2">
           {isPaused ? 'Paused' : (
             <>
@@ -260,7 +260,7 @@ const CertificationCarousel = () => {
             </>
           )} • Hover to pause • Click dots or arrows to navigate
         </span>
-      </div>
+      </div> */}
 
       {/* Progress bar for auto-scroll */}
       {!isPaused && (
