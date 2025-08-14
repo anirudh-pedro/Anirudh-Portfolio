@@ -14,7 +14,7 @@ const ProjectCard = ({ project }) => {
   return (
     <motion.div
       id={`project-${project.id}`}
-      className="rounded-xl overflow-hidden bg-black/20 backdrop-blur-sm border border-white/10 h-full flex flex-col md:flex-row"
+      className="rounded-xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/25 h-full flex flex-col md:flex-row shadow-xl shadow-black/50"
       variants={cardVariants}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
     >

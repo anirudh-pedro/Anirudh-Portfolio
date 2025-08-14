@@ -76,32 +76,49 @@ const ContactForm = () => {
     setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
     
     try {
-      // This is where you would typically make an API call to your backend
-      // For now, we'll just simulate a successful submission
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Reset form on success
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      setStatus({
-        submitted: true,
-        submitting: false,
-        info: { error: false, msg: 'Message sent successfully!' }
+      // Send form data to backend
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
       });
       
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setStatus(prevStatus => ({
-          ...prevStatus,
+      const result = await response.json();
+      
+      if (response.ok && result.success) {
+        // Reset form on success
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setStatus({
+          submitted: true,
+          submitting: false,
+          info: { error: false, msg: result.message || 'Message sent successfully! Thank you for contacting me.' }
+        });
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setStatus(prevStatus => ({
+            ...prevStatus,
+            submitted: false,
+            info: { error: false, msg: null }
+          }));
+        }, 5000);
+      } else {
+        // Handle server errors
+        setStatus({
           submitted: false,
-          info: { error: false, msg: null }
-        }));
-      }, 5000);
+          submitting: false,
+          info: { error: true, msg: result.message || 'Failed to send message. Please try again.' }
+        });
+      }
       
     } catch (error) {
+      console.error('Form submission error:', error);
       setStatus({
         submitted: false,
         submitting: false,
-        info: { error: true, msg: 'Something went wrong. Please try again later.' }
+        info: { error: true, msg: 'Network error. Please check your connection and try again.' }
       });
     }
   };
@@ -109,10 +126,10 @@ const ContactForm = () => {
   return (
     <div className="space-y-8">
       {/* Contact Form Section */}
-      <div className="bg-black/20 backdrop-blur-md rounded-2xl border border-white/10 p-6 sm:p-8">
+      <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/25 p-6 sm:p-8 shadow-xl shadow-black/50">
         <h3 className="text-xl font-bold mb-6 text-white flex items-center">
-          <span className="mr-2 p-1.5 rounded-full bg-blue-500/20">
-            <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <span className="mr-2 p-1.5 rounded-full bg-purple-500/20">
+            <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </span>
@@ -144,7 +161,7 @@ const ContactForm = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-black/30 border ${errors.name ? 'border-red-500/50' : 'border-gray-700'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-white text-sm`}
+                className={`w-full px-4 py-3 bg-black/30 backdrop-blur-sm border ${errors.name ? 'border-red-400' : 'border-white/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-white text-sm placeholder-gray-400 autofill:bg-black/30 autofill:text-white`}
                 placeholder="Your name"
               />
               {errors.name && (
@@ -163,7 +180,7 @@ const ContactForm = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-black/30 border ${errors.email ? 'border-red-500/50' : 'border-gray-700'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-white text-sm`}
+                className={`w-full px-4 py-3 bg-black/30 backdrop-blur-sm border ${errors.email ? 'border-red-400' : 'border-white/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-white text-sm placeholder-gray-400 autofill:bg-black/30 autofill:text-white`}
                 placeholder="your.email@example.com"
               />
               {errors.email && (
@@ -183,7 +200,7 @@ const ContactForm = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className={`w-full px-4 py-3 bg-black/30 border ${errors.subject ? 'border-red-500/50' : 'border-gray-700'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-white text-sm`}
+              className={`w-full px-4 py-3 bg-black/30 backdrop-blur-sm border ${errors.subject ? 'border-red-400' : 'border-white/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-white text-sm placeholder-gray-400 autofill:bg-black/30 autofill:text-white`}
               placeholder="What is this regarding?"
             />
             {errors.subject && (
@@ -202,7 +219,7 @@ const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               rows={5}
-              className={`w-full px-4 py-3 bg-black/30 border ${errors.message ? 'border-red-500/50' : 'border-gray-700'} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-white text-sm`}
+              className={`w-full px-4 py-3 bg-black/30 backdrop-blur-sm border ${errors.message ? 'border-red-400' : 'border-white/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 text-white text-sm placeholder-gray-400 resize-none autofill:bg-black/30 autofill:text-white`}
               placeholder="Your message here..."
             ></textarea>
             {errors.message && (
@@ -215,7 +232,7 @@ const ContactForm = () => {
             <button
               type="submit"
               disabled={status.submitting}
-              className="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg text-white font-medium transition-all flex items-center justify-center disabled:opacity-70"
+              className="w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 rounded-lg text-white font-medium transition-all flex items-center justify-center disabled:opacity-70"
             >
               {status.submitting ? (
                 <>
@@ -239,7 +256,7 @@ const ContactForm = () => {
       </div>
 
       {/* Resume Viewer Section - Now outside the form */}
-      <div className="bg-black/20 backdrop-blur-md rounded-2xl border border-white/10 p-2 sm:p-8">
+      <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/25 p-2 sm:p-8 shadow-xl shadow-black/50">
         <ResumeViewer />
       </div>
     </div>

@@ -24,16 +24,15 @@ const ResumeViewer = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="mt-8 w-full flex justify-center"
+    <div className="p-4 sm:p-5 max-w-3xl mx-auto"
+      style={{
+        opacity: 1,
+        y: 0
+      }}
     >
-      <div className="bg-black/20 backdrop-blur-md rounded-2xl border border-white/10 p-4 sm:p-5 overflow-hidden max-w-3xl mx-auto">
         <h3 className="text-xl font-bold mb-3 text-white flex items-center justify-center">
-          <span className="mr-2 p-1.5 rounded-full bg-blue-500/20">
-            <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <span className="mr-2 p-1.5 rounded-full bg-purple-500/20">
+            <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </span>
@@ -47,7 +46,7 @@ const ResumeViewer = () => {
           <div className="flex flex-wrap gap-2 justify-center">
             <button
               onClick={toggleModal}
-              className="px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 backdrop-blur-sm border border-blue-500/30 rounded-full text-white text-sm font-medium flex items-center transition-all hover:shadow-lg hover:shadow-blue-500/10"
+              className="px-4 py-2 bg-purple-600/20 hover:bg-purple-600/30 backdrop-blur-sm border border-purple-500/30 rounded-full text-white text-sm font-medium flex items-center transition-all hover:shadow-lg hover:shadow-purple-500/10"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -58,7 +57,7 @@ const ResumeViewer = () => {
             
             <button
               onClick={handleDownload}
-              className="px-4 py-2 bg-gradient-to-r from-blue-600/50 to-purple-600/50 hover:from-blue-600/60 hover:to-purple-600/60 backdrop-blur-sm rounded-full text-white text-sm font-medium flex items-center transition-all hover:shadow-lg hover:shadow-purple-500/20"
+              className="px-4 py-2 bg-gradient-to-r from-purple-600/50 to-purple-600/50 hover:from-purple-600/60 hover:to-purple-600/60 backdrop-blur-sm rounded-full text-white text-sm font-medium flex items-center transition-all hover:shadow-lg hover:shadow-purple-500/20"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -67,18 +66,17 @@ const ResumeViewer = () => {
             </button>
           </div>
         </div>
-      </div>
 
       {/* Modal for PDF Viewer */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-gray-900 rounded-xl w-full max-w-3xl h-[85vh] flex flex-col overflow-hidden border border-gray-700">
+          <div className="bg-white/10 backdrop-blur-xl rounded-xl w-full max-w-3xl h-[85vh] flex flex-col overflow-hidden border border-white/25 shadow-xl shadow-black/50">
             {/* Modal header */}
-            <div className="flex items-center justify-between p-3 border-b border-gray-700">
+            <div className="flex items-center justify-between p-3 border-b border-white/20">
               <h3 className="text-lg font-semibold text-white">Resume Preview</h3>
               <button 
                 onClick={toggleModal}
-                className="p-1 rounded-full hover:bg-gray-700 text-gray-400 hover:text-white"
+                className="p-1 rounded-full hover:bg-white/20 text-gray-300 hover:text-white transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -87,7 +85,7 @@ const ResumeViewer = () => {
             </div>
             
             {/* PDF content with rotation fixed */}
-            <div className="flex-1 overflow-auto bg-gray-800 flex items-center justify-center">
+            <div className="flex-1 overflow-auto bg-black/50 flex items-center justify-center">
               <iframe 
                 src={`${resumePath}#view=FitH&toolbar=0&navpanes=0&scrollbar=0&page=1&zoom=100`}
                 title="Resume"
@@ -96,10 +94,10 @@ const ResumeViewer = () => {
             </div>
             
             {/* Modal footer with controls - Removed "Press Esc to close" text */}
-            <div className="p-3 border-t border-gray-700 flex justify-end items-center">
+            <div className="p-3 border-t border-white/20 flex justify-end items-center">
               <button
                 onClick={handleDownload}
-                className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 rounded-md text-white text-sm font-medium flex items-center" 
+                className="px-3 py-1.5 bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-700/90 hover:to-purple-700/90 rounded-md text-white text-sm font-medium flex items-center transition-all shadow-lg" 
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -110,7 +108,7 @@ const ResumeViewer = () => {
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

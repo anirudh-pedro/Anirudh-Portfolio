@@ -376,7 +376,7 @@ const SkillCards = ({ activeCategory }) => {
           <motion.div
             key={skill.id}
             variants={cardVariants}
-            className="bg-black/20 backdrop-blur-md p-4 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group hover:shadow-lg hover:shadow-purple-500/5"
+            className="bg-white/10 backdrop-blur-xl p-4 rounded-xl border border-white/25 hover:border-purple-400/50 transition-all group hover:shadow-lg hover:shadow-purple-500/10 shadow-xl shadow-black/50"
             whileHover={{ y: -5 }}
           >
             <div className="flex items-start">

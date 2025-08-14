@@ -40,11 +40,11 @@ const SpaceBackground = () => {
     canvas.width = dimensions.width;
     canvas.height = dimensions.height;
     
-    // Background gradient - elegant dark tones
+    // Background gradient - elegant black tones
     const bgGradient = ctx.createLinearGradient(0, 0, 0, dimensions.height);
-    bgGradient.addColorStop(0, '#0B0F1A');
-    bgGradient.addColorStop(0.7, '#111827');
-    bgGradient.addColorStop(1, '#131B2E');
+    bgGradient.addColorStop(0, '#000000');
+    bgGradient.addColorStop(0.7, '#000000');
+    bgGradient.addColorStop(1, '#000000');
     
     ctx.fillStyle = bgGradient;
     ctx.fillRect(0, 0, dimensions.width, dimensions.height);
@@ -279,7 +279,7 @@ const SpaceBackground = () => {
   }, [starsTrigger]);
   
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-[#0B0F1A]">
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-black">
       {/* Base canvas for stars and background elements */}
       <canvas 
         ref={canvasRef} 
@@ -430,7 +430,7 @@ const SpaceBackground = () => {
       )}
       
       {/* Overlay gradient for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0B0F1A]/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/80" />
     </div>
   );
 };

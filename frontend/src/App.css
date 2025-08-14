@@ -3,5 +3,5 @@
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 body {
-  background-color: #040d23; /* or dark color to match your theme */
+  background-color: #000000; /* Changed to pure black */
 }

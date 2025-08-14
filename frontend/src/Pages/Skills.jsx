@@ -1,24 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SkillsHeader from '../Components/Skills/SkillsHeader';
-import SkillCategories from '../Components/Skills/SkillCategories';
-import SkillCards from '../Components/Skills/SkillCards';
+import SkillsArsenal from '../Components/Skills/SkillsArsenal';
 import CertificationCarousel from '../Components/Skills/CertificationCarousel';
 
 const Skills = () => {
-  // State to track active skill category
-  const [activeCategory, setActiveCategory] = useState('all');
-
-  // Define skill categories
-  const categories = [
-    { id: 'all', name: 'All Skills' },
-    { id: 'frontend', name: 'Frontend' },
-    { id: 'backend', name: 'Backend' },
-    { id: 'languages', name: 'Languages' },
-    { id: 'tools', name: 'Tools & DevOps' },
-    { id: 'databases', name: 'Databases' }
-  ];
-
   // Animation variants
   const pageVariants = {
     hidden: { opacity: 0 },
@@ -39,11 +25,6 @@ const Skills = () => {
     }
   };
 
-  // Handle category change
-  const handleCategoryChange = (categoryId) => {
-    setActiveCategory(categoryId);
-  };
-
   return (
     <section id="skills" className="py-10 sm:py-16 overflow-hidden">
       <motion.div 
@@ -57,19 +38,11 @@ const Skills = () => {
           <SkillsHeader />
         </motion.div>
 
-        <motion.div variants={itemVariants} className="mt-8">
-          <SkillCategories 
-            categories={categories} 
-            activeCategory={activeCategory} 
-            onCategoryChange={handleCategoryChange} 
-          />
-        </motion.div>
-
         <motion.div 
           variants={itemVariants} 
           className="mt-10"
         >
-          <SkillCards activeCategory={activeCategory} />
+          <SkillsArsenal />
         </motion.div>
         
         {/* Add certification carousel */}

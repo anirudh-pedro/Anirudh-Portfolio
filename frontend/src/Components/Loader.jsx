@@ -34,7 +34,7 @@ const Loader = () => {
   ];
 
   return (
-    <div className="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black flex flex-col items-center justify-center z-50 p-4">
       <motion.div
         className="w-full max-w-md bg-gray-800 rounded-lg shadow-2xl overflow-hidden"
         initial={{ opacity: 0, scale: 0.9 }}

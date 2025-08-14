@@ -79,12 +79,12 @@ const AboutInterests = () => {
 
   return (
     <motion.div
-      className="bg-black/20 backdrop-blur-md p-8 rounded-2xl border border-white/10"
+      className="bg-black/50 backdrop-blur-xl p-8 rounded-2xl border border-white/20 shadow-xl shadow-black/60"
       variants={containerVariants}
     >
       <h3 className="text-2xl font-bold mb-6 text-white flex items-center">
-        <span className="mr-3 p-2 rounded-full bg-green-500/20">
-          <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <span className="mr-3 p-2 rounded-full bg-purple-500/20">
+          <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </span>
@@ -100,7 +100,7 @@ const AboutInterests = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="p-3 rounded-full bg-gradient-to-br from-green-500/20 to-blue-500/20 mb-3 text-white">
+            <div className="p-3 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-600/20 mb-3 text-white">
               {interest.icon}
             </div>
             <span className="text-gray-300 text-sm">{interest.name}</span>

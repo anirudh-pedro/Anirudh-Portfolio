@@ -19,7 +19,7 @@ const ProjectsShowcase = ({ project, onClose }) => {
   return (
     <AnimatePresence>
       <motion.div 
-        className="mb-16 bg-black/20 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden"
+        className="mb-16 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/25 overflow-hidden shadow-xl shadow-black/50"
         variants={showcaseVariants}
         initial="hidden"
         animate="visible"

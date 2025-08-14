@@ -46,7 +46,7 @@ const AboutEducation = () => {
 
   return (
     <motion.div
-      className="bg-black/20 backdrop-blur-md p-8 rounded-2xl border border-white/10"
+      className="bg-black/50 backdrop-blur-xl p-8 rounded-2xl border border-white/20 shadow-xl shadow-black/60"
       variants={containerVariants}
     >
       <h3 className="text-2xl font-bold mb-6 text-white flex items-center">

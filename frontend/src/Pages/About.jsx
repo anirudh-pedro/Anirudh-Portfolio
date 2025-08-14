@@ -39,10 +39,11 @@ const About = () => {
         variants={pageVariants}
         viewport={{ once: true, amount: 0.01 }}
       >
-        {/* Header with better mobile responsiveness */}
-        <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
-          <AboutHeader />
-        </motion.div>
+        <div className="bg-white/10 backdrop-blur-xl border border-white/25 rounded-3xl p-6 sm:p-8 shadow-xl shadow-black/50">
+          {/* Header with better mobile responsiveness */}
+          <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
+            <AboutHeader />
+          </motion.div>
         
         <div className="flex flex-col gap-3 w-full">
           <div className="flex flex-col lg:flex-row w-full gap-5">
@@ -85,6 +86,7 @@ const About = () => {
           <motion.div variants={itemVariants}>
             <ResumeViewer />
           </motion.div>
+        </div>
         </div>
       </motion.div>
     </section>
