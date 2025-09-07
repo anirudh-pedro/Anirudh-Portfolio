@@ -11,18 +11,6 @@ const Loader = () => {
     }
   };
 
-  const cursorVariants = {
-    animate: {
-      opacity: [1, 0, 1],
-      transition: {
-        duration: 0.8,
-        repeat: Infinity,
-        // Fixed: Using standard easing instead of steps
-        ease: "linear"
-      }
-    }
-  };
-
   const codeLines = [
     { text: "Initializing portfolio...", delay: 0 },
     { text: "Loading components...", delay: 0.5 },

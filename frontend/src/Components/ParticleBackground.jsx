@@ -172,8 +172,6 @@ const ParticleBackground = () => {
         );
         
         // Adjust glow intensity for attracted particles
-        let glowIntensity = particle.attracted ? 0.3 : 0.2;
-        const baseColor = particle.color.replace(/[\d\.]+\)$/, `${glowIntensity})`);
         gradient.addColorStop(0, particle.color);
         gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
         
@@ -214,8 +212,8 @@ const ParticleBackground = () => {
               
               const opacity = connectionOpacity * (1 - distance / 150);
               
-              const color1 = particle.color.replace(/[\d\.]+\)$/, `${opacity})`);
-              const color2 = otherParticle.color.replace(/[\d\.]+\)$/, `${opacity})`);
+              const color1 = particle.color.replace(/[\d.]+\)$/, `${opacity})`);
+              const color2 = otherParticle.color.replace(/[\d.]+\)$/, `${opacity})`);
               
               gradient.addColorStop(0, color1);
               gradient.addColorStop(1, color2);

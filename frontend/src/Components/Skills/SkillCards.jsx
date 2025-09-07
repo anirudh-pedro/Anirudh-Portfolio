@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SkillProgress from './SkillProgress';
 
 const SkillCards = ({ activeCategory }) => {
-  // Define all your skills with appropriate categories and updated icon paths
-  const allSkills = [
+  // Define all your skills with appropriate categories and updated icon paths - wrapped in useMemo
+  const allSkills = useMemo(() => [
     // Frontend
     { 
       id: 1, 
@@ -233,7 +233,7 @@ const SkillCards = ({ activeCategory }) => {
       category: 'tools',
       description: 'CI/CD automation directly in GitHub repositories'
     }
-  ];
+  ], []); // Empty dependency array since skills are static
 
   // State for filtered skills
   const [filteredSkills, setFilteredSkills] = useState(allSkills);
@@ -248,10 +248,10 @@ const SkillCards = ({ activeCategory }) => {
     } else {
       setFilteredSkills(allSkills.filter(skill => skill.category === activeCategory));
     }
-  }, [activeCategory]);
+  }, [activeCategory, allSkills]);
 
   // Handle image error and use appropriate fallback
-  const handleImageError = (skillId, skillName) => {
+  const handleImageError = (skillId) => {
     setImageErrors(prev => ({
       ...prev,
       [skillId]: true

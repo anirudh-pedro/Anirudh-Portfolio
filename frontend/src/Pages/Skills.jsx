@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import SkillsHeader from '../Components/Skills/SkillsHeader';
 import SkillsArsenal from '../Components/Skills/SkillsArsenal';

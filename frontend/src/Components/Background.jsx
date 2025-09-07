@@ -276,7 +276,7 @@ const SpaceBackground = () => {
         tailLength: 70 + Math.random() * 30
       }
     ];
-  }, [starsTrigger]);
+  }, [starsTrigger]); // eslint-disable-line react-hooks/exhaustive-deps
   
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-black">

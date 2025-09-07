@@ -12,10 +12,11 @@ const ContactForm = () => {
     message: ''
   });
   
-  // Form status state
+  // Form status state with loading progress
   const [status, setStatus] = useState({
     submitted: false,
     submitting: false,
+    progress: 0,
     info: { error: false, msg: null }
   });
 
@@ -65,7 +66,7 @@ const ContactForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
+  // Handle form submission with timeout and retry
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -74,19 +75,47 @@ const ContactForm = () => {
       return;
     }
     
-    setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
+    setStatus(prevStatus => ({ ...prevStatus, submitting: true, progress: 0 }));
+    
+    // Simulate progress updates for better UX
+    const progressInterval = setInterval(() => {
+      setStatus(prev => {
+        if (prev.progress < 90) {
+          return { ...prev, progress: prev.progress + 10 };
+        }
+        return prev;
+      });
+    }, 1000);
+    
+    // Create a timeout promise
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Request timed out')), 30000) // 30 second timeout
+    );
     
     try {
-      // Send form data to backend
-      const response = await fetch(API_CONFIG.CONTACT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      });
+      // Update progress to show connection attempt
+      setStatus(prev => ({ ...prev, progress: 20 }));
+      
+      // Race between fetch and timeout
+      const response = await Promise.race([
+        fetch(API_CONFIG.CONTACT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+          // Add signal for better abort handling
+          signal: AbortSignal.timeout(25000) // 25 second timeout
+        }),
+        timeoutPromise
+      ]);
+      
+      clearInterval(progressInterval);
+      setStatus(prev => ({ ...prev, progress: 80 }));
       
       const result = await response.json();
+      
+      setStatus(prev => ({ ...prev, progress: 100 }));
       
       if (response.ok && result.success) {
         // Reset form on success
@@ -94,6 +123,7 @@ const ContactForm = () => {
         setStatus({
           submitted: true,
           submitting: false,
+          progress: 100,
           info: { error: false, msg: result.message || 'Message sent successfully! Thank you for contacting me.' }
         });
         
@@ -102,6 +132,7 @@ const ContactForm = () => {
           setStatus(prevStatus => ({
             ...prevStatus,
             submitted: false,
+            progress: 0,
             info: { error: false, msg: null }
           }));
         }, 5000);
@@ -110,19 +141,53 @@ const ContactForm = () => {
         setStatus({
           submitted: false,
           submitting: false,
+          progress: 0,
           info: { error: true, msg: result.message || 'Failed to send message. Please try again.' }
         });
       }
       
     } catch (error) {
       console.error('Form submission error:', error);
+      clearInterval(progressInterval);
+      
+      // Better error messages based on error type
+      let errorMessage = 'Something went wrong. Please try again.';
+      
+      if (error.message === 'Request timed out' || error.name === 'TimeoutError') {
+        errorMessage = 'The server is taking longer than expected. This might be because it\'s waking up from sleep mode. Please try again in a moment.';
+      } else if (error.name === 'TypeError' || error.message.includes('fetch')) {
+        errorMessage = 'Network connection error. Please check your internet connection and try again.';
+      } else if (error.name === 'AbortError') {
+        errorMessage = 'Request was cancelled. Please try again.';
+      }
+      
       setStatus({
         submitted: false,
         submitting: false,
-        info: { error: true, msg: 'Network error. Please check your connection and try again.' }
+        progress: 0,
+        info: { error: true, msg: errorMessage }
       });
     }
   };
+
+  // Function to wake up the server (call this on component mount)
+  const wakeUpServer = async () => {
+    try {
+      fetch(API_CONFIG.HEALTH_URL, { 
+        method: 'GET',
+        cache: 'no-cache'
+      }).catch(() => {
+        // Silently fail - this is just to wake up the server
+      });
+    } catch {
+      // Silently fail - this is just to wake up the server
+    }
+  };
+
+  // Wake up server when component mounts
+  React.useEffect(() => {
+    wakeUpServer();
+  }, []);
 
   return (
     <div className="space-y-8">
@@ -233,15 +298,27 @@ const ContactForm = () => {
             <button
               type="submit"
               disabled={status.submitting}
-              className="w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 rounded-lg text-white font-medium transition-all flex items-center justify-center disabled:opacity-70"
+              className="w-full py-3 px-6 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 rounded-lg text-white font-medium transition-all flex items-center justify-center disabled:opacity-70 relative overflow-hidden"
             >
               {status.submitting ? (
                 <>
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Sending...
+                  {/* Progress bar background */}
+                  <div 
+                    className="absolute inset-0 bg-gradient-to-r from-purple-800 to-purple-900 transition-all duration-300"
+                    style={{ width: `${status.progress}%` }}
+                  />
+                  
+                  {/* Loading content */}
+                  <div className="relative z-10 flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {status.progress < 20 ? 'Connecting...' : 
+                     status.progress < 50 ? 'Sending message...' :
+                     status.progress < 90 ? 'Processing...' : 'Almost done...'}
+                    <span className="ml-1 text-xs">({status.progress}%)</span>
+                  </div>
                 </>
               ) : (
                 <>
@@ -252,6 +329,18 @@ const ContactForm = () => {
                 </>
               )}
             </button>
+            
+            {/* Loading tip */}
+            {status.submitting && (
+              <motion.p 
+                className="text-xs text-gray-400 mt-2 text-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 3 }}
+              >
+                💡 Tip: The server might be waking up from sleep mode, which can take 15-30 seconds
+              </motion.p>
+            )}
           </div>
         </form>
       </div>

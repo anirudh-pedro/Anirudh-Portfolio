@@ -104,7 +104,7 @@ const SkillsArsenal = () => {
               className="flex flex-wrap gap-2"
               variants={containerVariants}
             >
-              {category.skills.map((skill, index) => (
+              {category.skills.map((skill) => (
                 <motion.span
                   key={skill}
                   variants={skillVariants}

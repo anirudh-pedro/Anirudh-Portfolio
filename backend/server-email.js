@@ -56,6 +56,16 @@ app.get('/api/health', (req, res) => {
 });
 
 app.post('/api/contact', async (req, res) => {
+    // Set a timeout for the entire operation
+    const timeout = setTimeout(() => {
+        if (!res.headersSent) {
+            res.status(408).json({
+                success: false,
+                message: 'Request timeout. Please try again.'
+            });
+        }
+    }, 25000); // 25 second timeout
+
     try {
         const { name, email, subject, message } = req.body;
 
@@ -114,6 +124,9 @@ app.post('/api/contact', async (req, res) => {
         await transporter.sendMail(notificationMailOptions);
         console.log('📧 Notification email sent to:', process.env.RECIPIENT_EMAIL);
 
+        // Clear timeout and send response
+        clearTimeout(timeout);
+
         // Log the contact attempt
         console.log('📝 New contact form submission:', {
             name,
@@ -122,17 +135,23 @@ app.post('/api/contact', async (req, res) => {
             timestamp: new Date().toISOString()
         });
 
-        res.status(200).json({
-            success: true,
-            message: 'Message sent successfully! Thank you for reaching out.'
-        });
+        if (!res.headersSent) {
+            res.status(200).json({
+                success: true,
+                message: 'Message sent successfully! Thank you for reaching out.'
+            });
+        }
 
     } catch (error) {
+        clearTimeout(timeout);
         console.error('❌ Error sending email:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Something went wrong. Please try again later or contact me directly.'
-        });
+        
+        if (!res.headersSent) {
+            res.status(500).json({
+                success: false,
+                message: 'Something went wrong. Please try again later or contact me directly.'
+            });
+        }
     }
 });
 

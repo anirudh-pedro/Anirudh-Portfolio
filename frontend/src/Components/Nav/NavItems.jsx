@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
-const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
+const NavItems = ({ isMobile = false, closeMenu }) => {
   // Add local state to manage active section
   const [currentSection, setCurrentSection] = useState('home'); 
   const initialLoadRef = useRef(true);
   
-  // Navigation links data
-  const navLinks = [
+  // Navigation links data - wrapped in useMemo to prevent re-creation on every render
+  const navLinks = useMemo(() => [
     { name: 'Home', href: '#home', icon: 'home' },
     { name: 'About', href: '#about', icon: 'user' },
     { name: 'Projects', href: '#projects', icon: 'code' },
     { name: 'Skills', href: '#skills', icon: 'chip' },
     { name: 'Contact', href: '#contact', icon: 'mail' }
-  ];
+  ], []);
   // Force home selection on initial page load
   useEffect(() => {
     if (initialLoadRef.current) {
@@ -82,7 +82,7 @@ const NavItems = ({ activeSection = 'home', isMobile = false, closeMenu }) => {
       window.removeEventListener('scroll', throttledScrollHandler);
       if (throttleTimeout) clearTimeout(throttleTimeout);
     };
-  }, [currentSection]);
+  }, [currentSection, navLinks]);
 
 
   // Animation variants
