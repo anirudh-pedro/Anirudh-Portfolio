@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
     origin: [
         'http://localhost:5173', // Local development
+        'http://localhost:5174', // Local development (alternate port)
         'https://anirudh-portfolio-one.vercel.app', // Production frontend
         process.env.FRONTEND_URL // Additional flexibility
     ].filter(Boolean), // Remove any undefined values

@@ -1,91 +1,75 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
+// Define nav links outside component to prevent recreating on every render
+const NAV_LINKS = [
+  { name: 'Home', id: 'home' },
+  { name: 'About', id: 'about' },
+  { name: 'Projects', id: 'projects' },
+  { name: 'Skills', id: 'skills' },
+  { name: 'Contact', id: 'contact' }
+];
+
 const NavItems = ({ isMobile = false, closeMenu }) => {
-  const [currentSection, setCurrentSection] = useState('home');
-  const currentSectionRef = useRef('home');
+  const [activeSection, setActiveSection] = useState('home');
 
-  const navLinks = useMemo(() => [
-    { name: 'Home', href: '#home', icon: 'home' },
-    { name: 'About', href: '#about', icon: 'user' },
-    { name: 'Projects', href: '#projects', icon: 'code' },
-    { name: 'Skills', href: '#skills', icon: 'chip' },
-    { name: 'Contact', href: '#contact', icon: 'mail' }
-  ], []);
-
+  // Detect which section is currently visible
   useEffect(() => {
-    const initialHash = window.location.hash.replace('#', '');
-    if (initialHash) {
-      currentSectionRef.current = initialHash;
-      setCurrentSection(initialHash);
-    }
-  }, []);
+    const handleScroll = () => {
+      const sections = NAV_LINKS.map(link => document.getElementById(link.id)).filter(Boolean);
+      const scrollPosition = window.scrollY + 100; // Offset for navbar
 
-  useEffect(() => {
-    const sections = navLinks
-      .map((link) => document.getElementById(link.href.slice(1)))
-      .filter(Boolean);
-
-    if (!sections.length) {
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
-
-        if (!visibleEntries.length) {
-          return;
-        }
-
-        const targetLine = (window.innerHeight || document.documentElement.clientHeight) * 0.3;
-        const sortedEntries = [...visibleEntries].sort(
-          (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
-        );
-
-        let bestEntry = sortedEntries[0];
-        sortedEntries.forEach((entry) => {
-          if (entry.boundingClientRect.top <= targetLine) {
-            bestEntry = entry;
+      // Find the section that's currently in view
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section.offsetTop <= scrollPosition) {
+          const newSection = section.id;
+          if (newSection !== activeSection) {
+            setActiveSection(newSection);
+            window.history.replaceState(null, '', `#${newSection}`);
           }
-        });
-
-        const sectionId = bestEntry.target.id;
-        if (currentSectionRef.current === sectionId) {
-          return;
+          break;
         }
-
-        currentSectionRef.current = sectionId;
-        setCurrentSection(sectionId);
-
-        if (window.location.hash !== `#${sectionId}`) {
-          window.history.replaceState(null, '', `#${sectionId}`);
-        }
-      },
-      {
-        root: null,
-        rootMargin: '-45% 0px -45% 0px',
-        threshold: [0.1, 0.25, 0.5]
-      }
-    );
-
-    sections.forEach((element) => observer.observe(element));
-
-    return () => observer.disconnect();
-  }, [navLinks]);
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && hash !== currentSectionRef.current) {
-        currentSectionRef.current = hash;
-        setCurrentSection(hash);
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+    // Initial check
+    const hash = window.location.hash.replace('#', '');
+    if (hash && NAV_LINKS.find(link => link.id === hash)) {
+      setActiveSection(hash);
+    } else {
+      handleScroll();
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeSection]);
+
+  // Handle navigation click
+  const handleClick = useCallback((e, sectionId) => {
+    e.preventDefault();
+    
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    // Update active section immediately
+    setActiveSection(sectionId);
+    window.history.replaceState(null, '', `#${sectionId}`);
+
+    // Smooth scroll to section
+    const navbarHeight = 80;
+    const targetPosition = section.offsetTop - navbarHeight;
+    
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    });
+
+    // Close mobile menu if open
+    if (closeMenu) {
+      setTimeout(() => closeMenu(), 300);
+    }
+  }, [closeMenu]);
 
   // Animation variants
   const containerVariants = {
@@ -94,7 +78,7 @@ const NavItems = ({ isMobile = false, closeMenu }) => {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.2
+        delayChildren: 0.1
       }
     }
   };
@@ -104,64 +88,8 @@ const NavItems = ({ isMobile = false, closeMenu }) => {
     visible: { opacity: 1, y: 0 }
   };
 
-  // Helper function to render the appropriate icon
-  const renderIcon = (iconName) => {
-    switch (iconName) {
-      case 'home':
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-          </svg>
-        );
-      case 'user':
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        );
-      case 'code':
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-          </svg>
-        );
-      case 'chip':
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-          </svg>
-        );
-      case 'mail':
-        return (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-        );
-      default:
-        return null;
-    }
-  };
 
-  // Smooth scroll navigation handler
-  const handleNavClick = useCallback((event, href) => {
-    event.preventDefault();
-    const sectionId = href.substring(1);
-    const targetElement = document.getElementById(sectionId);
-
-    if (!targetElement) return;
-
-    setCurrentSection(sectionId);
-    window.history.replaceState(null, '', href);
-
-    const yOffset = -64; // offset nav height for alignment
-    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
-    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-
-    if (closeMenu) closeMenu();
-  }, [closeMenu]);
-
-
-  // Mobile menu styling
+  // Mobile Navigation
   if (isMobile) {
     return (
       <motion.nav
@@ -170,20 +98,18 @@ const NavItems = ({ isMobile = false, closeMenu }) => {
         animate="visible"
         variants={containerVariants}
       >
-        <ul className="flex flex-col items-center space-y-6">
-          {navLinks.map((link, index) => (
-            <motion.li key={link.name} variants={itemVariants} custom={index}>
+        <ul className="flex flex-col items-center space-y-6 py-8">
+          {NAV_LINKS.map((link) => (
+            <motion.li key={link.id} variants={itemVariants}>
               <a
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                aria-current={currentSection === link.href.substring(1) ? 'page' : undefined}
-                className={`flex items-center text-2xl font-medium py-2 px-4 rounded-full 
-                  ${currentSection === link.href.substring(1) 
-                    ? 'text-white bg-gradient-to-r from-blue-500/40 to-purple-600/40 backdrop-blur-sm border border-white/10 shadow-lg shadow-purple-500/20' 
-                    : 'text-gray-300 hover:text-white'
-                  } transition-all duration-300`}
+                href={`#${link.id}`}
+                onClick={(e) => handleClick(e, link.id)}
+                className={`text-2xl font-semibold py-3 px-8 rounded-full transition-all duration-300
+                  ${activeSection === link.id
+                    ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg shadow-purple-500/50'
+                    : 'text-gray-300 hover:text-white hover:bg-white/10'
+                  }`}
               >
-                <span className="mr-3">{renderIcon(link.icon)}</span>
                 {link.name}
               </a>
             </motion.li>
@@ -193,7 +119,7 @@ const NavItems = ({ isMobile = false, closeMenu }) => {
     );
   }
 
-  // Desktop menu styling with glassmorphism effect
+  // Desktop Navigation
   return (
     <motion.nav
       className="hidden md:block"
@@ -201,60 +127,40 @@ const NavItems = ({ isMobile = false, closeMenu }) => {
       animate="visible"
       variants={containerVariants}
     >
-      <motion.div
-        className="relative px-4 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-lg shadow-purple-500/10"
-        whileHover={{ boxShadow: "0 8px 32px rgba(148, 85, 255, 0.15)" }}
-      >
-        <ul className="flex items-center space-x-1">
-          {navLinks.map((link) => (
-            <motion.li key={link.name} variants={itemVariants}>
-              <motion.a
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                aria-current={currentSection === link.href.substring(1) ? 'page' : undefined}
-                className={`relative flex items-center px-4 py-2 rounded-full text-sm font-medium group transition-all duration-300
-                  ${currentSection === link.href.substring(1)
-                    ? 'text-white bg-gradient-to-r from-blue-500/50 to-purple-600/50 backdrop-blur-md'
-                    : 'text-white/80 hover:text-white'
+      <div className="px-2 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-lg">
+        <ul className="flex items-center space-x-2">
+          {NAV_LINKS.map((link) => (
+            <motion.li key={link.id} variants={itemVariants}>
+              <a
+                href={`#${link.id}`}
+                onClick={(e) => handleClick(e, link.id)}
+                className={`relative block px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300
+                  ${activeSection === link.id
+                    ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-md'
+                    : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
-                whileHover={currentSection !== link.href.substring(1) ? {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  transition: { duration: 0.2 }
-                } : {}}
-                whileTap={{ scale: 0.97 }}
               >
-                <span className="flex items-center">
-                  <span className={`mr-2 transition-transform duration-300 ${currentSection === link.href.substring(1) ? 'scale-110' : 'group-hover:scale-110'}`}>
-                    {renderIcon(link.icon)}
-                  </span>
-                  {link.name}
-                </span>
+                {link.name}
                 
-                {/* Subtle glow effect for active item */}
-                {currentSection === link.href.substring(1) && (
+                {/* Active indicator glow */}
+                {activeSection === link.id && (
                   <motion.span
-                    className="absolute inset-0 rounded-full bg-white/5"
-                    initial={{ opacity: 0 }}
-                    animate={{ 
-                      opacity: [0.1, 0.2, 0.1], 
-                      boxShadow: [
-                        "0 0 5px rgba(156, 39, 176, 0.3)", 
-                        "0 0 15px rgba(156, 39, 176, 0.5)", 
-                        "0 0 5px rgba(156, 39, 176, 0.3)"
-                      ] 
+                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-600/20 blur-sm"
+                    animate={{
+                      opacity: [0.5, 1, 0.5],
                     }}
-                    transition={{ 
-                      duration: 2, 
+                    transition={{
+                      duration: 2,
                       repeat: Infinity,
-                      repeatType: "reverse" 
+                      ease: "easeInOut"
                     }}
                   />
                 )}
-              </motion.a>
+              </a>
             </motion.li>
           ))}
         </ul>
-      </motion.div>
+      </div>
     </motion.nav>
   );
 };
