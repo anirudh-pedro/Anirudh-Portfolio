@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 const NavItems = ({ isMobile = false, closeMenu }) => {
-  // Add local state to manage active section
-  const [currentSection, setCurrentSection] = useState('home'); 
-  const initialLoadRef = useRef(true);
-  
-  // Navigation links data - wrapped in useMemo to prevent re-creation on every render
+  const [currentSection, setCurrentSection] = useState('home');
+  const currentSectionRef = useRef('home');
+
   const navLinks = useMemo(() => [
     { name: 'Home', href: '#home', icon: 'home' },
     { name: 'About', href: '#about', icon: 'user' },
@@ -14,76 +12,80 @@ const NavItems = ({ isMobile = false, closeMenu }) => {
     { name: 'Skills', href: '#skills', icon: 'chip' },
     { name: 'Contact', href: '#contact', icon: 'mail' }
   ], []);
-  // Force home selection on initial page load
+
   useEffect(() => {
-    if (initialLoadRef.current) {
-      // Force home as active on first render
-      setCurrentSection('home');
-      
-      // Scroll to top if no hash in URL
-      if (!window.location.hash) {
-        window.scrollTo(0, 0);
-      }
-      
-      initialLoadRef.current = false;
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash) {
+      currentSectionRef.current = initialHash;
+      setCurrentSection(initialHash);
     }
   }, []);
-  
-  // Listen for scroll events to update active section
-  useEffect(() => {
-    const handleScroll = () => {
-      // Get all section elements
-      const sections = navLinks.map(link => {
-        const id = link.href.substring(1);
-        const element = document.getElementById(id);
-        return { id, element };
-      }).filter(item => item.element);
-      
-      // Get current scroll position with a small offset
-      const scrollPosition = window.scrollY + 100;
-      
-      // Find which section is currently in view
-      for (const { id, element } of sections) {
-        const offsetTop = element.offsetTop;
-        const height = element.offsetHeight;
-        
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
-          if (currentSection !== id) {
-            setCurrentSection(id);
-          }
-          break;
-        }
-      }
-      
-      // If we're at the very top of the page, always set home as active
-      if (window.scrollY < 50) {
-        setCurrentSection('home');
-      }
-    };
-    
-    // Throttled scroll handler for better performance
-    let throttleTimeout;
-    const throttledScrollHandler = () => {
-      if (!throttleTimeout) {
-        throttleTimeout = setTimeout(() => {
-          handleScroll();
-          throttleTimeout = null;
-        }, 100);
-      }
-    };
-    
-    // Add scroll event listener
-    window.addEventListener('scroll', throttledScrollHandler);
-    
-    // Run once on mount to set initial active state
-    handleScroll();
-    
-    return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
-      if (throttleTimeout) clearTimeout(throttleTimeout);
-    };
-  }, [currentSection, navLinks]);
 
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.getElementById(link.href.slice(1)))
+      .filter(Boolean);
+
+    if (!sections.length) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+
+        if (!visibleEntries.length) {
+          return;
+        }
+
+        const targetLine = (window.innerHeight || document.documentElement.clientHeight) * 0.3;
+        const sortedEntries = [...visibleEntries].sort(
+          (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+        );
+
+        let bestEntry = sortedEntries[0];
+        sortedEntries.forEach((entry) => {
+          if (entry.boundingClientRect.top <= targetLine) {
+            bestEntry = entry;
+          }
+        });
+
+        const sectionId = bestEntry.target.id;
+        if (currentSectionRef.current === sectionId) {
+          return;
+        }
+
+        currentSectionRef.current = sectionId;
+        setCurrentSection(sectionId);
+
+        if (window.location.hash !== `#${sectionId}`) {
+          window.history.replaceState(null, '', `#${sectionId}`);
+        }
+      },
+      {
+        root: null,
+        rootMargin: '-45% 0px -45% 0px',
+        threshold: [0.1, 0.25, 0.5]
+      }
+    );
+
+    sections.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, [navLinks]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && hash !== currentSectionRef.current) {
+        currentSectionRef.current = hash;
+        setCurrentSection(hash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   // Animation variants
   const containerVariants = {
@@ -140,30 +142,23 @@ const NavItems = ({ isMobile = false, closeMenu }) => {
     }
   };
 
-  // Enhanced navigation click handler
-const handleNavClick = (e, href) => {
-  e.preventDefault();
-  const sectionId = href.substring(1);
+  // Smooth scroll navigation handler
+  const handleNavClick = useCallback((event, href) => {
+    event.preventDefault();
+    const sectionId = href.substring(1);
+    const targetElement = document.getElementById(sectionId);
 
-  // Update current section state
-  setCurrentSection(sectionId);
+    if (!targetElement) return;
 
-  // Delay scroll to ensure layout is complete
-  setTimeout(() => {
-    const targetElement = document.querySelector(href);
-    if (targetElement) {
-      const yOffset = -60; // adjust based on navbar height
-      const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+    setCurrentSection(sectionId);
+    window.history.replaceState(null, '', href);
 
-      // Update URL without reload
-      window.history.pushState(null, '', href);
+    const yOffset = -64; // offset nav height for alignment
+    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
 
-      // Close mobile menu
-      if (closeMenu) closeMenu();
-    }
-  }, 100); // delay of 100ms ensures section is rendered
-};
+    if (closeMenu) closeMenu();
+  }, [closeMenu]);
 
 
   // Mobile menu styling
@@ -181,6 +176,7 @@ const handleNavClick = (e, href) => {
               <a
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
+                aria-current={currentSection === link.href.substring(1) ? 'page' : undefined}
                 className={`flex items-center text-2xl font-medium py-2 px-4 rounded-full 
                   ${currentSection === link.href.substring(1) 
                     ? 'text-white bg-gradient-to-r from-blue-500/40 to-purple-600/40 backdrop-blur-sm border border-white/10 shadow-lg shadow-purple-500/20' 
@@ -215,6 +211,7 @@ const handleNavClick = (e, href) => {
               <motion.a
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
+                aria-current={currentSection === link.href.substring(1) ? 'page' : undefined}
                 className={`relative flex items-center px-4 py-2 rounded-full text-sm font-medium group transition-all duration-300
                   ${currentSection === link.href.substring(1)
                     ? 'text-white bg-gradient-to-r from-blue-500/50 to-purple-600/50 backdrop-blur-md'
