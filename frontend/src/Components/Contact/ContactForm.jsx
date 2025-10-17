@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import ResumeViewer from '../About/ResumeViewer';
 import { API_CONFIG } from '../../config/api';
@@ -18,6 +18,12 @@ const ContactForm = () => {
     submitting: false,
     progress: 0,
     info: { error: false, msg: null }
+  });
+
+  // Server status state
+  const [serverStatus, setServerStatus] = useState({
+    isAwake: false,
+    isChecking: true
   });
 
   // Error state for validation
@@ -87,9 +93,9 @@ const ContactForm = () => {
       });
     }, 1000);
     
-    // Create a timeout promise
+    // Create a timeout promise - increased to 60 seconds for email delivery
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Request timed out')), 30000) // 30 second timeout
+      setTimeout(() => reject(new Error('Request timed out')), 60000) // 60 second timeout
     );
     
     try {
@@ -104,8 +110,8 @@ const ContactForm = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData),
-          // Add signal for better abort handling
-          signal: AbortSignal.timeout(25000) // 25 second timeout
+          // Add signal for better abort handling - increased to 55 seconds
+          signal: AbortSignal.timeout(55000) // 55 second timeout
         }),
         timeoutPromise
       ]);
@@ -118,6 +124,9 @@ const ContactForm = () => {
       setStatus(prev => ({ ...prev, progress: 100 }));
       
       if (response.ok && result.success) {
+        // Server is definitely awake now
+        setServerStatus({ isAwake: true, isChecking: false });
+        
         // Reset form on success
         setFormData({ name: '', email: '', subject: '', message: '' });
         setStatus({
@@ -170,27 +179,94 @@ const ContactForm = () => {
     }
   };
 
-  // Function to wake up the server (call this on component mount)
-  const wakeUpServer = async () => {
+  // Function to wake up the server and check its status
+  const wakeUpServer = useCallback(async () => {
+    setServerStatus({ isAwake: false, isChecking: true });
+    
     try {
-      fetch(API_CONFIG.HEALTH_URL, { 
+      const startTime = Date.now();
+      const response = await fetch(API_CONFIG.HEALTH_URL, { 
         method: 'GET',
-        cache: 'no-cache'
-      }).catch(() => {
-        // Silently fail - this is just to wake up the server
+        cache: 'no-cache',
+        signal: AbortSignal.timeout(60000) // 60 second timeout
       });
-    } catch {
-      // Silently fail - this is just to wake up the server
+      
+      const responseTime = Date.now() - startTime;
+      
+      if (response.ok) {
+        setServerStatus({ 
+          isAwake: true, 
+          isChecking: false 
+        });
+        
+        if (import.meta.env.MODE === 'development') {
+          console.log(`Server is awake! Response time: ${responseTime}ms`);
+        }
+      }
+    } catch (error) {
+      setServerStatus({ 
+        isAwake: false, 
+        isChecking: false 
+      });
+      
+      if (import.meta.env.MODE === 'development') {
+        console.log('Server wake-up attempt (may be sleeping):', error.message);
+      }
     }
-  };
-
-  // Wake up server when component mounts
-  React.useEffect(() => {
-    wakeUpServer();
   }, []);
+
+  // Periodic server wake-up to keep it alive longer
+  useEffect(() => {
+    // Initial wake-up
+    wakeUpServer();
+    
+    // Wake up every 10 minutes to keep server alive
+    const intervalId = setInterval(() => {
+      wakeUpServer();
+    }, 10 * 60 * 1000); // 10 minutes
+    
+    return () => clearInterval(intervalId);
+  }, [wakeUpServer]);
 
   return (
     <div className="space-y-8">
+      {/* Server Status Indicator */}
+      {serverStatus.isChecking && (
+        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
+          <div className="flex items-center text-yellow-300 text-sm">
+            <svg className="animate-spin w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Waking up server... (This may take 30-50 seconds on first visit)
+          </div>
+        </div>
+      )}
+      
+      {!serverStatus.isChecking && !serverStatus.isAwake && (
+        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+          <div className="flex items-start text-red-300 text-sm">
+            <svg className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div>
+              Server is sleeping. Click <button onClick={wakeUpServer} className="underline font-semibold hover:text-red-200">here to wake it up</button>, or fill the form and submit (may take 30-50 seconds).
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {serverStatus.isAwake && !serverStatus.isChecking && (
+        <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
+          <div className="flex items-center text-green-300 text-sm">
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            Server is ready! Your message will be sent instantly.
+          </div>
+        </div>
+      )}
+      
       {/* Contact Form Section */}
       <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/25 p-6 sm:p-8 shadow-xl shadow-black/50">
         <h3 className="text-xl font-bold mb-6 text-white flex items-center">
@@ -314,7 +390,7 @@ const ContactForm = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    {status.progress < 20 ? 'Connecting...' : 
+                    {status.progress < 20 ? (serverStatus.isAwake ? 'Connecting...' : 'Waking server...') : 
                      status.progress < 50 ? 'Sending message...' :
                      status.progress < 90 ? 'Processing...' : 'Almost done...'}
                     <span className="ml-1 text-xs">({status.progress}%)</span>

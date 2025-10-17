@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
     origin: [
         'http://localhost:5173', // Local development
-        'http://localhost:5174', // Local development (alternate port)
         'https://anirudh-portfolio-one.vercel.app', // Production frontend
         process.env.FRONTEND_URL // Additional flexibility
     ].filter(Boolean), // Remove any undefined values
@@ -25,7 +24,16 @@ const createTransporter = () => {
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
-        }
+        },
+        // Add connection pooling and timeout settings
+        pool: true,
+        maxConnections: 1,
+        maxMessages: 3,
+        rateDelta: 1000,
+        rateLimit: 3,
+        connectionTimeout: 30000, // 30 seconds
+        greetingTimeout: 30000,
+        socketTimeout: 45000 // 45 seconds
     });
 };
 
@@ -57,7 +65,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.post('/api/contact', async (req, res) => {
-    // Set a timeout for the entire operation
+    // Set a timeout for the entire operation - increased to 50 seconds
     const timeout = setTimeout(() => {
         if (!res.headersSent) {
             res.status(408).json({
@@ -65,7 +73,7 @@ app.post('/api/contact', async (req, res) => {
                 message: 'Request timeout. Please try again.'
             });
         }
-    }, 25000); // 25 second timeout
+    }, 50000); // 50 second timeout
 
     try {
         const { name, email, subject, message } = req.body;
