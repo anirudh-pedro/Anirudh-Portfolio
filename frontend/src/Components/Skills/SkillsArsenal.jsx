@@ -60,22 +60,6 @@ const SkillsArsenal = () => {
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <motion.div 
-        className="text-center mb-12"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          <span className="mr-3">🔧</span>
-          <span className="bg-gradient-to-r from-pink-400 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-            My Tech Arsenal
-          </span>
-        </h2>
-      </motion.div>
-
       {/* Skills Grid */}
       <motion.div 
         className="grid grid-cols-1 lg:grid-cols-2 gap-6"

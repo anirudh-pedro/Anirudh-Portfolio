@@ -19,7 +19,7 @@ const AboutHeader = () => {
       <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 text-transparent bg-clip-text">
         About Me
       </h2>
-      <div className="w-24 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 mx-auto rounded-full shadow-lg shadow-blue-500/50"></div>
+      <div className="w-24 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 mx-auto rounded-full shadow-lg shadow-purple-500/50"></div>
       <p className="text-base sm:text-lg text-gray-300 mt-6 max-w-3xl mx-auto leading-relaxed">
         A passionate developer crafting elegant solutions to complex problems.
         Let me share a bit more about my journey, experience, and what drives me.

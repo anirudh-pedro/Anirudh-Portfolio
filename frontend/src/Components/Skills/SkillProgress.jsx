@@ -6,7 +6,7 @@ const SkillProgress = ({ proficiency }) => {
   const getColor = (level) => {
     if (level >= 90) return 'from-green-400 to-emerald-500';
     if (level >= 80) return 'from-blue-400 to-indigo-500';
-    if (level >= 70) return 'from-purple-400 to-violet-500';
+    if (level >= 70) return 'from-purple-400 to-purple-500';
     if (level >= 60) return 'from-amber-400 to-orange-500';
     return 'from-red-400 to-rose-500';
   };
