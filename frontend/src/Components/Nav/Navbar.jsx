@@ -18,6 +18,33 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Detect active section based on scroll position
+  useEffect(() => {
+    const handleScrollSpy = () => {
+      const sections = ['home', 'about', 'projects', 'skills', 'contact'];
+      const scrollPosition = window.scrollY + 100; // offset for navbar
+
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollSpy);
+    // Run on mount to set initial active section
+    handleScrollSpy();
+    
+    return () => window.removeEventListener('scroll', handleScrollSpy);
+  }, []);
+
   // Listen for section changes
   useEffect(() => {
     const handleNavigationClick = (e) => {
@@ -84,7 +111,7 @@ const Navbar = () => {
             <Logo onLogoClick={handleLogoClick} />
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-1">
+            <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
               <NavItems 
                 activeSection={activeSection} 
                 setActiveSection={setActiveSection}

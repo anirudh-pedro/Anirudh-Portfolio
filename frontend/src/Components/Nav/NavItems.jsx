@@ -51,46 +51,34 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             <motion.button
               key={item.id}
               onClick={() => handleNavClick(item.id)}
-              className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                isActive
-                  ? 'text-white'
-                  : 'text-gray-300 hover:text-white'
-              }`}
+              className="relative px-5 py-2.5 rounded-lg text-sm font-medium group"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Background glow effect */}
-              {isActive && (
-                <motion.div
-                  layoutId="navbar-indicator"
-                  className="absolute inset-0 bg-white/20 rounded-lg backdrop-blur-sm border border-white/30"
-                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-              
-              {/* Hover effect */}
-              {!isActive && (
-                <motion.div
-                  className="absolute inset-0 bg-white/5 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300"
-                />
-              )}
+              {/* Background - unified hover state */}
+              <motion.div
+                className={`absolute inset-0 rounded-lg transition-all duration-300 ${
+                  isActive
+                    ? 'bg-gradient-to-r from-blue-400/30 via-purple-500/30 to-indigo-600/30 border border-blue-400/40 shadow-lg shadow-blue-500/20 backdrop-blur-sm'
+                    : 'bg-gradient-to-r from-blue-400/0 via-purple-500/0 to-indigo-600/0 border border-transparent group-hover:from-blue-400/10 group-hover:via-purple-500/10 group-hover:to-indigo-600/10 group-hover:border-blue-400/20'
+                }`}
+                layoutId={isActive ? "navbar-indicator" : undefined}
+                transition={isActive ? { type: 'spring', bounce: 0.2, duration: 0.6 } : { duration: 0.3 }}
+              />
 
-              {/* Text */}
-              <span className="relative z-10">
+              {/* Text with gradient - unified hover state */}
+              <span 
+                className={`relative z-10 transition-all duration-300 ${
+                  isActive 
+                    ? 'bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent font-semibold' 
+                    : 'text-gray-300 group-hover:text-white group-hover:font-medium'
+                }`}
+              >
                 {item.label}
               </span>
-
-              {/* Active indicator dot */}
-              {isActive && (
-                <motion.div
-                  className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"
-                  layoutId="active-dot"
-                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                />
-              )}
             </motion.button>
           );
         })}
@@ -124,19 +112,21 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             <div
               className={`absolute inset-0 rounded-xl transition-all duration-300 ${
                 isActive
-                  ? 'bg-white/20 border border-white/30 shadow-lg shadow-white/10'
-                  : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
+                  ? 'bg-gradient-to-r from-blue-400/30 via-purple-500/30 to-indigo-600/30 border border-blue-400/40 shadow-lg shadow-blue-500/20'
+                  : 'bg-white/5 border border-white/10 hover:bg-gradient-to-r hover:from-blue-400/10 hover:via-purple-500/10 hover:to-indigo-600/10 hover:border-blue-400/20'
               }`}
             />
 
             {/* Content */}
             <div className="relative z-10 flex items-center gap-4">
-              <span className="flex-1">{item.label}</span>
+              <span className={`flex-1 ${isActive ? 'bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent font-semibold' : ''}`}>
+                {item.label}
+              </span>
               
               {/* Arrow indicator */}
               <motion.svg
                 className={`w-5 h-5 transition-colors duration-300 ${
-                  isActive ? 'text-white' : 'text-gray-400'
+                  isActive ? 'text-blue-400' : 'text-gray-400'
                 }`}
                 fill="none"
                 stroke="currentColor"

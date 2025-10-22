@@ -59,7 +59,7 @@ const Logo = ({ onLogoClick }) => {
         aria-label="Go to home section"
       >
         <motion.span 
-          className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent"
+          className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent"
           whileHover={{
             backgroundPosition: ["0%", "100%"],
             transition: { duration: 1, repeat: Infinity, repeatType: "reverse" }
