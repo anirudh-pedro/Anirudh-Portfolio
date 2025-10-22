@@ -79,11 +79,12 @@ const AboutInterests = () => {
 
   return (
     <motion.div
-      className="bg-black/50 backdrop-blur-xl p-8 rounded-2xl border border-white/20 shadow-xl shadow-black/60"
+      className="bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-xl p-6 sm:p-8 rounded-2xl border border-blue-500/20 shadow-xl shadow-blue-500/10 hover:border-blue-400/30 transition-all duration-300"
       variants={containerVariants}
+      whileHover={{ y: -5, transition: { duration: 0.3 } }}
     >
-      <h3 className="text-2xl font-bold mb-6 text-white flex items-center">
-        <span className="mr-3 p-2 rounded-full bg-purple-500/20">
+      <h3 className="text-xl sm:text-2xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent flex items-center">
+        <span className="mr-3 p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20">
           <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -91,20 +92,19 @@ const AboutInterests = () => {
         Interests
       </h3>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4">
         {interests.map((interest, index) => (
           <motion.div 
             key={index}
-            className="flex flex-col items-center bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors"
+            className="flex flex-col items-center bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-xl p-3 sm:p-4 border border-blue-500/20 hover:border-blue-400/40 hover:from-blue-500/20 hover:to-purple-500/20 transition-all duration-300"
             variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -3 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="p-3 rounded-full bg-gradient-to-br from-purple-500/20 to-purple-600/20 mb-3 text-white">
+            <div className="p-2 sm:p-3 rounded-full bg-gradient-to-br from-blue-500/30 to-purple-600/30 mb-2 sm:mb-3 text-blue-300 shadow-lg shadow-blue-500/20">
               {interest.icon}
             </div>
-            <span className="text-gray-300 text-sm">{interest.name}</span>
-            
+            <span className="text-gray-200 text-xs sm:text-sm font-medium text-center">{interest.name}</span>
           </motion.div>
         ))}
       </div>

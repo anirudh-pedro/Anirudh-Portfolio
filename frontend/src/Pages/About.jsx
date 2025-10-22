@@ -5,7 +5,6 @@ import AboutBio from '../Components/About/AboutBio';
 import AboutEducation from '../Components/About/AboutEducation';
 import LeetCodeStats from '../Components/About/LeetCodeStats';
 import GitHubStats from '../Components/About/GitHubStats';
-import AboutInterests from '../Components/About/AboutInterests';
 import TechnicalExpertise from '../Components/About/TechnicalExpertise';
 import ResumeViewer from '../Components/About/ResumeViewer';
 
@@ -15,78 +14,69 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.5 } 
+      transition: { duration: 0.6, ease: "easeOut" } 
     }
   };
 
-
   return (
-    <section id="about" className="py-6 sm:py-8 md:py-12 overflow-hidden w-full">
+    <section id="about" className="min-h-screen py-12 sm:py-16 md:py-20 overflow-hidden">
       <motion.div 
-        className="container mx-auto px-2 sm:px-3 md:px-4 max-w-6xl"
+        className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"
         initial="hidden"
         whileInView="visible"
         variants={pageVariants}
-        viewport={{ once: true, amount: 0.01 }}
+        viewport={{ once: true, amount: 0.1 }}
       >
-        <div className="p-6 sm:p-8">
-          {/* Header with better mobile responsiveness */}
-          <motion.div variants={itemVariants} className="mb-2 sm:mb-3">
-            <AboutHeader />
-          </motion.div>
-        
-        <div className="flex flex-col gap-3 w-full">
-          <div className="flex flex-col lg:flex-row w-full gap-5">
-            <motion.div 
-              variants={itemVariants} 
-              className="w-full lg:w-2/3 flex flex-col gap-0"
-            >
-              <div className="w-full">
-                <AboutBio />
-              </div>
-              
-              <div className="w-full">
+        {/* Header */}
+        <motion.div variants={itemVariants} className="mb-12">
+          <AboutHeader />
+        </motion.div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          
+          {/* Left Column - Bio & Stats */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Bio Section */}
+            <motion.div variants={itemVariants}>
+              <AboutBio />
+            </motion.div>
+
+            {/* Coding Stats - Side by Side on Desktop */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <motion.div variants={itemVariants} className="flex flex-col gap-6">
                 <LeetCodeStats />
-              </div>
+                
+                {/* Resume Viewer below LeetCode */}
+                <ResumeViewer />
+              </motion.div>
               
-              <div className="w-full">
+              <motion.div variants={itemVariants}>
                 <GitHubStats />
-              </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Right Column - Skills & Info */}
+          <div className="space-y-6">
+            <motion.div variants={itemVariants}>
+              <TechnicalExpertise />
             </motion.div>
             
-            <motion.div 
-              variants={itemVariants} 
-              className="w-full lg:w-1/3 flex flex-col gap-5"
-            >
-              <div className="w-full">
-                <TechnicalExpertise />
-              </div>
-              
-              <div className="w-full">
-                <AboutEducation />
-              </div>
-              
-              <div className="w-full">
-                <AboutInterests />
-              </div>
+            <motion.div variants={itemVariants}>
+              <AboutEducation />
             </motion.div>
           </div>
-          
-          {/* Position Resume Viewer here, properly aligned with variants */}
-          <motion.div variants={itemVariants}>
-            <ResumeViewer />
-          </motion.div>
-        </div>
         </div>
       </motion.div>
     </section>
