@@ -20,27 +20,60 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const createTransporter = () => {
     return nodemailer.createTransport({
-        service: 'gmail',
+        pool: true,
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
         auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
         },
-        // Add connection pooling and timeout settings
-        pool: true,
         maxConnections: 1,
-        maxMessages: 3,
-        rateDelta: 1000,
-        rateLimit: 3,
-        connectionTimeout: 30000, // 30 seconds
-        greetingTimeout: 30000,
-        socketTimeout: 45000 // 45 seconds
+        maxMessages: Infinity,
+        rateDelta: 2000,
+        rateLimit: 1,
+        connectionTimeout: 20000,
+        socketTimeout: 60000,
+        tls: {
+            rejectUnauthorized: false
+        }
     });
+};
+
+let transporter;
+let transporterReady = false;
+let lastVerifyTimestamp = 0;
+const VERIFY_TTL = 10 * 60 * 1000; // re-verify every 10 minutes to keep connection warm
+
+const ensureTransporter = async () => {
+    if (!transporter) {
+        transporter = createTransporter();
+        transporterReady = false;
+    }
+
+    const needsVerify = !transporterReady || (Date.now() - lastVerifyTimestamp) > VERIFY_TTL;
+
+    if (needsVerify) {
+        try {
+            await transporter.verify();
+            transporterReady = true;
+            lastVerifyTimestamp = Date.now();
+            console.log('✅ SMTP transporter ready');
+        } catch (error) {
+            console.error('❌ SMTP verification failed:', error.message);
+            transporterReady = false;
+            // recreate transporter to avoid stale sockets
+            transporter = createTransporter();
+            throw error;
+        }
+    }
+
+    return transporter;
 };
 
 const testEmailConfig = async () => {
     try {
-        const transporter = createTransporter();
-        await transporter.verify();
+        await ensureTransporter();
         console.log('✅ Email service is ready');
     } catch (error) {
         console.log('❌ Email configuration error:', error.message);
@@ -56,16 +89,25 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/api/health', (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: 'Server is running',
+app.get('/api/health', async (req, res) => {
+    let smtpReady = false;
+    try {
+        await ensureTransporter();
+        smtpReady = true;
+    } catch (error) {
+        console.warn('⚠️ Health check could not verify SMTP:', error.message);
+    }
+
+    res.status(smtpReady ? 200 : 503).json({
+        success: smtpReady,
+        message: smtpReady ? 'Server and SMTP are ready' : 'Server up, SMTP warming up',
+        smtpReady,
         timestamp: new Date().toISOString()
     });
 });
 
 app.post('/api/contact', async (req, res) => {
-    // Set a timeout for the entire operation - increased to 50 seconds
+    // Set a timeout for the entire operation
     const timeout = setTimeout(() => {
         if (!res.headersSent) {
             res.status(408).json({
@@ -73,7 +115,7 @@ app.post('/api/contact', async (req, res) => {
                 message: 'Request timeout. Please try again.'
             });
         }
-    }, 50000); // 50 second timeout
+    }, 60000); // 60 second timeout to allow cold starts
 
     try {
         const { name, email, subject, message } = req.body;
@@ -95,7 +137,7 @@ app.post('/api/contact', async (req, res) => {
             });
         }
 
-        const transporter = createTransporter();
+    const transporter = await ensureTransporter();
 
         // Email content to you (notification)
         const notificationMailOptions = {
@@ -129,8 +171,21 @@ app.post('/api/contact', async (req, res) => {
             `
         };
 
+        const sendEmailWithRetry = async () => {
+            try {
+                await transporter.sendMail(notificationMailOptions);
+            } catch (error) {
+                // If the transporter connection died, rebuild and retry once
+                transporterReady = false;
+                lastVerifyTimestamp = 0;
+                console.warn('⚠️ SMTP send failed, retrying with fresh transporter:', error.message);
+                const freshTransporter = await ensureTransporter();
+                await freshTransporter.sendMail(notificationMailOptions);
+            }
+        };
+
         // Send notification email to you
-        await transporter.sendMail(notificationMailOptions);
+        await sendEmailWithRetry();
         console.log('📧 Notification email sent to:', process.env.RECIPIENT_EMAIL);
 
         // Clear timeout and send response

@@ -20,10 +20,11 @@ const ContactForm = () => {
     info: { error: false, msg: null }
   });
 
-  // Server status state
   const [serverStatus, setServerStatus] = useState({
     isAwake: false,
-    isChecking: true
+    isChecking: true,
+    lastChecked: null,
+    responseTime: null
   });
 
   // Error state for validation
@@ -82,6 +83,9 @@ const ContactForm = () => {
     }
     
     setStatus(prevStatus => ({ ...prevStatus, submitting: true, progress: 0 }));
+    if (!serverStatus.isAwake) {
+      setServerStatus(prev => ({ ...prev, isChecking: true }));
+    }
     
     // Simulate progress updates for better UX
     const progressInterval = setInterval(() => {
@@ -93,7 +97,7 @@ const ContactForm = () => {
       });
     }, 1000);
     
-    // Create a timeout promise - increased to 60 seconds for email delivery
+    // Create a timeout promise aligned with backend cold start expectations
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error('Request timed out')), 60000) // 60 second timeout
     );
@@ -110,8 +114,8 @@ const ContactForm = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData),
-          // Add signal for better abort handling - increased to 55 seconds
-          signal: AbortSignal.timeout(55000) // 55 second timeout
+          // Add signal for better abort handling (slightly less than timeout)
+          signal: AbortSignal.timeout(55000)
         }),
         timeoutPromise
       ]);
@@ -124,9 +128,12 @@ const ContactForm = () => {
       setStatus(prev => ({ ...prev, progress: 100 }));
       
       if (response.ok && result.success) {
-        // Server is definitely awake now
-        setServerStatus({ isAwake: true, isChecking: false });
-        
+        setServerStatus(prev => ({
+          ...prev,
+          isAwake: true,
+          isChecking: false,
+          lastChecked: new Date()
+        }));
         // Reset form on success
         setFormData({ name: '', email: '', subject: '', message: '' });
         setStatus({
@@ -163,7 +170,9 @@ const ContactForm = () => {
       let errorMessage = 'Something went wrong. Please try again.';
       
       if (error.message === 'Request timed out' || error.name === 'TimeoutError') {
-        errorMessage = 'The server is taking longer than expected. This might be because it\'s waking up from sleep mode. Please try again in a moment.';
+        errorMessage = 'The server needed a little longer. It is now awake—please hit send once more and it should go through instantly.';
+        setServerStatus(prev => ({ ...prev, isAwake: false, isChecking: false }));
+        wakeUpServer();
       } else if (error.name === 'TypeError' || error.message.includes('fetch')) {
         errorMessage = 'Network connection error. Please check your internet connection and try again.';
       } else if (error.name === 'AbortError') {
@@ -179,58 +188,59 @@ const ContactForm = () => {
     }
   };
 
-  // Function to wake up the server and check its status
+  // Function to wake up the server (call this on component mount)
   const wakeUpServer = useCallback(async () => {
-    setServerStatus({ isAwake: false, isChecking: true });
-    
+    setServerStatus(prev => ({ ...prev, isChecking: true }));
+    const startedAt = performance.now();
+
     try {
-      const startTime = Date.now();
-      const response = await fetch(API_CONFIG.HEALTH_URL, { 
+      const response = await fetch(API_CONFIG.HEALTH_URL, {
         method: 'GET',
         cache: 'no-cache',
-        signal: AbortSignal.timeout(60000) // 60 second timeout
+        signal: AbortSignal.timeout(60000)
       });
-      
-      const responseTime = Date.now() - startTime;
-      
-      if (response.ok) {
-        setServerStatus({ 
-          isAwake: true, 
-          isChecking: false 
-        });
-        
-        if (import.meta.env.MODE === 'development') {
-          console.log(`Server is awake! Response time: ${responseTime}ms`);
-        }
+
+      const duration = Math.round(performance.now() - startedAt);
+      const data = await response.json().catch(() => ({}));
+
+      setServerStatus({
+        isAwake: Boolean(data?.smtpReady ?? response.ok),
+        isChecking: false,
+        lastChecked: new Date(),
+        responseTime: duration
+      });
+
+      if (import.meta.env.MODE === 'development') {
+        console.info(`Server health check: ${response.status} (${duration} ms)`);
       }
     } catch (error) {
-      setServerStatus({ 
-        isAwake: false, 
-        isChecking: false 
-      });
-      
+      setServerStatus(prev => ({
+        ...prev,
+        isAwake: false,
+        isChecking: false,
+        lastChecked: new Date()
+      }));
+
       if (import.meta.env.MODE === 'development') {
-        console.log('Server wake-up attempt (may be sleeping):', error.message);
+        console.warn('Server wake-up failed:', error.message);
       }
     }
   }, []);
 
-  // Periodic server wake-up to keep it alive longer
+  // Wake up server when component mounts & keep it warm
   useEffect(() => {
-    // Initial wake-up
     wakeUpServer();
-    
-    // Wake up every 10 minutes to keep server alive
+
     const intervalId = setInterval(() => {
       wakeUpServer();
-    }, 10 * 60 * 1000); // 10 minutes
-    
+    }, 10 * 60 * 1000); // Ping every 10 minutes while user is on the page
+
     return () => clearInterval(intervalId);
   }, [wakeUpServer]);
 
   return (
     <div className="space-y-8">
-      {/* Server Status Indicator */}
+      {/* Server status indicator */}
       {serverStatus.isChecking && (
         <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
           <div className="flex items-center text-yellow-300 text-sm">
@@ -238,11 +248,11 @@ const ContactForm = () => {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Waking up server... (This may take 30-50 seconds on first visit)
+            Warming up the mail server... (first load can take 20-40 seconds)
           </div>
         </div>
       )}
-      
+
       {!serverStatus.isChecking && !serverStatus.isAwake && (
         <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
           <div className="flex items-start text-red-300 text-sm">
@@ -250,23 +260,28 @@ const ContactForm = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <div>
-              Server is sleeping. Click <button onClick={wakeUpServer} className="underline font-semibold hover:text-red-200">here to wake it up</button>, or fill the form and submit (may take 30-50 seconds).
+              The server was asleep. Click
+              {' '}
+              <button type="button" onClick={wakeUpServer} className="underline font-semibold hover:text-red-100">
+                wake it up
+              </button>
+              {' '}and then submit—once awake it stays fast for the next few minutes.
             </div>
           </div>
         </div>
       )}
-      
+
       {serverStatus.isAwake && !serverStatus.isChecking && (
         <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
           <div className="flex items-center text-green-300 text-sm">
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            Server is ready! Your message will be sent instantly.
+            Server ready! Last response in {serverStatus.responseTime ?? '—'} ms.
           </div>
         </div>
       )}
-      
+
       {/* Contact Form Section */}
       <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/25 p-6 sm:p-8 shadow-xl shadow-black/50">
         <h3 className="text-xl font-bold mb-6 text-white flex items-center">
@@ -369,6 +384,11 @@ const ContactForm = () => {
             )}
           </div>
           
+          {/* Informational note about cold starts */}
+          <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs text-blue-200">
+            💡 Tip: On the free Render tier the mail server can nap after 15 minutes of inactivity. The first send wakes it up—after that, messages go out instantly.
+          </div>
+
           {/* Submit button */}
           <div>
             <button
@@ -414,7 +434,7 @@ const ContactForm = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3 }}
               >
-                💡 Tip: The server might be waking up from sleep mode, which can take 15-30 seconds
+                💡 Tip: Cold starts can take a short while—once you see success, future messages are instant.
               </motion.p>
             )}
           </div>

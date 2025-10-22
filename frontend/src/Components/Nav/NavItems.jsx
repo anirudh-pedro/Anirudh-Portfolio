@@ -1,167 +1,187 @@
-import { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
-// Define nav links outside component to prevent recreating on every render
-const NAV_LINKS = [
-  { name: 'Home', id: 'home' },
-  { name: 'About', id: 'about' },
-  { name: 'Projects', id: 'projects' },
-  { name: 'Skills', id: 'skills' },
-  { name: 'Contact', id: 'contact' }
-];
+const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) => {
+  const navItems = [
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'contact', label: 'Contact' },
+  ];
 
-const NavItems = ({ isMobile = false, closeMenu }) => {
-  const [activeSection, setActiveSection] = useState('home');
-
-  // Detect which section is currently visible
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = NAV_LINKS.map(link => document.getElementById(link.id)).filter(Boolean);
-      const scrollPosition = window.scrollY + 100; // Offset for navbar
-
-      // Find the section that's currently in view
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section.offsetTop <= scrollPosition) {
-          const newSection = section.id;
-          if (newSection !== activeSection) {
-            setActiveSection(newSection);
-            window.history.replaceState(null, '', `#${newSection}`);
-          }
-          break;
-        }
-      }
-    };
-
-    // Initial check
-    const hash = window.location.hash.replace('#', '');
-    if (hash && NAV_LINKS.find(link => link.id === hash)) {
-      setActiveSection(hash);
-    } else {
-      handleScroll();
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [activeSection]);
-
-  // Handle navigation click
-  const handleClick = useCallback((e, sectionId) => {
-    e.preventDefault();
-    
+  const handleNavClick = (sectionId) => {
     const section = document.getElementById(sectionId);
-    if (!section) return;
-
-    // Update active section immediately
-    setActiveSection(sectionId);
-    window.history.replaceState(null, '', `#${sectionId}`);
-
-    // Smooth scroll to section
-    const navbarHeight = 80;
-    const targetPosition = section.offsetTop - navbarHeight;
     
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
+    if (section) {
+      const navbarHeight = 80; // Approximate navbar height
+      const sectionTop = section.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: sectionTop,
+        behavior: 'smooth'
+      });
+    }
+
+    setActiveSection(sectionId);
+    
+    // Dispatch custom event for other components
+    const event = new CustomEvent('navigationClicked', {
+      detail: { sectionId }
     });
-
-    // Close mobile menu if open
-    if (closeMenu) {
-      setTimeout(() => closeMenu(), 300);
-    }
-  }, [closeMenu]);
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1
-      }
+    document.dispatchEvent(event);
+    
+    // Update URL
+    window.history.pushState(null, '', `#${sectionId}`);
+    
+    // Call mobile menu close callback
+    if (onItemClick) {
+      onItemClick();
     }
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: { opacity: 1, y: 0 }
-  };
-
-
-  // Mobile Navigation
-  if (isMobile) {
+  // Desktop variant
+  if (!isMobile) {
     return (
-      <motion.nav
-        className="w-full"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <ul className="flex flex-col items-center space-y-6 py-8">
-          {NAV_LINKS.map((link) => (
-            <motion.li key={link.id} variants={itemVariants}>
-              <a
-                href={`#${link.id}`}
-                onClick={(e) => handleClick(e, link.id)}
-                className={`text-2xl font-semibold py-3 px-8 rounded-full transition-all duration-300
-                  ${activeSection === link.id
-                    ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg shadow-purple-500/50'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-              >
-                {link.name}
-              </a>
-            </motion.li>
-          ))}
-        </ul>
-      </motion.nav>
+      <>
+        {navItems.map((item, index) => {
+          const isActive = activeSection === item.id;
+          
+          return (
+            <motion.button
+              key={item.id}
+              onClick={() => handleNavClick(item.id)}
+              className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                isActive
+                  ? 'text-white'
+                  : 'text-gray-300 hover:text-white'
+              }`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {/* Background glow effect */}
+              {isActive && (
+                <motion.div
+                  layoutId="navbar-indicator"
+                  className="absolute inset-0 bg-white/20 rounded-lg backdrop-blur-sm border border-white/30"
+                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              
+              {/* Hover effect */}
+              {!isActive && (
+                <motion.div
+                  className="absolute inset-0 bg-white/5 rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-300"
+                />
+              )}
+
+              {/* Text */}
+              <span className="relative z-10">
+                {item.label}
+              </span>
+
+              {/* Active indicator dot */}
+              {isActive && (
+                <motion.div
+                  className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"
+                  layoutId="active-dot"
+                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+            </motion.button>
+          );
+        })}
+      </>
     );
   }
 
-  // Desktop Navigation
+  // Mobile variant
   return (
-    <motion.nav
-      className="hidden md:block"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <div className="px-2 py-2 rounded-full bg-white/5 backdrop-blur-md border border-white/10 shadow-lg">
-        <ul className="flex items-center space-x-2">
-          {NAV_LINKS.map((link) => (
-            <motion.li key={link.id} variants={itemVariants}>
-              <a
-                href={`#${link.id}`}
-                onClick={(e) => handleClick(e, link.id)}
-                className={`relative block px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300
-                  ${activeSection === link.id
-                    ? 'text-white bg-gradient-to-r from-blue-500 to-purple-600 shadow-md'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
+    <>
+      {navItems.map((item, index) => {
+        const isActive = activeSection === item.id;
+        
+        return (
+          <motion.button
+            key={item.id}
+            onClick={() => handleNavClick(item.id)}
+            className={`relative w-full text-left px-6 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
+              isActive
+                ? 'text-white'
+                : 'text-gray-300'
+            }`}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+            transition={{ delay: index * 0.1, duration: 0.3 }}
+            whileHover={{ scale: 1.02, x: 5 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {/* Background */}
+            <div
+              className={`absolute inset-0 rounded-xl transition-all duration-300 ${
+                isActive
+                  ? 'bg-white/20 border border-white/30 shadow-lg shadow-white/10'
+                  : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
+              }`}
+            />
+
+            {/* Content */}
+            <div className="relative z-10 flex items-center gap-4">
+              <span className="flex-1">{item.label}</span>
+              
+              {/* Arrow indicator */}
+              <motion.svg
+                className={`w-5 h-5 transition-colors duration-300 ${
+                  isActive ? 'text-white' : 'text-gray-400'
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                animate={{ x: isActive ? 5 : 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
-                {link.name}
-                
-                {/* Active indicator glow */}
-                {activeSection === link.id && (
-                  <motion.span
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-600/20 blur-sm"
-                    animate={{
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                )}
-              </a>
-            </motion.li>
-          ))}
-        </ul>
-      </div>
-    </motion.nav>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </motion.svg>
+            </div>
+
+            {/* Shimmer effect on active */}
+            {isActive && (
+              <motion.div
+                className="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                initial={{ x: '-100%' }}
+                animate={{ x: '200%' }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 2,
+                  ease: 'linear',
+                }}
+              />
+            )}
+          </motion.button>
+        );
+      })}
+
+      {/* Decorative element at bottom */}
+      <motion.div
+        className="mt-8 pt-8 border-t border-white/10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <p className="text-center text-gray-400 text-sm">
+          Crafted with 🤍 by Anirudh
+        </p>
+      </motion.div>
+    </>
   );
 };
 

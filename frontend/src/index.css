@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Reduced padding to match navbar */
+}
+
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 12px;
