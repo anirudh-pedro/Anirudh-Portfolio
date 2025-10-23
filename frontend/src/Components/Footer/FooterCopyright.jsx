@@ -11,9 +11,9 @@ const FooterCopyright = () => {
       </div>
       
       <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-        <a href="#privacy" className="hover:text-blue-400 transition-colors text-xs">Privacy</a>
-        <a href="#terms" className="hover:text-blue-400 transition-colors text-xs">Terms</a>
-        <a href="#sitemap" className="hover:text-blue-400 transition-colors text-xs">Sitemap</a>
+        {/* <a href="#privacy" className="hover:text-blue-400 transition-colors text-xs">Privacy</a> */}
+        {/* <a href="#terms" className="hover:text-blue-400 transition-colors text-xs">Terms</a> */}
+        {/* <a href="#sitemap" className="hover:text-blue-400 transition-colors text-xs">Sitemap</a> */}
         <div className="text-xs">
           <span>Made with </span>
           <span className="text-red-400">❤</span>

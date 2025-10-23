@@ -110,18 +110,18 @@ const GitHubStats = () => {
           </div>
 
           {/* GitHub Activity Heatmap */}
-          <div className="w-full overflow-hidden rounded-xl shadow-lg border border-gray-700/30 bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-sm p-4 md:p-6">
+          <div className="w-full rounded-xl shadow-lg border border-gray-700/30 bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-sm p-4 md:p-6 overflow-hidden">
             <h4 className="text-base md:text-lg font-semibold text-gray-100 mb-3 flex items-center">
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
               Contribution Activity
             </h4>
-            <div className="transform transition-transform hover:scale-[1.01] duration-300">
+            <div className="w-full overflow-hidden rounded-lg">
               <img 
                 src={`https://github-readme-activity-graph.vercel.app/graph?username=${githubUsername}&theme=github-compact&bg_color=0d1117&color=ffffff&line=39d353&point=ffffff&area=true&hide_border=true&custom_title=GitHub%20Contribution%20Graph`}
                 alt={`${githubUsername}'s GitHub Contribution Graph`}
-                className="w-full h-auto rounded-lg"
+                className="w-full h-auto max-w-full"
                 loading="lazy"
               />
             </div>
