@@ -10,8 +10,8 @@ const SkillCategories = ({ categories, activeCategory, onCategoryChange }) => {
           onClick={() => onCategoryChange(category.id)}
           className={`px-4 py-2 rounded-full text-sm sm:text-base font-medium transition-all ${
             activeCategory === category.id
-              ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30'
-              : 'bg-black/20 backdrop-blur-sm border border-white/10 text-gray-300 hover:text-white hover:border-purple-500/30'
+              ? 'bg-violet-600 text-white shadow-lg shadow-violet-500/30'
+              : 'bg-black/20 backdrop-blur-sm border border-white/10 text-gray-200 hover:text-white hover:border-violet-500/30'
           }`}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}

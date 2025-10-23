@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Apply Raleway and Lora font family globally */
+* {
+  font-family: 'Raleway', 'Lora', sans-serif;
+}
+
 /* Smooth scrolling behavior */
 html {
   scroll-behavior: smooth;

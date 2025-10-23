@@ -5,7 +5,7 @@ const FooterLogo = () => {
     <div>
       <a href="#home" className="inline-block">
         <div className="flex items-center">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/20">
+          <div className="w-12 h-12 rounded-full bg-violet-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-violet-500/20">
             A
           </div>
           <div className="ml-3">

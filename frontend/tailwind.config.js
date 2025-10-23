@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Raleway', 'Lora', 'sans-serif'],
+      },
       keyframes: {
         blink: {
           '0%, 100%': { opacity: 1 },

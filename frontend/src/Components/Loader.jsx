@@ -92,7 +92,7 @@ const Loader = () => {
         transition={{ delay: 0.6 }}
       >
         <motion.div 
-          className="h-full bg-gradient-to-r from-blue-500 to-purple-600"
+          className="h-full bg-violet-500"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
           transition={{ 

@@ -59,12 +59,11 @@ const Logo = ({ onLogoClick }) => {
         aria-label="Go to home section"
       >
         <motion.span 
-          className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent"
+          className="text-lg sm:text-xl lg:text-2xl font-bold text-violet-400"
           whileHover={{
-            backgroundPosition: ["0%", "100%"],
-            transition: { duration: 1, repeat: Infinity, repeatType: "reverse" }
+            scale: 1.05,
+            transition: { duration: 0.3 }
           }}
-          style={{ backgroundSize: "200%" }}
         >
           Anirudh
         </motion.span>

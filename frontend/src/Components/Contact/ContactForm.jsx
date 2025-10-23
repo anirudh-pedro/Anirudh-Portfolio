@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import ResumeViewer from '../About/ResumeViewer';
 import { API_CONFIG } from '../../config/api';
 
 const ContactForm = () => {
@@ -439,11 +438,6 @@ const ContactForm = () => {
             )}
           </div>
         </form>
-      </div>
-
-      {/* Resume Viewer Section - Now outside the form */}
-      <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/25 p-2 sm:p-8 shadow-xl shadow-black/50">
-        <ResumeViewer />
       </div>
     </div>
   );

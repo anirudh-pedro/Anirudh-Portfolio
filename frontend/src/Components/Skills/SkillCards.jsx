@@ -380,7 +380,7 @@ const SkillCards = ({ activeCategory }) => {
             whileHover={{ y: -5 }}
           >
             <div className="flex items-start">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-600/20 flex items-center justify-center mr-4 p-2 overflow-hidden">
+              <div className="w-12 h-12 rounded-lg bg-violet-500/20 flex items-center justify-center mr-4 p-2 overflow-hidden">
                 {/* First attempt with original icon */}
                 <img 
                   src={imageErrors[skill.id] ? getFallbackIcon(skill.name) : skill.icon} 

@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 const SkillProgress = ({ proficiency }) => {
   // Define colors based on proficiency level
   const getColor = (level) => {
-    if (level >= 90) return 'from-green-400 to-emerald-500';
-    if (level >= 80) return 'from-blue-400 to-indigo-500';
-    if (level >= 70) return 'from-purple-400 to-purple-500';
-    if (level >= 60) return 'from-amber-400 to-orange-500';
-    return 'from-red-400 to-rose-500';
+    if (level >= 90) return 'bg-violet-500';
+    if (level >= 80) return 'bg-violet-500';
+    if (level >= 70) return 'bg-violet-500';
+    if (level >= 60) return 'bg-violet-500';
+    return 'bg-violet-500';
   };
 
   // Get label based on proficiency
@@ -28,7 +28,7 @@ const SkillProgress = ({ proficiency }) => {
       </div>
       <div className="h-1.5 w-full bg-gray-700/50 rounded-full overflow-hidden">
         <motion.div 
-          className={`h-full bg-gradient-to-r ${getColor(proficiency)}`}
+          className={`h-full ${getColor(proficiency)}`}
           initial={{ width: 0 }}
           animate={{ width: `${proficiency}%` }}
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}

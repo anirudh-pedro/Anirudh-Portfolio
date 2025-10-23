@@ -45,10 +45,10 @@ const NotFound = () => {
           variants={itemVariants}
           className="mb-8"
         >
-          <h1 className="text-8xl md:text-9xl font-bold mb-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+          <h1 className="text-8xl md:text-9xl font-bold mb-4 text-violet-400">
             404
           </h1>
-          <div className="w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full"></div>
+          <div className="w-32 h-1 bg-violet-500 mx-auto rounded-full"></div>
         </motion.div>
 
         {/* Error Message */}
@@ -72,10 +72,10 @@ const NotFound = () => {
         >
           <Link 
             to="/"
-            className="group px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full text-white font-medium hover:shadow-lg hover:shadow-purple-500/25 transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+            className="group px-8 py-3 bg-violet-600 hover:bg-violet-700 rounded-full text-white font-medium hover:shadow-lg hover:shadow-violet-500/25 transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
           >
             <span className="relative z-10">Return Home</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-violet-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
 
           <button 

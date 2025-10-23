@@ -111,16 +111,29 @@ const Footer = () => {
               </div>
               
               {/* Call to action with smooth scrolling */}
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col gap-3">
                 <a 
                   href="#contact"
                   onClick={(e) => handleSmoothScroll(e, "contact")}
-                  className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-colors duration-300 cursor-pointer"
+                  className="inline-flex items-center justify-center px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-colors duration-300 cursor-pointer"
                 >
                   <span>Get in touch</span>
                   <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
+                </a>
+                
+                {/* Resume Button */}
+                <a 
+                  href="/path-to-your-resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-4 py-2 bg-transparent border-2 border-violet-500 hover:bg-violet-500/20 text-violet-400 hover:text-white text-sm font-medium rounded-lg transition-all duration-300"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span>My Resume</span>
                 </a>
               </div>
             </motion.div>

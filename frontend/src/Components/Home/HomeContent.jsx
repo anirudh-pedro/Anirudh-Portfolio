@@ -45,7 +45,7 @@ const HomeContent = ({ scrollToSection }) => {
       variants={containerVariants}
     >
       <motion.h1 
-        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 whitespace-nowrap bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_1.2px_1.2px_rgba(255,255,255,0.3)]"
+        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 whitespace-nowrap text-violet-400 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255,0.3)]"
         variants={itemVariants}
         >
         Hi, I'm Anirudh T
@@ -59,7 +59,7 @@ const HomeContent = ({ scrollToSection }) => {
       </motion.div>
       
       <motion.p 
-        className="text-lg text-gray-300 mb-8 max-w-lg"
+        className="text-lg text-gray-200 mb-8 max-w-lg"
         variants={itemVariants}
       >
         I build full-stack web applications and solve real-world problems with code.
@@ -71,7 +71,7 @@ const HomeContent = ({ scrollToSection }) => {
       >
         <motion.button 
             onClick={() => scrollToSection('contact')}
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 bg-purple-600 hover:to-purple-700 rounded-full text-white font-medium transition-all duration-300 shadow-lg"
+            className="px-6 py-3 bg-violet-500 hover:bg-violet-600 rounded-full text-white font-medium transition-all duration-300 shadow-lg"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"

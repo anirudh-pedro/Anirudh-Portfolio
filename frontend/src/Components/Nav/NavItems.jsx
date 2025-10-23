@@ -73,8 +73,8 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
               <span 
                 className={`relative z-10 transition-all duration-300 ${
                   isActive 
-                    ? 'text-purple-400 font-semibold' 
-                    : 'text-gray-300 group-hover:text-white group-hover:font-medium'
+                    ? 'text-violet-400 font-semibold' 
+                    : 'text-gray-200 group-hover:text-white group-hover:font-medium'
                 }`}
               >
                 {item.label}
@@ -99,7 +99,7 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             className={`relative w-full text-left px-6 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
               isActive
                 ? 'text-white'
-                : 'text-gray-300'
+                : 'text-gray-200'
             }`}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -119,14 +119,14 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
 
             {/* Content */}
             <div className="relative z-10 flex items-center gap-4">
-              <span className={`flex-1 ${isActive ? 'text-purple-400 font-semibold' : ''}`}>
+              <span className={`flex-1 ${isActive ? 'text-violet-400 font-semibold' : ''}`}>
                 {item.label}
               </span>
               
               {/* Arrow indicator */}
               <motion.svg
                 className={`w-5 h-5 transition-colors duration-300 ${
-                  isActive ? 'text-purple-400' : 'text-gray-400'
+                  isActive ? 'text-violet-400' : 'text-gray-400'
                 }`}
                 fill="none"
                 stroke="currentColor"

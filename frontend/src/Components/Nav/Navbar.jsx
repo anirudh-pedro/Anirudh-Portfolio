@@ -130,7 +130,7 @@ const Navbar = () => {
             >
               <div className="w-5 h-4 flex flex-col justify-between">
                 <motion.span
-                  className="w-full h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full shadow-sm shadow-purple-400/50"
+                  className="w-full h-0.5 bg-violet-400 rounded-full shadow-sm shadow-violet-400/50"
                   animate={{
                     rotate: isMobileMenuOpen ? 45 : 0,
                     y: isMobileMenuOpen ? 7 : 0,
@@ -138,14 +138,14 @@ const Navbar = () => {
                   transition={{ duration: 0.3 }}
                 />
                 <motion.span
-                  className="w-full h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full shadow-sm shadow-purple-400/50"
+                  className="w-full h-0.5 bg-violet-400 rounded-full shadow-sm shadow-violet-400/50"
                   animate={{
                     opacity: isMobileMenuOpen ? 0 : 1,
                   }}
                   transition={{ duration: 0.2 }}
                 />
                 <motion.span
-                  className="w-full h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full shadow-sm shadow-purple-400/50"
+                  className="w-full h-0.5 bg-violet-400 rounded-full shadow-sm shadow-violet-400/50"
                   animate={{
                     rotate: isMobileMenuOpen ? -45 : 0,
                     y: isMobileMenuOpen ? -7 : 0,
@@ -193,7 +193,7 @@ const Navbar = () => {
                     aria-label="Close menu"
                   >
                     <svg
-                      className="w-6 h-6 text-purple-400 drop-shadow-[0_0_6px_rgba(168,85,247,0.5)]"
+                      className="w-6 h-6 text-violet-400 drop-shadow-[0_0_6px_rgba(168,85,247,0.5)]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
