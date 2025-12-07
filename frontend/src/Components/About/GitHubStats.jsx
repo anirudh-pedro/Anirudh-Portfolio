@@ -1,22 +1,178 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const GitHubStats = () => {
   const githubUsername = "anirudh-pedro"; // Your GitHub username
   
-  // GitHub stats from Codolio
-  const githubData = {
-    totalContributions: 296,
-    totalActiveDays: 116,
-    maxStreak: 12,
-    currentStreak: 1,
+  const [githubData, setGithubData] = useState({
+    totalContributions: 0,
+    totalActiveDays: 0,
+    maxStreak: 0,
+    currentStreak: 0,
     stats: {
-      stars: 7,
-      commits: 295,
-      prs: 1,
-      issues: 0
+      stars: 0,
+      commits: 0,
+      prs: 0,
+      issues: 0,
+      repositories: 0
     }
-  };
+  });
+  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchGitHubData = async () => {
+      try {
+        setLoading(true);
+        
+        // Primary: Fetch contribution data (no auth required, no rate limits)
+        const contributionResponse = await fetch(`https://github-contributions-api.jogruber.de/v4/${githubUsername}?y=last`);
+        
+        if (!contributionResponse.ok) {
+          throw new Error('Failed to fetch contribution data');
+        }
+
+        const contributionData = await contributionResponse.json();
+        const contributions = contributionData.contributions || [];
+        
+        // Calculate all stats from contribution data
+        const totalContributions = contributionData.total?.['lastYear'] || 0;
+        const activeDays = contributions.filter(day => day.count > 0);
+        const totalActiveDays = activeDays.length;
+        const totalCommits = contributions.reduce((sum, day) => sum + day.count, 0);
+        
+        // Sort by date ascending for streak calculation
+        const sortedContributions = [...contributions].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        // Calculate max streak
+        let tempStreak = 0;
+        let maxStreakCount = 0;
+        for (let i = 0; i < sortedContributions.length; i++) {
+          if (sortedContributions[i].count > 0) {
+            tempStreak++;
+            maxStreakCount = Math.max(maxStreakCount, tempStreak);
+          } else {
+            tempStreak = 0;
+          }
+        }
+        
+        // Calculate current streak
+        const today = new Date().toISOString().split('T')[0];
+        let currentStreakCount = 0;
+        const todayIndex = sortedContributions.findIndex(c => c.date === today);
+        if (todayIndex !== -1) {
+          for (let i = todayIndex; i >= 0; i--) {
+            if (sortedContributions[i].count > 0) {
+              currentStreakCount++;
+            } else {
+              break;
+            }
+          }
+        } else {
+          const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+          const yesterdayIndex = sortedContributions.findIndex(c => c.date === yesterday);
+          if (yesterdayIndex !== -1) {
+            for (let i = yesterdayIndex; i >= 0; i--) {
+              if (sortedContributions[i].count > 0) {
+                currentStreakCount++;
+              } else {
+                break;
+              }
+            }
+          }
+        }
+        
+        // Try to fetch additional stats (with graceful fallback)
+        let totalStars = 7;
+        let totalPRs = 1;
+        let totalIssues = 0;
+        let totalRepos = 0;
+        
+        try {
+          const userResponse = await fetch(`https://api.github.com/users/${githubUsername}`);
+          if (userResponse.ok) {
+            const userData = await userResponse.json();
+            totalRepos = userData.public_repos || 0;
+          }
+        } catch (err) {
+          // Silent fail, use defaults
+        }
+        
+        try {
+          const reposResponse = await fetch(`https://api.github.com/users/${githubUsername}/repos?per_page=100`);
+          if (reposResponse.ok) {
+            const reposData = await reposResponse.json();
+            totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+          }
+        } catch (err) {
+          // Silent fail, use defaults
+        }
+        
+        try {
+          const prsResponse = await fetch(`https://api.github.com/search/issues?q=author:${githubUsername}+type:pr`);
+          if (prsResponse.ok) {
+            const prsData = await prsResponse.json();
+            totalPRs = prsData.total_count || 1;
+          }
+        } catch (err) {
+          // Silent fail, use defaults
+        }
+        
+        try {
+          const issuesResponse = await fetch(`https://api.github.com/search/issues?q=author:${githubUsername}+type:issue`);
+          if (issuesResponse.ok) {
+            const issuesData = await issuesResponse.json();
+            totalIssues = issuesData.total_count || 0;
+          }
+        } catch (err) {
+          // Silent fail, use defaults
+        }
+
+        setGithubData({
+          totalContributions: totalContributions,
+          totalActiveDays: totalActiveDays,
+          maxStreak: maxStreakCount,
+          currentStreak: currentStreakCount,
+          stats: {
+            stars: totalStars,
+            commits: totalCommits,
+            prs: totalPRs,
+            issues: totalIssues,
+            repositories: totalRepos
+          }
+        });
+        
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching GitHub data:', err);
+        setError('Failed to load GitHub stats');
+        // Set fallback data
+        setGithubData({
+          totalContributions: 367,
+          totalActiveDays: 116,
+          maxStreak: 12,
+          currentStreak: 1,
+          stats: {
+            stars: 7,
+            commits: 295,
+            prs: 1,
+            issues: 0,
+            repositories: 0
+          }
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGitHubData();
+    
+    // Refresh data every 5 minutes
+    const interval = setInterval(fetchGitHubData, 5 * 60 * 1000);
+    
+    return () => clearInterval(interval);
+  }, [githubUsername]);
   
   const containerVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -45,7 +201,14 @@ const GitHubStats = () => {
           </svg>
         </span>
         GitHub Stats
+        {loading && <span className="ml-2 text-xs text-gray-400 animate-pulse">Updating...</span>}
       </h3>
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
+          {error} - Showing cached data
+        </div>
+      )}
 
       <div className="space-y-4">
         <motion.div variants={itemVariants} className="flex flex-col items-center space-y-4">
