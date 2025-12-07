@@ -34,7 +34,7 @@ const GitHubStats = () => {
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-xl p-6 sm:p-8 rounded-2xl border border-gray-700/50 shadow-xl shadow-gray-500/10 hover:border-gray-600/50 transition-all duration-300 h-full"
+      className="bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-xl p-6 sm:p-8 pt-4 rounded-2xl border border-gray-700/50 shadow-xl shadow-gray-500/10 hover:border-gray-600/50 transition-all duration-300 h-full"
       variants={containerVariants}
       whileHover={{ y: -5, transition: { duration: 0.3 } }}
     >

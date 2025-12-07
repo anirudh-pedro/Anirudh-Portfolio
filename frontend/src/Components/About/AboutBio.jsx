@@ -28,7 +28,7 @@ const AboutBio = () => {
         </div>
         My Story
       </h3>
-      <div className="space-y-4 text-gray-200 leading-relaxed">
+      <div className="space-y-4 text-gray-200 leading-relaxed text-base sm:text-lg">
         <p>
           Hello! I'm <span className="font-semibold text-violet-400">Anirudh T</span>, a passionate full-stack developer with a focus on creating efficient, 
           scalable, and user-friendly applications. My journey in technology began during my undergraduate 

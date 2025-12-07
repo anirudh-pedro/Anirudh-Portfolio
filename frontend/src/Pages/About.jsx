@@ -5,7 +5,6 @@ import AboutBio from '../Components/About/AboutBio';
 import AboutEducation from '../Components/About/AboutEducation';
 import LeetCodeStats from '../Components/About/LeetCodeStats';
 import GitHubStats from '../Components/About/GitHubStats';
-import TechnicalExpertise from '../Components/About/TechnicalExpertise';
 import ResumeViewer from '../Components/About/ResumeViewer';
 
 const About = () => {
@@ -42,39 +41,34 @@ const About = () => {
           <AboutHeader />
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Main Content - 2 Column Layout */}
+        <div className="space-y-0">
           
-          {/* Left Column - Bio & Stats */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Bio Section */}
+          {/* Top Row - My Story and Education side by side */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-3">
             <motion.div variants={itemVariants}>
               <AboutBio />
             </motion.div>
 
-            {/* Coding Stats - Side by Side on Desktop */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <motion.div variants={itemVariants} className="flex flex-col gap-6">
+            <motion.div variants={itemVariants}>
+              <AboutEducation />
+            </motion.div>
+          </div>
+
+          {/* Middle Row - LeetCode and GitHub side by side */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-3">
+            <div className="space-y-3">
+              <motion.div variants={itemVariants}>
                 <LeetCodeStats />
-                
-                {/* Resume Viewer below LeetCode */}
-                <ResumeViewer />
               </motion.div>
               
               <motion.div variants={itemVariants}>
-                <GitHubStats />
+                <ResumeViewer />
               </motion.div>
             </div>
-          </div>
 
-          {/* Right Column - Skills & Info */}
-          <div className="space-y-6">
             <motion.div variants={itemVariants}>
-              <TechnicalExpertise />
-            </motion.div>
-            
-            <motion.div variants={itemVariants}>
-              <AboutEducation />
+              <GitHubStats />
             </motion.div>
           </div>
         </div>

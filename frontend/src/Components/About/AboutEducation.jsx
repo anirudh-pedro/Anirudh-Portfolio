@@ -46,7 +46,7 @@ const AboutEducation = () => {
 
   return (
     <motion.div
-      className="bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-xl p-6 sm:p-8 rounded-2xl border border-purple-500/20 shadow-xl shadow-purple-500/10 hover:border-purple-400/30 transition-all duration-300"
+      className="bg-gradient-to-br from-black/60 to-black/40 backdrop-blur-xl p-6 sm:p-8 pb-3 rounded-2xl border border-purple-500/20 shadow-xl shadow-purple-500/10 hover:border-purple-400/30 transition-all duration-300"
       variants={containerVariants}
       whileHover={{ y: -5, transition: { duration: 0.3 } }}
     >
