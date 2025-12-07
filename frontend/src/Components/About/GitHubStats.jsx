@@ -34,13 +34,18 @@ const GitHubStats = () => {
         }
 
         const contributionData = await contributionResponse.json();
+        console.log('Contribution Data:', contributionData); // Debug log
+        
         const contributions = contributionData.contributions || [];
+        console.log('Total contributions array length:', contributions.length); // Debug log
         
         // Calculate all stats from contribution data
-        const totalContributions = contributionData.total?.['lastYear'] || 0;
+        const totalContributions = contributionData.total?.['lastYear'] || contributionData.total?.[Object.keys(contributionData.total)[0]] || 0;
         const activeDays = contributions.filter(day => day.count > 0);
         const totalActiveDays = activeDays.length;
         const totalCommits = contributions.reduce((sum, day) => sum + day.count, 0);
+        
+        console.log('Calculated Stats:', { totalContributions, totalActiveDays, totalCommits }); // Debug log
         
         // Sort by date ascending for streak calculation
         const sortedContributions = [...contributions].sort((a, b) => new Date(a.date) - new Date(b.date));
