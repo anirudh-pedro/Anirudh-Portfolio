@@ -159,7 +159,7 @@ const GitHubStats = () => {
           maxStreak: 12,
           currentStreak: 1,
           stats: {
-            stars: 7,
+            stars: 9,
             commits: 295,
             prs: 1,
             issues: 0,
@@ -313,18 +313,18 @@ const GitHubStats = () => {
               </div>
             </motion.div>
 
-            {/* Commits */}
+            {/* Repositories */}
             <motion.div 
               className="bg-black/40 backdrop-blur-sm p-4 rounded-xl border border-gray-700/30 hover:border-gray-600/40 transition-all"
               whileHover={{ y: -3 }}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xl md:text-2xl font-bold text-gray-100">{githubData.stats.commits}</p>
-                  <p className="text-xs text-gray-400 mt-1">Commits</p>
+                  <p className="text-xl md:text-2xl font-bold text-gray-100">{githubData.stats.repositories}</p>
+                  <p className="text-xs text-gray-400 mt-1">Repositories</p>
                 </div>
                 <svg className="w-7 h-7 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                 </svg>
               </div>
             </motion.div>
