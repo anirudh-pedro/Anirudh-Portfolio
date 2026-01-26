@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import profileImage from '../assets/anirudhphoto.jpg';
 import ProfileImage from '../Components/Home/ProfileImage';
 import HomeContent from '../Components/Home/HomeContent';
-import SpaceBackground from '../Components/Background';
 
 const Home = () => {
   const scrollToSection = (sectionId) => {
@@ -26,7 +25,6 @@ const Home = () => {
 
   return (
     <>
-    {/* <SpaceBackground /> */}
     <motion.div 
       className="container mx-auto px-6 py-12 max-w-7xl text-center md:text-left"
       initial="hidden"

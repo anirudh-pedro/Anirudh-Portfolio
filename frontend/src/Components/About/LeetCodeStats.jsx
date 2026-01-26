@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const LeetCodeStats = () => {
-  const leetcodeUsername = "anirudh_pedro"; // Your LeetCode username
+  const leetcodeUsername = "anirudh_T"; // Your LeetCode username
   
   const containerVariants = {
     hidden: { opacity: 0, y: 30 },

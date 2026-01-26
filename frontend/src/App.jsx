@@ -6,7 +6,6 @@ import NotFound from './Pages/NotFound';
 import Navbar from './Components/Nav/Navbar';
 import Loader from './Components/Loader';
 import './App.css';
-import SpaceBackground from './Components/Background';
 
 function App() {
   // State for loading screen
@@ -40,11 +39,6 @@ function App() {
           )}
         </AnimatePresence>
         
-        {/* Fixed particle background */}
-        {/* <div className="w-full absolute h-screen -z-10 pointer-events-none">
-          <SpaceBackground />
-        </div> */}
-
         <AnimatePresence>
           {!loading && (
             <motion.div

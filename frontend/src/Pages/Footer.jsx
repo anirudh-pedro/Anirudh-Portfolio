@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import FooterLogo from '../Components/Footer/FooterLogo';
-import FooterNav from '../Components/Footer/FooterNav';
 import FooterSocial from '../Components/Footer/FooterSocial';
 import FooterCopyright from '../Components/Footer/FooterCopyright';
 
