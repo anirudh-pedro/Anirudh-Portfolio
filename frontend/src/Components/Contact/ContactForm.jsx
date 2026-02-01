@@ -249,18 +249,6 @@ const ContactForm = () => {
 
   return (
     <div className="space-y-8">
-      {/* Server status indicator */}
-      {serverStatus.isAwake && !serverStatus.isChecking && (
-        <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
-          <div className="flex items-center text-green-300 text-sm">
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            Server ready! Last response in {serverStatus.responseTime ?? '—'} ms.
-          </div>
-        </div>
-      )}
-
       {/* Contact Form Section */}
       <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/25 p-6 sm:p-8 shadow-xl shadow-black/50">
         <h3 className="text-xl font-bold mb-6 text-white flex items-center">
