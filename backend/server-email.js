@@ -21,7 +21,23 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Validate required environment variables
+const validateEnvVars = () => {
+    const required = ['EMAIL_USER', 'EMAIL_PASS', 'RECIPIENT_EMAIL'];
+    const missing = required.filter(varName => !process.env[varName]);
+    
+    if (missing.length > 0) {
+        console.error('❌ Missing required environment variables:', missing.join(', '));
+        console.error('⚠️ Email functionality will not work until these are set.');
+        return false;
+    }
+    return true;
+};
+
 const createTransporter = () => {
+    if (!validateEnvVars()) {
+        throw new Error('Missing required environment variables for email');
+    }
     return nodemailer.createTransport({
         pool: true,
         host: 'smtp.gmail.com',
@@ -125,6 +141,7 @@ app.post('/api/contact', async (req, res) => {
 
         // Validation
         if (!name || !email || !subject || !message) {
+            clearTimeout(timeout);
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required'
@@ -134,13 +151,14 @@ app.post('/api/contact', async (req, res) => {
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
+            clearTimeout(timeout);
             return res.status(400).json({
                 success: false,
                 message: 'Invalid email address'
             });
         }
 
-    const transporter = await ensureTransporter();
+        const transporter = await ensureTransporter();
 
         // Email content to you (notification)
         const notificationMailOptions = {
@@ -213,10 +231,23 @@ app.post('/api/contact', async (req, res) => {
         clearTimeout(timeout);
         console.error('❌ Error sending email:', error);
         
+        // Provide more specific error messages
+        let errorMessage = 'Something went wrong. Please try again later or contact me directly.';
+        let statusCode = 500;
+        
+        if (error.message.includes('Missing required environment variables')) {
+            errorMessage = 'Email service is not configured. Please contact the administrator.';
+            statusCode = 503;
+            console.error('🔧 Configuration issue: Check environment variables on Render');
+        } else if (error.code === 'EAUTH' || error.code === 'ENOTFOUND') {
+            errorMessage = 'Email service authentication failed. Please try again later.';
+            statusCode = 503;
+        }
+        
         if (!res.headersSent) {
-            res.status(500).json({
+            res.status(statusCode).json({
                 success: false,
-                message: 'Something went wrong. Please try again later or contact me directly.'
+                message: errorMessage
             });
         }
     }
