@@ -105,7 +105,7 @@ app.post('/api/contact', async (req, res) => {
             subject: `Portfolio Contact: ${subject}`,
             html: `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-                    <h2 style="color: #333; border-bottom: 2px solid #8B5CF6; padding-bottom: 10px;">New Portfolio Contact</h2>
+                    <h2 style="color: #333; border-bottom: 2px solid #8B5CF6; padding-bottom: 10px;">Portfolio Contact</h2>
                     
                     <div style="margin: 20px 0;">
                         <h3 style="color: #8B5CF6; margin-bottom: 5px;">Contact Details:</h3>
