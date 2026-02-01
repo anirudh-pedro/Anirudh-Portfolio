@@ -105,6 +105,10 @@ const ContactForm = () => {
       // Update progress to show connection attempt
       setStatus(prev => ({ ...prev, progress: 20 }));
       
+      // Create an AbortController for better compatibility
+      const abortController = new AbortController();
+      const abortTimeout = setTimeout(() => abortController.abort(), 55000);
+      
       // Race between fetch and timeout
       const response = await Promise.race([
         fetch(API_CONFIG.CONTACT_URL, {
@@ -113,11 +117,12 @@ const ContactForm = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData),
-          // Add signal for better abort handling (slightly less than timeout)
-          signal: AbortSignal.timeout(55000)
+          signal: abortController.signal
         }),
         timeoutPromise
       ]);
+      
+      clearTimeout(abortTimeout);
       
       clearInterval(progressInterval);
       setStatus(prev => ({ ...prev, progress: 80 }));
@@ -193,11 +198,16 @@ const ContactForm = () => {
     const startedAt = performance.now();
 
     try {
+      const abortController = new AbortController();
+      const abortTimeout = setTimeout(() => abortController.abort(), 60000);
+      
       const response = await fetch(API_CONFIG.HEALTH_URL, {
         method: 'GET',
         cache: 'no-cache',
-        signal: AbortSignal.timeout(60000)
+        signal: abortController.signal
       });
+      
+      clearTimeout(abortTimeout);
 
       const duration = Math.round(performance.now() - startedAt);
       const data = await response.json().catch(() => ({}));

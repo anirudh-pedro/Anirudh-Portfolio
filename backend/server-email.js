@@ -11,9 +11,12 @@ app.use(cors({
     origin: [
         'http://localhost:5173', // Local development
         'https://anirudh-portfolio-one.vercel.app', // Production frontend
+        'https://anirudh-portfolio-lxuq.onrender.com', // Backend on Render
         process.env.FRONTEND_URL // Additional flexibility
     ].filter(Boolean), // Remove any undefined values
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
