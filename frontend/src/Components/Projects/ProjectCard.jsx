@@ -31,7 +31,7 @@ const ProjectCard = ({ project }) => {
             tag !== 'featured' && (
               <span 
                 key={index}
-                  className="text-xs px-2 py-1 rounded-full bg-slate-950/80 backdrop-blur-sm text-slate-100"
+                  className="text-xs px-2 py-1 rounded-full bg-slate-100 backdrop-blur-sm text-slate-700"
               >
                 {tag}
               </span>
@@ -51,20 +51,20 @@ const ProjectCard = ({ project }) => {
       
       {/* Project Content - Right side on md+ screens, bottom on smaller screens */}
       <div className="md:w-3/5 p-5 flex flex-col flex-grow">
-        <h3 className="display-font text-xl font-semibold text-slate-100 mb-2">{project.title}</h3>
+        <h3 className="display-font text-xl font-semibold text-slate-900 mb-2">{project.title}</h3>
         
         {/* New: Project subtitle for better description */}
         {project.subtitle && (
           <p className="text-sm text-cyan-300 mb-3">{project.subtitle}</p>
         )}
         
-        <p className="text-slate-300 text-sm mb-4 line-clamp-3">{project.description}</p>
+        <p className="text-slate-600 text-sm mb-4 line-clamp-3">{project.description}</p>
         
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech, index) => (
             <span 
               key={index}
-              className="text-xs px-2 py-1 bg-slate-700/35 text-slate-200 rounded-full border border-slate-200/20"
+              className="text-xs px-2 py-1 bg-slate-100 text-slate-700 rounded-full border border-slate-300/70"
             >
               {tech}
             </span>
@@ -93,7 +93,7 @@ const ProjectCard = ({ project }) => {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1.5 bg-slate-700/40 hover:bg-slate-700/65 rounded-full text-slate-100 text-sm font-medium flex items-center flex-1 justify-center"
+              className="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 rounded-full text-white text-sm font-medium flex items-center flex-1 justify-center"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >

@@ -28,16 +28,16 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="min-h-screen py-12 sm:py-16 md:py-20 overflow-hidden">
+    <section id="about" className="py-8 sm:py-12 md:py-16 overflow-hidden">
       <motion.div 
-        className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"
+        className="container mx-auto px-4 sm:px-6 max-w-7xl"
         initial="hidden"
         whileInView="visible"
         variants={pageVariants}
         viewport={{ once: true, amount: 0.1 }}
       >
         {/* Header */}
-        <motion.div variants={itemVariants} className="mb-12">
+        <motion.div variants={itemVariants} className="mb-8 sm:mb-10">
           <AboutHeader />
         </motion.div>
 
@@ -45,7 +45,7 @@ const About = () => {
         <div className="space-y-0">
           
           {/* Top Row - My Story and Education side by side */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 mb-4">
             <motion.div variants={itemVariants}>
               <AboutBio />
             </motion.div>
@@ -56,8 +56,8 @@ const About = () => {
           </div>
 
           {/* Middle Row - LeetCode and GitHub side by side */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-3">
-            <div className="space-y-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 mb-3">
+            <div className="space-y-4">
               <motion.div variants={itemVariants}>
                 <LeetCodeStats />
               </motion.div>

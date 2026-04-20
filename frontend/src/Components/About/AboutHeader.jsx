@@ -16,11 +16,11 @@ const AboutHeader = () => {
 
   return (
     <motion.div variants={headerVariants} className="text-center mb-12">
-      <h2 className="display-font text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-slate-100">
+      <h2 className="display-font text-3xl sm:text-4xl md:text-5xl font-semibold mb-5 sm:mb-6 text-slate-900">
         About Me
       </h2>
       <div className="w-24 h-1 bg-cyan-400 mx-auto rounded-full shadow-lg shadow-cyan-400/25"></div>
-      <p className="text-base sm:text-lg text-slate-300 mt-6 max-w-3xl mx-auto leading-relaxed">
+      <p className="text-base sm:text-lg text-slate-600 mt-6 max-w-3xl mx-auto leading-relaxed">
         A passionate developer crafting elegant solutions to complex problems.
         Let me share a bit more about my journey, experience, and what drives me.
       </p>

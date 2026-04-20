@@ -9,8 +9,8 @@ const FooterLogo = () => {
             A
           </div>
           <div className="ml-3">
-            <span className="display-font text-slate-100 font-semibold text-xl block">Anirudh T</span>
-            <span className="text-xs text-cyan-200">Full-Stack Developer</span>
+            <span className="display-font text-slate-900 font-semibold text-xl block">Anirudh T</span>
+            <span className="text-xs text-cyan-700">Full-Stack Developer</span>
           </div>
         </div>
       </a>

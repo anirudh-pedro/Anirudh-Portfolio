@@ -39,8 +39,8 @@ const Footer = () => {
       {/* Removed the top gradient border div */}
       
       {/* Background decoration */}
-      <div className="absolute right-10 top-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute left-20 bottom-40 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute right-10 top-20 w-64 h-64 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute left-20 bottom-40 w-72 h-72 bg-sky-400/15 rounded-full blur-3xl pointer-events-none"></div>
       
       <div className="pt-16 pb-8 backdrop-blur-sm">
         <div className="container mx-auto px-4 max-w-6xl">
@@ -54,7 +54,7 @@ const Footer = () => {
             {/* Logo and about section */}
             <motion.div variants={itemVariants} className="lg:col-span-2">
               <FooterLogo />
-              <p className="mt-6 text-slate-300 text-sm leading-relaxed">
+              <p className="mt-6 text-slate-600 text-sm leading-relaxed">
                 I'm a full-stack developer passionate about creating elegant, 
                 user-friendly applications that solve real-world problems. 
                 With expertise in modern web technologies, I focus on delivering 
@@ -63,13 +63,13 @@ const Footer = () => {
               
               {/* Contact info */}
               <div className="mt-6 space-y-2">
-                <div className="flex items-center text-slate-300 text-sm">
+                <div className="flex items-center text-slate-700 text-sm">
                   <svg className="w-4 h-4 mr-2 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <a href="mailto:anirudh200503@gmail.com" className="hover:text-cyan-200 transition-colors">anirudh200503@gmail.com</a>
                 </div>
-                <div className="flex items-center text-slate-300 text-sm">
+                <div className="flex items-center text-slate-700 text-sm">
                   <svg className="w-4 h-4 mr-2 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -81,14 +81,14 @@ const Footer = () => {
             
             {/* Navigation links with smooth scrolling */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
-              <h3 className="display-font text-lg font-semibold text-slate-100 mb-6 pb-2 border-b border-slate-300/20">Navigation</h3>
+              <h3 className="display-font text-lg font-semibold text-slate-900 mb-6 pb-2 border-b border-slate-300/50">Navigation</h3>
               <ul className="space-y-3">
                 {["Home", "About", "Projects", "Skills", "Contact"].map((item, index) => (
                   <li key={index}>
                     <a 
                       href={`#${item.toLowerCase()}`} 
                       onClick={(e) => handleSmoothScroll(e, item.toLowerCase())}
-                      className="text-slate-300 hover:text-cyan-200 transition-colors flex items-center text-sm cursor-pointer"
+                      className="text-slate-700 hover:text-cyan-700 transition-colors flex items-center text-sm cursor-pointer"
                     >
                       <svg className="w-3 h-3 mr-2 text-cyan-300/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -102,7 +102,7 @@ const Footer = () => {
             
             {/* Social and tech section */}
             <motion.div variants={itemVariants} className="lg:col-span-1">
-              <h3 className="display-font text-lg font-semibold text-slate-100 mb-6 pb-2 border-b border-slate-300/20">Connect</h3>
+              <h3 className="display-font text-lg font-semibold text-slate-900 mb-6 pb-2 border-b border-slate-300/50">Connect</h3>
               
               {/* Social links */}
               <div className="mb-8">
@@ -127,7 +127,7 @@ const Footer = () => {
                   href="/path-to-your-resume.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-4 py-2 bg-transparent border border-slate-300/30 hover:bg-slate-300/10 text-slate-100 text-sm font-medium rounded-lg transition-all duration-300"
+                  className="inline-flex items-center justify-center px-4 py-2 bg-white border border-slate-300/70 hover:bg-slate-50 text-slate-800 text-sm font-medium rounded-lg transition-all duration-300"
                 >
                   <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

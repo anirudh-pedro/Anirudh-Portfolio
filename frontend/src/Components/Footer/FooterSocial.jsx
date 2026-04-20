@@ -33,7 +33,7 @@ const FooterSocial = () => {
           href={social.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/85 border border-slate-300/20 text-slate-300 hover:text-cyan-200 hover:border-cyan-200/45 transition-all duration-300"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-300/70 text-slate-600 hover:text-cyan-700 hover:border-cyan-300/70 transition-all duration-300"
           whileHover={{ 
             y: -5, 
             boxShadow: '0 10px 25px -5px rgba(34, 193, 195, 0.25)'

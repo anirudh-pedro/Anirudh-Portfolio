@@ -47,7 +47,7 @@ const ProfileImage = ({ imageSrc }) => {
         <motion.img
           src={imageSrc}
           alt="Anirudh T"
-          className="relative rounded-[2rem] w-full h-full object-cover border border-slate-200/25 shadow-2xl shadow-black/40"
+          className="relative rounded-[2rem] w-full h-full object-cover border border-slate-300/60 shadow-2xl shadow-slate-400/30"
           whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         />
       </div>

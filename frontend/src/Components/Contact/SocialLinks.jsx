@@ -48,7 +48,7 @@ const SocialLinks = () => {
 
   return (
     <div className="professional-card rounded-2xl p-6 sm:p-8 shadow-xl shadow-black/30">
-      <h3 className="display-font text-xl font-semibold mb-6 text-slate-100 flex items-center">
+      <h3 className="display-font text-xl font-semibold mb-6 text-slate-900 flex items-center">
         <span className="mr-2 p-1.5 rounded-full bg-cyan-500/15">
           <svg className="w-4 h-4 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
@@ -69,13 +69,13 @@ const SocialLinks = () => {
             href={social.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2.5 bg-slate-800/55 hover:bg-slate-700/60 rounded-lg transition-colors border border-slate-300/15 hover:border-cyan-200/35"
+            className="flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-50 rounded-lg transition-colors border border-slate-300/60 hover:border-cyan-300/60"
             variants={itemVariants}
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.97 }}
           >
             <span className="text-cyan-200">{social.icon}</span>
-            <span className="text-sm text-slate-100">{social.platform}</span>
+            <span className="text-sm text-slate-800">{social.platform}</span>
           </motion.a>
         ))}
       </motion.div>

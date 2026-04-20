@@ -5,7 +5,7 @@ const SkillsHeader = () => {
   return (
     <div className="text-center">
       <motion.h2 
-        className="display-font text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-100"
+        className="display-font text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-900"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
@@ -13,7 +13,7 @@ const SkillsHeader = () => {
         Technical Skills
       </motion.h2>
       <motion.p 
-        className="mt-4 text-slate-300 max-w-3xl mx-auto text-sm sm:text-base"
+        className="mt-4 text-slate-600 max-w-3xl mx-auto text-sm sm:text-base"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.7 }}

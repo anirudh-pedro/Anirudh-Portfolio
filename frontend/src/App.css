@@ -1,10 +1,10 @@
 :root {
-  --bg-950: #080d16;
-  --bg-900: #0f1726;
-  --surface-800: rgba(18, 28, 45, 0.7);
-  --surface-border: rgba(148, 163, 184, 0.24);
-  --text-strong: #f3f7ff;
-  --text-soft: #a9b7ce;
+  --bg-50: #f8fbff;
+  --bg-100: #eef5fb;
+  --surface-100: rgba(255, 255, 255, 0.86);
+  --surface-border: rgba(30, 41, 59, 0.1);
+  --text-strong: #0f172a;
+  --text-soft: #475569;
   --accent: #22c1c3;
   --accent-deep: #118ab2;
   --section-spacing: clamp(4rem, 8vw, 7rem);
@@ -13,9 +13,9 @@
 .App {
   color: var(--text-strong);
   background:
-    radial-gradient(circle at 15% 10%, rgba(34, 193, 195, 0.16), transparent 40%),
-    radial-gradient(circle at 85% 25%, rgba(17, 138, 178, 0.18), transparent 35%),
-    linear-gradient(160deg, var(--bg-950), var(--bg-900));
+    radial-gradient(circle at 15% 10%, rgba(34, 193, 195, 0.12), transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(17, 138, 178, 0.12), transparent 35%),
+    linear-gradient(160deg, var(--bg-50), var(--bg-100));
 }
 
 .App::before {
@@ -24,8 +24,8 @@
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(circle at center, black 42%, transparent 100%);
   z-index: 0;

@@ -50,7 +50,7 @@ const AboutEducation = () => {
       variants={containerVariants}
       whileHover={{ y: -5, transition: { duration: 0.3 } }}
     >
-      <h3 className="display-font text-xl sm:text-2xl font-semibold mb-6 text-slate-100 flex items-center">
+      <h3 className="display-font text-xl sm:text-2xl font-semibold mb-6 text-slate-900 flex items-center">
         <span className="mr-3 p-2 rounded-lg bg-cyan-500/15">
           <svg className="w-5 h-5 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 14l9-5-9-5-9 5 9 5z" />
@@ -71,11 +71,11 @@ const AboutEducation = () => {
             <div className="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full bg-cyan-300 shadow-lg shadow-cyan-300/30"></div>
             
             <div className="mb-1 flex flex-wrap items-center">
-              <h4 className="text-base sm:text-lg font-semibold text-slate-100 mr-2">{item.degree}</h4>
+              <h4 className="text-base sm:text-lg font-semibold text-slate-900 mr-2">{item.degree}</h4>
               <span className="text-sm sm:text-base text-cyan-200">in {item.field}</span>
             </div>
             
-            <p className="text-slate-300 text-sm sm:text-base">{item.institution}, {item.location}</p>
+            <p className="text-slate-600 text-sm sm:text-base">{item.institution}, {item.location}</p>
             
             <div className="flex items-center mt-1 mb-3">
               <svg className="w-4 h-4 text-cyan-300 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +84,7 @@ const AboutEducation = () => {
               <span className="text-sm text-slate-400">{item.period}</span>
             </div>
             
-            <ul className="list-disc list-inside text-xs sm:text-sm text-slate-300 space-y-1">
+            <ul className="list-disc list-inside text-xs sm:text-sm text-slate-600 space-y-1">
               {item.highlights.map((highlight, i) => (
                 <li key={i}>{highlight}</li>
               ))}

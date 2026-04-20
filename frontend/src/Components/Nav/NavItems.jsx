@@ -62,8 +62,8 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
               <motion.div
                 className={`absolute inset-0 rounded-lg transition-all duration-300 ${
                   isActive
-                    ? 'bg-cyan-400/10 border border-cyan-200/30 shadow-lg shadow-cyan-500/10 backdrop-blur-sm'
-                    : 'bg-transparent border border-transparent group-hover:bg-slate-700/30 group-hover:border-slate-200/15'
+                    ? 'bg-cyan-100 border border-cyan-300/60 shadow-sm'
+                    : 'bg-transparent border border-transparent group-hover:bg-slate-100 group-hover:border-slate-300/60'
                 }`}
                 layoutId={isActive ? "navbar-indicator" : undefined}
                 transition={isActive ? { type: 'spring', bounce: 0.2, duration: 0.6 } : { duration: 0.3 }}
@@ -73,8 +73,8 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
               <span 
                 className={`relative z-10 transition-all duration-300 ${
                   isActive 
-                    ? 'text-cyan-200 font-semibold' 
-                    : 'text-slate-200 group-hover:text-white group-hover:font-medium'
+                    ? 'text-cyan-800 font-semibold' 
+                    : 'text-slate-700 group-hover:text-slate-900 group-hover:font-medium'
                 }`}
               >
                 {item.label}
@@ -98,8 +98,8 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             onClick={() => handleNavClick(item.id)}
             className={`relative w-full text-left px-6 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
               isActive
-                ? 'text-white'
-                : 'text-slate-200'
+                ? 'text-slate-900'
+                : 'text-slate-700'
             }`}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -112,21 +112,21 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             <div
               className={`absolute inset-0 rounded-xl transition-all duration-300 ${
                 isActive
-                  ? 'bg-cyan-400/10 border border-cyan-200/40 shadow-lg shadow-cyan-500/10'
-                  : 'bg-slate-800/40 border border-slate-200/10 hover:bg-slate-700/40 hover:border-slate-100/20'
+                  ? 'bg-cyan-100 border border-cyan-300/60 shadow-sm'
+                  : 'bg-white border border-slate-300/60 hover:bg-slate-50 hover:border-slate-400/60'
               }`}
             />
 
             {/* Content */}
             <div className="relative z-10 flex items-center gap-4">
-              <span className={`flex-1 ${isActive ? 'text-cyan-200 font-semibold' : ''}`}>
+              <span className={`flex-1 ${isActive ? 'text-cyan-800 font-semibold' : ''}`}>
                 {item.label}
               </span>
               
               {/* Arrow indicator */}
               <motion.svg
                 className={`w-5 h-5 transition-colors duration-300 ${
-                  isActive ? 'text-cyan-200' : 'text-slate-400'
+                  isActive ? 'text-cyan-700' : 'text-slate-500'
                 }`}
                 fill="none"
                 stroke="currentColor"
@@ -167,7 +167,7 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
       >
-        <p className="text-center text-slate-400 text-sm">
+        <p className="text-center text-slate-500 text-sm">
           Crafted by Anirudh T
         </p>
       </motion.div>

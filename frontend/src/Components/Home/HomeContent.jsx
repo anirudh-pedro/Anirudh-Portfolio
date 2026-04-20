@@ -51,7 +51,7 @@ const HomeContent = ({ scrollToSection }) => {
         Computer Science Engineer
       </motion.p>
       <motion.h1 
-        className="display-font text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 text-slate-50 leading-tight"
+        className="display-font text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 text-slate-900 leading-tight"
         variants={itemVariants}
         >
         Building reliable web products that people enjoy using.
@@ -65,7 +65,7 @@ const HomeContent = ({ scrollToSection }) => {
       </motion.div>
       
       <motion.p 
-        className="text-base sm:text-lg text-slate-300 mb-8 max-w-xl leading-relaxed"
+        className="text-base sm:text-lg text-slate-600 mb-8 max-w-xl leading-relaxed"
         variants={itemVariants}
       >
         I am Anirudh T, a full-stack developer focused on shipping clean interfaces, scalable backend services, and thoughtful user experiences from idea to deployment.
@@ -86,7 +86,7 @@ const HomeContent = ({ scrollToSection }) => {
         </motion.button>
         <motion.button 
           onClick={() => scrollToSection('projects')}
-          className="px-6 py-3 bg-transparent border border-slate-300/30 hover:bg-slate-300/10 rounded-full text-slate-100 font-medium transition-all duration-300"
+          className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 rounded-full text-slate-800 font-medium transition-all duration-300"
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"

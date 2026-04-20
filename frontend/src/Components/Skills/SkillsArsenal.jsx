@@ -78,7 +78,7 @@ const SkillsArsenal = () => {
             {/* Category Header */}
             <div className="flex items-center mb-4">
               <span className="text-2xl mr-3">{category.icon}</span>
-              <h3 className="display-font text-xl font-semibold text-slate-100 group-hover:text-cyan-200 transition-colors">
+              <h3 className="display-font text-xl font-semibold text-slate-900 group-hover:text-cyan-700 transition-colors">
                 {category.title}
               </h3>
             </div>
@@ -92,7 +92,7 @@ const SkillsArsenal = () => {
                 <motion.span
                   key={skill}
                   variants={skillVariants}
-                  className="px-3 py-1.5 bg-slate-700/35 hover:bg-slate-600/45 border border-slate-300/20 rounded-full text-sm text-slate-200 hover:text-white transition-all duration-200 cursor-default"
+                  className="px-3 py-1.5 bg-slate-100 hover:bg-cyan-50 border border-slate-300/60 rounded-full text-sm text-slate-700 hover:text-cyan-800 transition-all duration-200 cursor-default"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >

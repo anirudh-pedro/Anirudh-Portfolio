@@ -65,10 +65,10 @@ const CertificationCarousel = () => {
     <div className="w-full mt-16">
       {/* Header */}
       <div className="mb-12 text-center">
-        <h3 className="display-font text-2xl sm:text-3xl font-semibold text-slate-100 mb-3">
+        <h3 className="display-font text-2xl sm:text-3xl font-semibold text-slate-900 mb-3">
           Certifications
         </h3>
-        <p className="text-slate-300 mt-2 max-w-2xl mx-auto text-sm sm:text-base">
+        <p className="text-slate-600 mt-2 max-w-2xl mx-auto text-sm sm:text-base">
           Continuous learning and skill development are core to my professional journey
         </p>
       </div>
@@ -90,7 +90,7 @@ const CertificationCarousel = () => {
             onClick={() => window.open(cert.link, '_blank')}
           >
             {/* Certificate Image */}
-            <div className="w-full h-48 overflow-hidden border-b border-slate-300/20 bg-slate-950/40 flex items-center justify-center p-4">
+            <div className="w-full h-48 overflow-hidden border-b border-slate-300/40 bg-slate-100/70 flex items-center justify-center p-4">
               <img
                 src={cert.image}
                 alt={cert.name}
@@ -111,7 +111,7 @@ const CertificationCarousel = () => {
             {/* Certificate Details */}
             <div className="p-5 flex-1 flex flex-col">
               <div className="flex-1">
-                <h4 className="text-base font-semibold text-slate-100 leading-tight mb-2 line-clamp-2 group-hover:text-cyan-200 transition-colors">
+                <h4 className="text-base font-semibold text-slate-900 leading-tight mb-2 line-clamp-2 group-hover:text-cyan-700 transition-colors">
                   {cert.name}
                 </h4>
                 <p className="text-sm text-cyan-300 mb-4">Issued by {cert.issuer}</p>
@@ -121,7 +121,7 @@ const CertificationCarousel = () => {
                   {cert.topics.map((topic, i) => (
                     <span
                       key={i}
-                      className="px-2 py-1 text-xs rounded-full bg-slate-700/35 text-slate-200 border border-slate-300/25"
+                      className="px-2 py-1 text-xs rounded-full bg-slate-100 text-slate-700 border border-slate-300/60"
                     >
                       {topic}
                     </span>
@@ -130,7 +130,7 @@ const CertificationCarousel = () => {
               </div>
               
               {/* View Button */}
-              <div className="mt-auto pt-4 border-t border-slate-300/20">
+              <div className="mt-auto pt-4 border-t border-slate-300/40">
                 <div className="flex items-center justify-between text-cyan-300 group-hover:text-cyan-200 transition-colors">
                   <span className="text-sm font-medium">View Certificate</span>
                   <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

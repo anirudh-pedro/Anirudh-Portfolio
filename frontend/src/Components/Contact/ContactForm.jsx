@@ -251,7 +251,7 @@ const ContactForm = () => {
     <div className="space-y-8">
       {/* Contact Form Section */}
       <div className="professional-card rounded-2xl p-6 sm:p-8 shadow-xl shadow-black/30">
-        <h3 className="display-font text-xl font-semibold mb-6 text-slate-100 flex items-center">
+        <h3 className="display-font text-xl font-semibold mb-6 text-slate-900 flex items-center">
           <span className="mr-2 p-1.5 rounded-full bg-cyan-500/15">
             <svg className="w-4 h-4 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -276,7 +276,7 @@ const ContactForm = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
             {/* Name field */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-1">
+              <label htmlFor="name" className="block text-sm font-medium text-slate-600 mb-1">
                 Name
               </label>
               <input
@@ -285,7 +285,7 @@ const ContactForm = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-slate-900/60 backdrop-blur-sm border ${errors.name ? 'border-red-400' : 'border-slate-300/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-300 text-slate-100 text-sm placeholder-slate-400 autofill:bg-slate-900/60 autofill:text-slate-100`}
+                className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.name ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
                 placeholder="Your name"
               />
               {errors.name && (
@@ -295,7 +295,7 @@ const ContactForm = () => {
             
             {/* Email field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-600 mb-1">
                 Email
               </label>
               <input
@@ -304,7 +304,7 @@ const ContactForm = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-slate-900/60 backdrop-blur-sm border ${errors.email ? 'border-red-400' : 'border-slate-300/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-300 text-slate-100 text-sm placeholder-slate-400 autofill:bg-slate-900/60 autofill:text-slate-100`}
+                className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.email ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
                 placeholder="your.email@example.com"
               />
               {errors.email && (
@@ -315,7 +315,7 @@ const ContactForm = () => {
           
           {/* Subject field */}
           <div className="mb-5">
-            <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-1">
+            <label htmlFor="subject" className="block text-sm font-medium text-slate-600 mb-1">
               Subject
             </label>
             <input
@@ -324,7 +324,7 @@ const ContactForm = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className={`w-full px-4 py-3 bg-slate-900/60 backdrop-blur-sm border ${errors.subject ? 'border-red-400' : 'border-slate-300/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-300 text-slate-100 text-sm placeholder-slate-400 autofill:bg-slate-900/60 autofill:text-slate-100`}
+              className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.subject ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
               placeholder="What is this regarding?"
             />
             {errors.subject && (
@@ -334,7 +334,7 @@ const ContactForm = () => {
           
           {/* Message field */}
           <div className="mb-6">
-            <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-1">
+            <label htmlFor="message" className="block text-sm font-medium text-slate-600 mb-1">
               Message
             </label>
             <textarea
@@ -343,7 +343,7 @@ const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               rows={5}
-              className={`w-full px-4 py-3 bg-slate-900/60 backdrop-blur-sm border ${errors.message ? 'border-red-400' : 'border-slate-300/30'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-300 text-slate-100 text-sm placeholder-slate-400 resize-none autofill:bg-slate-900/60 autofill:text-slate-100`}
+              className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.message ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 resize-none autofill:bg-white autofill:text-slate-800`}
               placeholder="Your message here..."
             ></textarea>
             {errors.message && (

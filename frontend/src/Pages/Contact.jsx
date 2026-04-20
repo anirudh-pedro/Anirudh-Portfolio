@@ -28,7 +28,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20">
+    <section id="contact" className="py-8 sm:py-12 md:py-16">
       <motion.div 
         className="container mx-auto px-4 max-w-6xl"
         initial="hidden"
@@ -40,9 +40,9 @@ const Contact = () => {
           <ContactHeader />
         </motion.div>
 
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div className="mt-8 sm:mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
           {/* Left side - Contact info and social links */}
-          <motion.div variants={itemVariants} className="lg:col-span-1 space-y-8">
+          <motion.div variants={itemVariants} className="lg:col-span-1 space-y-6 sm:space-y-8">
             <ContactInfo />
             <SocialLinks />
           </motion.div>

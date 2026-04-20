@@ -61,7 +61,7 @@ const Logo = ({ onLogoClick }) => {
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-cyan-300"></span>
           <motion.span 
-            className="display-font text-lg sm:text-xl lg:text-2xl font-semibold text-slate-100 tracking-wide"
+            className="display-font text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 tracking-wide"
             whileHover={{
               scale: 1.03,
               transition: { duration: 0.25 }

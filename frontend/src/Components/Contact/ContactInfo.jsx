@@ -40,7 +40,7 @@ const ContactInfo = () => {
 
   return (
     <div className="professional-card rounded-2xl p-6 sm:p-8 shadow-xl shadow-black/30">
-      <h3 className="display-font text-xl font-semibold mb-6 text-slate-100 flex items-center">
+      <h3 className="display-font text-xl font-semibold mb-6 text-slate-900 flex items-center">
         <span className="mr-2 p-1.5 rounded-full bg-cyan-500/15">
           <svg className="w-4 h-4 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -60,12 +60,12 @@ const ContactInfo = () => {
               {item.link ? (
                 <a 
                   href={item.link} 
-                  className="text-slate-100 hover:text-cyan-200 transition-colors text-base"
+                  className="text-slate-800 hover:text-cyan-700 transition-colors text-base"
                 >
                   {item.value}
                 </a>
               ) : (
-                <p className="text-slate-100 text-base">{item.value}</p>
+                <p className="text-slate-800 text-base">{item.value}</p>
               )}
             </div>
           </div>

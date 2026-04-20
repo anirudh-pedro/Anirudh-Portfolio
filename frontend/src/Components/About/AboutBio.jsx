@@ -20,7 +20,7 @@ const AboutBio = () => {
       variants={bioVariants}
       whileHover={{ y: -5, transition: { duration: 0.3 } }}
     >
-      <h3 className="display-font text-2xl font-semibold mb-6 text-slate-100 flex items-center">
+      <h3 className="display-font text-2xl font-semibold mb-6 text-slate-900 flex items-center">
         <div className="bg-cyan-400/15 p-2 rounded-lg mr-3">
           <svg className="w-5 h-5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -28,7 +28,7 @@ const AboutBio = () => {
         </div>
         My Story
       </h3>
-      <div className="space-y-4 text-slate-300 leading-relaxed text-base sm:text-lg">
+      <div className="space-y-4 text-slate-600 leading-relaxed text-base sm:text-lg">
         <p>
           Hello! I'm <span className="font-semibold text-cyan-200">Anirudh T</span>, a passionate full-stack developer with a focus on creating efficient, 
           scalable, and user-friendly applications. My journey in technology began during my undergraduate 

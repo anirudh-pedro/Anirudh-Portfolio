@@ -43,7 +43,7 @@ const MainPage = () => {
     >
       <motion.section 
         id="home" 
-        className="min-h-screen flex items-center justify-center"
+        className="min-h-[92vh] pt-24 pb-10 flex items-center justify-center"
         variants={sectionVariants}
       >
         <Home />
@@ -51,7 +51,7 @@ const MainPage = () => {
 
       <motion.section 
         id="about" 
-        className="min-h-screen flex items-center justify-center"
+        className="py-10 sm:py-14"
         variants={sectionVariants}
       >
         <About />
@@ -59,7 +59,7 @@ const MainPage = () => {
 
       <motion.section 
         id="projects" 
-        className="min-h-screen"
+        className="py-10 sm:py-14"
         variants={sectionVariants}
       >
         <Projects />
@@ -67,7 +67,7 @@ const MainPage = () => {
 
       <motion.section 
         id="skills" 
-        className="min-h-screen flex items-center justify-center"
+        className="py-10 sm:py-14"
         variants={sectionVariants}
       >
         <Skills />
@@ -75,7 +75,7 @@ const MainPage = () => {
 
       <motion.section 
         id="contact" 
-        className="min-h-screen flex items-center justify-center"
+        className="py-10 sm:py-14"
         variants={sectionVariants}
       >
         <Contact />

@@ -16,9 +16,9 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" className="min-h-screen py-20 overflow-hidden">
+    <section id="projects" className="py-8 sm:py-12 md:py-16 overflow-hidden">
       <motion.div 
-        className="container mx-auto px-6 max-w-6xl"
+        className="container mx-auto px-4 sm:px-6 max-w-6xl"
         initial="hidden"
         whileInView="visible"
         variants={pageVariants}

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 * {
@@ -22,8 +22,8 @@ h6,
 body {
   margin: 0;
   min-height: 100vh;
-  color: #f3f7ff;
-  background-color: #0b1220;
+  color: #0f172a;
+  background-color: #f8fbff;
 }
 
 /* Smooth scrolling behavior */
@@ -38,16 +38,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(7, 13, 25, 0.55);
+  background: rgba(203, 213, 225, 0.35);
   border-radius: 10px;
-  border: 1px solid rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.25);
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #118ab2 0%, #22c1c3 100%);
   border-radius: 10px;
-  border: 2px solid rgba(148, 163, 184, 0.1);
-  box-shadow: 0 4px 8px rgba(6, 11, 20, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -61,13 +61,13 @@ html {
 }
 
 ::-webkit-scrollbar-corner {
-  background: rgba(7, 13, 25, 0.55);
+  background: rgba(203, 213, 225, 0.35);
 }
 
 /* Firefox Custom Scrollbar */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #22c1c3 rgba(7, 13, 25, 0.55);
+  scrollbar-color: #22c1c3 rgba(203, 213, 225, 0.35);
 }
 
 .no-scrollbar {
@@ -100,19 +100,20 @@ textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus,
 textarea:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px rgba(12, 22, 38, 0.9) inset !important;
-  -webkit-text-fill-color: #e8efff !important;
+  -webkit-box-shadow: 0 0 0 30px rgba(248, 250, 252, 1) inset !important;
+  -webkit-text-fill-color: #0f172a !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 
 /* Additional autofill styling for better control */
 input[data-autocompleted] {
-  background-color: rgba(12, 22, 38, 0.9) !important;
-  color: #e8efff !important;
+  background-color: rgba(248, 250, 252, 1) !important;
+  color: #0f172a !important;
 }
 
 .professional-card {
-  background: linear-gradient(155deg, rgba(15, 23, 38, 0.84), rgba(11, 18, 32, 0.72));
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.95));
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 16px 40px -28px rgba(15, 23, 42, 0.35);
   backdrop-filter: blur(12px);
 }
