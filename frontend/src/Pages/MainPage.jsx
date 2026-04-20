@@ -43,7 +43,7 @@ const MainPage = () => {
     >
       <motion.section 
         id="home" 
-        className="min-h-[92vh] pt-24 pb-10 flex items-center justify-center"
+        className="min-h-[88vh] pt-16 pb-8 flex items-center justify-center"
         variants={sectionVariants}
       >
         <Home />

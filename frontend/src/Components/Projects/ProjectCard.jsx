@@ -28,7 +28,7 @@ const ProjectCard = ({ project }) => {
         {/* Tags overlay */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-2 max-w-[90%]">
           {project.tags.map((tag, index) => (
-            tag !== 'featured' && (
+            tag !== 'featured' && tag !== 'web' && (
               <span 
                 key={index}
                   className="text-xs px-2 py-1 rounded-full bg-slate-100 backdrop-blur-sm text-slate-700"
@@ -38,15 +38,6 @@ const ProjectCard = ({ project }) => {
             )
           ))}
         </div>
-        
-        {/* "Featured" badge for highlighted projects */}
-        {project.tags.includes('featured') && (
-          <div className="absolute top-3 right-3">
-            <span className="text-xs px-2 py-1 rounded-full bg-slate-700 text-white font-semibold">
-              Featured
-            </span>
-          </div>
-        )}
       </div>
       
       {/* Project Content - Right side on md+ screens, bottom on smaller screens */}

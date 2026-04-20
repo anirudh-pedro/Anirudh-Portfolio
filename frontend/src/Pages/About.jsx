@@ -61,12 +61,12 @@ const About = () => {
             <motion.div variants={itemVariants}>
               <GitHubStats />
             </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <ResumeViewer />
+            </motion.div>
           </div>
         </div>
-
-        <motion.div variants={itemVariants} className="mt-4 sm:mt-5 max-w-2xl mx-auto">
-          <ResumeViewer />
-        </motion.div>
       </motion.div>
     </section>
   );

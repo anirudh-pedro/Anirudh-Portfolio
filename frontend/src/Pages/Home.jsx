@@ -26,12 +26,12 @@ const Home = () => {
   return (
     <>
     <motion.div 
-      className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-7xl text-center md:text-left"
+      className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 max-w-7xl text-center md:text-left"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
       >
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mt-4 md:mt-8 md:gap-12 lg:gap-20 xl:gap-32">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 mt-0 md:mt-2 md:gap-12 lg:gap-20 xl:gap-32">
       <ProfileImage imageSrc={profileImage} />
       <HomeContent scrollToSection={scrollToSection} />
       </div>

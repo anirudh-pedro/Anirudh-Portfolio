@@ -51,10 +51,10 @@ const HomeContent = ({ scrollToSection }) => {
         Computer Science Engineer
       </motion.p>
       <motion.h1 
-        className="display-font text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 text-slate-900 leading-tight"
+        className="display-font text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-semibold mb-4 text-slate-900 leading-tight"
         variants={itemVariants}
         >
-        Building reliable web products that people enjoy using.
+        Full-stack engineer building AI-powered web applications.
       </motion.h1>
       
       <motion.div 

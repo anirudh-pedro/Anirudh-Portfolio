@@ -29,10 +29,10 @@ const AboutEducation = () => {
     {
       degree: "Bachelor of Engineering",
       field: "Computer Science",
-      institution: "Srishakthi Institute of Engineering and Technology",
+      institution: "Sri Shakthi Institute of Engineering and Technology",
       location: "Coimbatore, India",
       period: "2023 - 2027",
-      highlights: ["CGPA: 7.82/10", "Dean's List", "Technical Tutor"]
+      highlights: ["CGPA: 7.82/10"]
     },
     {
       degree: "Higher Secondary",

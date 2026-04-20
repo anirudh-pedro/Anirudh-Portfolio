@@ -26,6 +26,14 @@ const AboutBio = () => {
           I value continuous learning, collaboration, and clean maintainable code while keeping up with industry best practices.
         </>
       )
+    },
+    {
+      command: 'cat ai-agents.txt',
+      output: (
+        <>
+          I build <span className="font-semibold text-slate-900">AI agents</span> that automate workflows, connect tools, and deliver practical outcomes for real-world use cases.
+        </>
+      )
     }
   ];
 
@@ -74,7 +82,7 @@ const AboutBio = () => {
           </p>
 
           <p className="mt-3 text-sm sm:text-[0.95rem] text-slate-500">
-            Full-stack developer with strong MERN expertise and a focus on scalable, maintainable code.
+            Full-stack developer with strong MERN expertise, AI/ML integration experience, and a focus on scalable, maintainable code.
           </p>
 
           <div className="mt-4 space-y-3 border-t border-slate-200 pt-4 text-sm sm:text-[0.9rem] leading-7">
