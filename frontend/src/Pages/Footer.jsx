@@ -35,18 +35,18 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative mt-20 overflow-hidden pb-8">
+    <footer className="relative mt-20 overflow-hidden">
       <div className="absolute right-10 top-16 w-60 h-60 bg-slate-300/25 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute left-10 bottom-10 w-72 h-72 bg-slate-200/45 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="container mx-auto px-4 max-w-6xl">
-        <motion.div
-          className="rounded-3xl border border-slate-300/60 bg-white/80 backdrop-blur-xl shadow-2xl shadow-slate-300/30 p-6 sm:p-8 md:p-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={variants}
-        >
+      <motion.div
+        className="w-full border-y border-slate-300/60 bg-white/72 backdrop-blur-md py-10 sm:py-12"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={variants}
+      >
+        <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
             <motion.div variants={itemVariants} className="lg:col-span-1">
               <FooterLogo />
@@ -130,8 +130,8 @@ const Footer = () => {
           >
             <FooterCopyright />
           </motion.div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </footer>
   );
 };
