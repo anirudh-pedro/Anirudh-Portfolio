@@ -59,7 +59,7 @@ const Logo = ({ onLogoClick }) => {
         aria-label="Go to home section"
       >
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-cyan-300"></span>
+          <span className="h-2 w-2 rounded-full bg-slate-500"></span>
           <motion.span 
             className="display-font text-lg sm:text-xl lg:text-2xl font-semibold text-slate-900 tracking-wide"
             whileHover={{

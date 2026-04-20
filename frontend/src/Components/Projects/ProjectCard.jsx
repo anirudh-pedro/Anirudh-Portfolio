@@ -42,7 +42,7 @@ const ProjectCard = ({ project }) => {
         {/* "Featured" badge for highlighted projects */}
         {project.tags.includes('featured') && (
           <div className="absolute top-3 right-3">
-            <span className="text-xs px-2 py-1 rounded-full bg-cyan-500 text-slate-950 font-semibold">
+            <span className="text-xs px-2 py-1 rounded-full bg-slate-700 text-white font-semibold">
               Featured
             </span>
           </div>
@@ -55,7 +55,7 @@ const ProjectCard = ({ project }) => {
         
         {/* New: Project subtitle for better description */}
         {project.subtitle && (
-          <p className="text-sm text-cyan-300 mb-3">{project.subtitle}</p>
+          <p className="text-sm text-slate-500 mb-3">{project.subtitle}</p>
         )}
         
         <p className="text-slate-600 text-sm mb-4 line-clamp-3">{project.description}</p>
@@ -77,7 +77,7 @@ const ProjectCard = ({ project }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1.5 bg-cyan-500 hover:bg-cyan-400 rounded-full text-slate-950 text-sm font-semibold flex items-center flex-1 justify-center"
+              className="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-full text-white text-sm font-semibold flex items-center flex-1 justify-center"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >

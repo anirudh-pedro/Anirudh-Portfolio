@@ -45,7 +45,7 @@ const HomeContent = ({ scrollToSection }) => {
       variants={containerVariants}
     >
       <motion.p
-        className="mb-3 text-sm tracking-[0.22em] uppercase text-cyan-200/80"
+        className="mb-3 text-sm tracking-[0.22em] uppercase text-slate-500"
         variants={itemVariants}
       >
         Computer Science Engineer
@@ -77,7 +77,7 @@ const HomeContent = ({ scrollToSection }) => {
       >
         <motion.button 
             onClick={() => scrollToSection('contact')}
-            className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 rounded-full text-slate-950 font-semibold transition-all duration-300 shadow-lg shadow-cyan-500/25"
+            className="px-6 py-3 bg-slate-800 hover:bg-slate-700 rounded-full text-white font-semibold transition-all duration-300 shadow-lg shadow-slate-500/25"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"

@@ -28,7 +28,7 @@ const NotFound = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-white to-cyan-50 overflow-hidden">
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100 overflow-hidden">
       
       {/* Content */}
       <motion.div
@@ -42,10 +42,10 @@ const NotFound = () => {
           variants={itemVariants}
           className="mb-8"
         >
-          <h1 className="text-8xl md:text-9xl font-bold mb-4 text-cyan-700">
+          <h1 className="text-8xl md:text-9xl font-bold mb-4 text-slate-700">
             404
           </h1>
-          <div className="w-32 h-1 bg-cyan-500 mx-auto rounded-full"></div>
+          <div className="w-32 h-1 bg-slate-500 mx-auto rounded-full"></div>
         </motion.div>
 
         {/* Error Message */}
@@ -69,15 +69,15 @@ const NotFound = () => {
         >
           <Link 
             to="/"
-            className="group px-8 py-3 bg-cyan-500 hover:bg-cyan-400 rounded-full text-slate-950 font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+            className="group px-8 py-3 bg-slate-800 hover:bg-slate-700 rounded-full text-white font-semibold hover:shadow-lg hover:shadow-slate-400/30 transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
           >
             <span className="relative z-10">Return Home</span>
-            <div className="absolute inset-0 bg-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-slate-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
 
           <button 
             onClick={() => window.history.back()}
-            className="px-8 py-3 border border-slate-300 rounded-full text-slate-700 font-medium hover:border-cyan-400 hover:text-cyan-700 hover:bg-cyan-50 transform hover:-translate-y-1 transition-all duration-300"
+            className="px-8 py-3 border border-slate-300 rounded-full text-slate-700 font-medium hover:border-slate-500 hover:text-slate-900 hover:bg-slate-100 transform hover:-translate-y-1 transition-all duration-300"
           >
             Go Back
           </button>
@@ -94,7 +94,7 @@ const NotFound = () => {
 
       {/* Floating Elements */}
       <motion.div
-        className="absolute top-20 left-10 w-4 h-4 bg-cyan-500/35 rounded-full"
+        className="absolute top-20 left-10 w-4 h-4 bg-slate-500/35 rounded-full"
         animate={{
           y: [0, -20, 0],
           opacity: [0.3, 0.8, 0.3]
@@ -106,7 +106,7 @@ const NotFound = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-32 right-16 w-6 h-6 bg-sky-500/30 rounded-full"
+        className="absolute bottom-32 right-16 w-6 h-6 bg-slate-400/35 rounded-full"
         animate={{
           y: [0, -15, 0],
           opacity: [0.4, 0.9, 0.4]
@@ -119,7 +119,7 @@ const NotFound = () => {
         }}
       />
       <motion.div
-        className="absolute top-1/3 right-20 w-3 h-3 bg-cyan-400/40 rounded-full"
+        className="absolute top-1/3 right-20 w-3 h-3 bg-slate-500/35 rounded-full"
         animate={{
           y: [0, -25, 0],
           opacity: [0.2, 0.7, 0.2]

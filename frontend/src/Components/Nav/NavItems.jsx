@@ -62,7 +62,7 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
               <motion.div
                 className={`absolute inset-0 rounded-lg transition-all duration-300 ${
                   isActive
-                    ? 'bg-cyan-100 border border-cyan-300/60 shadow-sm'
+                    ? 'bg-slate-200 border border-slate-400/60 shadow-sm'
                     : 'bg-transparent border border-transparent group-hover:bg-slate-100 group-hover:border-slate-300/60'
                 }`}
                 layoutId={isActive ? "navbar-indicator" : undefined}
@@ -73,7 +73,7 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
               <span 
                 className={`relative z-10 transition-all duration-300 ${
                   isActive 
-                    ? 'text-cyan-800 font-semibold' 
+                    ? 'text-slate-900 font-semibold' 
                     : 'text-slate-700 group-hover:text-slate-900 group-hover:font-medium'
                 }`}
               >
@@ -112,21 +112,21 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             <div
               className={`absolute inset-0 rounded-xl transition-all duration-300 ${
                 isActive
-                  ? 'bg-cyan-100 border border-cyan-300/60 shadow-sm'
+                  ? 'bg-slate-200 border border-slate-400/60 shadow-sm'
                   : 'bg-white border border-slate-300/60 hover:bg-slate-50 hover:border-slate-400/60'
               }`}
             />
 
             {/* Content */}
             <div className="relative z-10 flex items-center gap-4">
-              <span className={`flex-1 ${isActive ? 'text-cyan-800 font-semibold' : ''}`}>
+              <span className={`flex-1 ${isActive ? 'text-slate-900 font-semibold' : ''}`}>
                 {item.label}
               </span>
               
               {/* Arrow indicator */}
               <motion.svg
                 className={`w-5 h-5 transition-colors duration-300 ${
-                  isActive ? 'text-cyan-700' : 'text-slate-500'
+                  isActive ? 'text-slate-700' : 'text-slate-500'
                 }`}
                 fill="none"
                 stroke="currentColor"

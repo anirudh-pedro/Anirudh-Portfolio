@@ -23,29 +23,29 @@ const ResumeViewer = () => {
   };
 
   return (
-    <div className="p-4 sm:p-5 max-w-3xl mx-auto"
+    <div className="p-3 sm:p-4 max-w-3xl mx-auto"
       style={{
         opacity: 1,
         y: 0
       }}
     >
-        <h3 className="display-font text-xl font-semibold mb-3 text-slate-900 flex items-center justify-center">
-          <span className="mr-2 p-1.5 rounded-full bg-cyan-500/15">
-            <svg className="w-4 h-4 text-cyan-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <h3 className="display-font text-lg sm:text-xl font-semibold mb-2 text-slate-900 flex items-center justify-center">
+          <span className="mr-2 p-1.5 rounded-full bg-slate-200">
+            <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </span>
           My Resume
         </h3>
 
-        <div className="flex flex-col items-center justify-center gap-4 mt-3">
-          <div className="text-slate-600 text-sm text-center max-w-md">
+        <div className="flex flex-col items-center justify-center gap-3 mt-2">
+          <div className="text-slate-600 text-xs sm:text-sm text-center max-w-md">
             View or download my professional resume to learn more about my experience.
           </div>
           <div className="flex flex-wrap gap-2 justify-center">
             <button
               onClick={toggleModal}
-              className="px-4 py-2 bg-white hover:bg-slate-50 backdrop-blur-sm border border-slate-300/70 rounded-full text-slate-800 text-sm font-medium flex items-center transition-all"
+              className="px-3.5 py-1.5 bg-white hover:bg-slate-50 backdrop-blur-sm border border-slate-300/70 rounded-full text-slate-800 text-xs sm:text-sm font-medium flex items-center transition-all"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -56,7 +56,7 @@ const ResumeViewer = () => {
             
             <button
               onClick={handleDownload}
-              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 backdrop-blur-sm rounded-full text-slate-950 text-sm font-semibold flex items-center transition-all"
+              className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 backdrop-blur-sm rounded-full text-white text-xs sm:text-sm font-semibold flex items-center transition-all"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -96,7 +96,7 @@ const ResumeViewer = () => {
             <div className="p-3 border-t border-slate-300/60 flex justify-end items-center">
               <button
                 onClick={handleDownload}
-                className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 rounded-md text-slate-950 text-sm font-semibold flex items-center transition-all shadow-lg" 
+                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-md text-white text-sm font-semibold flex items-center transition-all shadow-lg" 
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

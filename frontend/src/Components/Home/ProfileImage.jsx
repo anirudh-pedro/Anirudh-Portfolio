@@ -33,7 +33,7 @@ const ProfileImage = ({ imageSrc }) => {
     >
       <div className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80">
         <motion.div 
-          className="absolute inset-0 rounded-full bg-cyan-400/35 blur-2xl"
+          className="absolute inset-0 rounded-full bg-slate-400/30 blur-2xl"
           animate={{ 
             scale: [1, 1.1, 1],
             opacity: [0.3, 0.45, 0.3]

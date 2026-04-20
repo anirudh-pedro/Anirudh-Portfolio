@@ -72,13 +72,13 @@ const SkillsArsenal = () => {
           <motion.div
             key={key}
             variants={itemVariants}
-            className="professional-card rounded-xl p-6 shadow-xl shadow-black/30 hover:border-cyan-300/40 transition-all duration-300 group"
+            className="professional-card rounded-xl p-6 shadow-xl shadow-black/30 hover:border-slate-400/60 transition-all duration-300 group"
             whileHover={{ y: -5, scale: 1.02 }}
           >
             {/* Category Header */}
             <div className="flex items-center mb-4">
               <span className="text-2xl mr-3">{category.icon}</span>
-              <h3 className="display-font text-xl font-semibold text-slate-900 group-hover:text-cyan-700 transition-colors">
+              <h3 className="display-font text-xl font-semibold text-slate-900 group-hover:text-slate-700 transition-colors">
                 {category.title}
               </h3>
             </div>
@@ -92,7 +92,7 @@ const SkillsArsenal = () => {
                 <motion.span
                   key={skill}
                   variants={skillVariants}
-                  className="px-3 py-1.5 bg-slate-100 hover:bg-cyan-50 border border-slate-300/60 rounded-full text-sm text-slate-700 hover:text-cyan-800 transition-all duration-200 cursor-default"
+                  className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300/60 rounded-full text-sm text-slate-700 hover:text-slate-900 transition-all duration-200 cursor-default"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >

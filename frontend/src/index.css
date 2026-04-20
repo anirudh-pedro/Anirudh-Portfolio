@@ -44,20 +44,20 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #118ab2 0%, #22c1c3 100%);
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
   border-radius: 10px;
   border: 2px solid rgba(255, 255, 255, 0.7);
   box-shadow: 0 4px 8px rgba(15, 23, 42, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #0f6d95 0%, #1ca8aa 100%);
-  box-shadow: 0 6px 12px rgba(34, 193, 195, 0.35);
+  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+  box-shadow: 0 6px 12px rgba(71, 85, 105, 0.35);
   transform: scale(1.05);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: linear-gradient(135deg, #0f6d95 0%, #22c1c3 100%);
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
 }
 
 ::-webkit-scrollbar-corner {
@@ -67,7 +67,7 @@ html {
 /* Firefox Custom Scrollbar */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #22c1c3 rgba(203, 213, 225, 0.35);
+  scrollbar-color: #6b7280 rgba(203, 213, 225, 0.35);
 }
 
 .no-scrollbar {

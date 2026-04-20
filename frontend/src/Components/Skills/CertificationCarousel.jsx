@@ -86,7 +86,7 @@ const CertificationCarousel = () => {
             key={cert.id}
             variants={cardVariants}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
-            className="professional-card rounded-2xl overflow-hidden shadow-xl shadow-black/30 hover:border-cyan-300/40 transition-all duration-300 cursor-pointer group flex flex-col"
+            className="professional-card rounded-2xl overflow-hidden shadow-xl shadow-black/30 hover:border-slate-400/60 transition-all duration-300 cursor-pointer group flex flex-col"
             onClick={() => window.open(cert.link, '_blank')}
           >
             {/* Certificate Image */}
@@ -111,10 +111,10 @@ const CertificationCarousel = () => {
             {/* Certificate Details */}
             <div className="p-5 flex-1 flex flex-col">
               <div className="flex-1">
-                <h4 className="text-base font-semibold text-slate-900 leading-tight mb-2 line-clamp-2 group-hover:text-cyan-700 transition-colors">
+                <h4 className="text-base font-semibold text-slate-900 leading-tight mb-2 line-clamp-2 group-hover:text-slate-700 transition-colors">
                   {cert.name}
                 </h4>
-                <p className="text-sm text-cyan-300 mb-4">Issued by {cert.issuer}</p>
+                <p className="text-sm text-slate-500 mb-4">Issued by {cert.issuer}</p>
                 
                 {/* Topics */}
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -131,7 +131,7 @@ const CertificationCarousel = () => {
               
               {/* View Button */}
               <div className="mt-auto pt-4 border-t border-slate-300/40">
-                <div className="flex items-center justify-between text-cyan-300 group-hover:text-cyan-200 transition-colors">
+                <div className="flex items-center justify-between text-slate-600 group-hover:text-slate-800 transition-colors">
                   <span className="text-sm font-medium">View Certificate</span>
                   <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

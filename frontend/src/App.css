@@ -5,16 +5,16 @@
   --surface-border: rgba(30, 41, 59, 0.1);
   --text-strong: #0f172a;
   --text-soft: #475569;
-  --accent: #22c1c3;
-  --accent-deep: #118ab2;
+  --accent: #6b7280;
+  --accent-deep: #4b5563;
   --section-spacing: clamp(4rem, 8vw, 7rem);
 }
 
 .App {
   color: var(--text-strong);
   background:
-    radial-gradient(circle at 15% 10%, rgba(34, 193, 195, 0.12), transparent 40%),
-    radial-gradient(circle at 85% 25%, rgba(17, 138, 178, 0.12), transparent 35%),
+    radial-gradient(circle at 15% 10%, rgba(148, 163, 184, 0.2), transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(203, 213, 225, 0.25), transparent 35%),
     linear-gradient(160deg, var(--bg-50), var(--bg-100));
 }
 

@@ -22,31 +22,40 @@ const Loader = () => {
   ];
 
   return (
-    <div className="fixed inset-0 bg-black flex flex-col items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-slate-50 flex flex-col items-center justify-center z-50 p-4">
       <motion.div
-        className="w-full max-w-md bg-gray-800 rounded-lg shadow-2xl overflow-hidden"
+        className="w-full max-w-3xl bg-slate-100 rounded-xl shadow-2xl shadow-slate-300/50 overflow-hidden border border-slate-200"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
         {/* Terminal header */}
-        <div className="bg-gray-700 px-4 py-2 flex items-center">
-          <div className="flex space-x-2 mr-4">
+        <div className="relative bg-slate-200/70 px-4 py-3 border-b border-slate-200">
+          <div className="absolute left-4 top-1/2 flex -translate-y-1/2 space-x-2">
             <div className="w-3 h-3 bg-red-500 rounded-full"></div>
             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           </div>
-          <div className="text-gray-300 text-sm font-medium">portfolio-loader.jsx</div>
+          <div className="text-center text-slate-600 text-sm font-semibold">Portfolio Loader - Please wait</div>
         </div>
 
         {/* Terminal content */}
         <motion.div 
-          className="p-4 font-mono text-sm text-gray-300 h-64 overflow-y-auto"
+          className="p-6 font-mono text-sm sm:text-base text-slate-700 min-h-52 sm:min-h-60 overflow-y-auto bg-slate-50"
           variants={containerVariants}
           initial="initial"
           animate="animate"
         >
-          <div className="text-blue-400 mb-2">$ npm run portfolio</div>
+          <div className="text-slate-900 text-xl sm:text-3xl mb-6 tracking-tight leading-relaxed">
+            Loading portfolio experience.
+            <motion.span
+              className="inline-block w-[2px] h-7 sm:h-9 bg-indigo-400 ml-1 align-middle"
+              animate={{ opacity: [1, 0.2, 1] }}
+              transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+            />
+          </div>
+
+          <div className="text-emerald-700 mb-3">$ npm run portfolio</div>
           
           {codeLines.map((line, index) => (
             <motion.div
@@ -62,22 +71,9 @@ const Loader = () => {
                 }
               }}
             >
-              <span className="text-green-400 mr-2">&gt;</span>
-              <span className={line.highlight ? "text-purple-400 font-bold" : ""}>
+              <span className="text-emerald-700 mr-2">&gt;</span>
+              <span className={line.highlight ? 'text-slate-900 font-bold' : ''}>
                 {line.text}
-                {index === codeLines.length - 1 && (
-                  <motion.span 
-                    className="inline-block w-2 h-4 bg-purple-400 ml-1"
-                    animate={{
-                      opacity: [1, 0, 1],
-                      transition: {
-                        duration: 0.8,
-                        repeat: Infinity,
-                        ease: "linear"
-                      }
-                    }}
-                  />
-                )}
               </span>
             </motion.div>
           ))}
@@ -86,13 +82,13 @@ const Loader = () => {
 
       {/* Progress bar */}
       <motion.div 
-        className="w-full max-w-md h-1 mt-4 bg-gray-800 rounded-full overflow-hidden"
+        className="w-full max-w-3xl h-1 mt-4 bg-slate-300 rounded-full overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
       >
         <motion.div 
-          className="h-full bg-violet-500"
+          className="h-full bg-slate-700"
           initial={{ width: "0%" }}
           animate={{ width: "100%" }}
           transition={{ 
@@ -109,14 +105,14 @@ const Loader = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        <span className="text-gray-400 text-sm tracking-wide uppercase font-medium">
-          Portfolio loading
+        <span className="text-slate-500 text-sm tracking-wide uppercase font-medium">
+          Preparing portfolio
         </span>
         <div className="flex space-x-1">
           {[0, 1, 2].map((dot) => (
             <motion.div
               key={dot}
-              className="w-1.5 h-1.5 bg-purple-500 rounded-full"
+              className="w-1.5 h-1.5 bg-slate-700 rounded-full"
               animate={{
                 opacity: [0.4, 1, 0.4],
                 scale: [0.8, 1, 0.8]

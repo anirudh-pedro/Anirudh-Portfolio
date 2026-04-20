@@ -252,8 +252,8 @@ const ContactForm = () => {
       {/* Contact Form Section */}
       <div className="professional-card rounded-2xl p-6 sm:p-8 shadow-xl shadow-black/30">
         <h3 className="display-font text-xl font-semibold mb-6 text-slate-900 flex items-center">
-          <span className="mr-2 p-1.5 rounded-full bg-cyan-500/15">
-            <svg className="w-4 h-4 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <span className="mr-2 p-1.5 rounded-full bg-slate-200">
+            <svg className="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </span>
@@ -285,7 +285,7 @@ const ContactForm = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.name ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
+                className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.name ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400/50 focus:border-slate-500 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
                 placeholder="Your name"
               />
               {errors.name && (
@@ -304,7 +304,7 @@ const ContactForm = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.email ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
+                className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.email ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400/50 focus:border-slate-500 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
                 placeholder="your.email@example.com"
               />
               {errors.email && (
@@ -324,7 +324,7 @@ const ContactForm = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.subject ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
+              className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.subject ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400/50 focus:border-slate-500 text-slate-800 text-sm placeholder-slate-400 autofill:bg-white autofill:text-slate-800`}
               placeholder="What is this regarding?"
             />
             {errors.subject && (
@@ -343,7 +343,7 @@ const ContactForm = () => {
               value={formData.message}
               onChange={handleChange}
               rows={5}
-              className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.message ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-300/60 focus:border-cyan-400 text-slate-800 text-sm placeholder-slate-400 resize-none autofill:bg-white autofill:text-slate-800`}
+              className={`w-full px-4 py-3 bg-white backdrop-blur-sm border ${errors.message ? 'border-red-400' : 'border-slate-300/80'} rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-400/50 focus:border-slate-500 text-slate-800 text-sm placeholder-slate-400 resize-none autofill:bg-white autofill:text-slate-800`}
               placeholder="Your message here..."
             ></textarea>
             {errors.message && (
@@ -356,13 +356,13 @@ const ContactForm = () => {
             <button
               type="submit"
               disabled={status.submitting}
-              className="w-full py-3 px-6 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 rounded-lg text-slate-950 font-semibold transition-all flex items-center justify-center disabled:opacity-70 relative overflow-hidden"
+              className="w-full py-3 px-6 bg-slate-800 hover:bg-slate-700 rounded-lg text-white font-semibold transition-all flex items-center justify-center disabled:opacity-70 relative overflow-hidden"
             >
               {status.submitting ? (
                 <>
                   {/* Progress bar background */}
                   <div 
-                    className="absolute inset-0 bg-gradient-to-r from-cyan-700 to-sky-700 transition-all duration-300"
+                    className="absolute inset-0 bg-slate-700 transition-all duration-300"
                     style={{ width: `${status.progress}%` }}
                   />
                   

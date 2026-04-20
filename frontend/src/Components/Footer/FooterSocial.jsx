@@ -33,10 +33,10 @@ const FooterSocial = () => {
           href={social.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-300/70 text-slate-600 hover:text-cyan-700 hover:border-cyan-300/70 transition-all duration-300"
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-300/70 text-slate-600 hover:text-slate-900 hover:border-slate-500/70 transition-all duration-300"
           whileHover={{ 
             y: -5, 
-            boxShadow: '0 10px 25px -5px rgba(34, 193, 195, 0.25)'
+            boxShadow: '0 10px 25px -5px rgba(100, 116, 139, 0.25)'
           }}
           whileTap={{ scale: 0.95 }}
         >
