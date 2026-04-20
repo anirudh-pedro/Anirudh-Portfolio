@@ -77,16 +77,16 @@ const SocialIcons = () => {
           href={social.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-3 rounded-full bg-opacity-20 bg-gray-800 backdrop-blur-sm"
+          className="p-3 rounded-xl bg-slate-900/70 border border-slate-200/15 backdrop-blur-sm"
           style={{ color: social.color }}
           aria-label={social.name}
           variants={iconVariants}
           whileHover={{ 
-            scale: 1.2, 
+            scale: 1.08,
             color: social.hoverColor,
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            rotate: [0, -10, 10, -10, 0],
-            transition: { duration: 0.5 }
+            backgroundColor: 'rgba(30, 41, 59, 0.9)',
+            borderColor: 'rgba(148, 163, 184, 0.35)',
+            transition: { duration: 0.25 }
           }}
           whileTap={{ scale: 0.9 }}
         >

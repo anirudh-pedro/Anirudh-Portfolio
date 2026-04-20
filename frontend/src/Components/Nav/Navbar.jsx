@@ -88,19 +88,19 @@ const Navbar = () => {
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
         className={`navbar-container fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'py-3 shadow-lg shadow-black/20'
-            : 'py-4 md:py-6'
+            ? 'py-3 shadow-xl shadow-black/25'
+            : 'py-4'
         }`}
       >
-        {/* Glassmorphism background - Black transparent */}
+        {/* Glassmorphism background */}
         <div 
           className={`absolute inset-0 transition-all duration-300 ${
             isScrolled
-              ? 'bg-black/70 backdrop-blur-xl border-b border-white/10'
-              : 'bg-black/30 backdrop-blur-md'
+              ? 'bg-slate-950/80 backdrop-blur-xl border-b border-slate-300/15'
+              : 'bg-slate-950/50 backdrop-blur-md border-b border-slate-300/10'
           }`}
         />
 
@@ -121,7 +121,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <motion.button
-              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg bg-purple-500/20 border border-purple-400/40 backdrop-blur-sm hover:bg-purple-500/30 hover:border-purple-400/60 transition-colors"
+              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-lg bg-cyan-500/10 border border-cyan-300/30 backdrop-blur-sm hover:bg-cyan-500/20 hover:border-cyan-300/50 transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -130,7 +130,7 @@ const Navbar = () => {
             >
               <div className="w-5 h-4 flex flex-col justify-between">
                 <motion.span
-                  className="w-full h-0.5 bg-violet-400 rounded-full shadow-sm shadow-violet-400/50"
+                  className="w-full h-0.5 bg-cyan-200 rounded-full"
                   animate={{
                     rotate: isMobileMenuOpen ? 45 : 0,
                     y: isMobileMenuOpen ? 7 : 0,
@@ -138,14 +138,14 @@ const Navbar = () => {
                   transition={{ duration: 0.3 }}
                 />
                 <motion.span
-                  className="w-full h-0.5 bg-violet-400 rounded-full shadow-sm shadow-violet-400/50"
+                  className="w-full h-0.5 bg-cyan-200 rounded-full"
                   animate={{
                     opacity: isMobileMenuOpen ? 0 : 1,
                   }}
                   transition={{ duration: 0.2 }}
                 />
                 <motion.span
-                  className="w-full h-0.5 bg-violet-400 rounded-full shadow-sm shadow-violet-400/50"
+                  className="w-full h-0.5 bg-cyan-200 rounded-full"
                   animate={{
                     rotate: isMobileMenuOpen ? -45 : 0,
                     y: isMobileMenuOpen ? -7 : 0,
@@ -168,7 +168,7 @@ const Navbar = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-40 md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
             />
 
@@ -181,19 +181,19 @@ const Navbar = () => {
               className="fixed top-0 right-0 bottom-0 w-full max-w-sm z-50 md:hidden"
             >
               {/* Glass panel */}
-              <div className="h-full bg-black/90 backdrop-blur-2xl border-l border-white/10 shadow-2xl shadow-black/50">
+              <div className="h-full bg-slate-950/95 backdrop-blur-2xl border-l border-slate-200/15 shadow-2xl shadow-black/60">
                 
                 {/* Close button */}
                 <div className="relative flex justify-end p-6">
                   <motion.button
-                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-purple-500/20 border border-purple-400/40 hover:bg-purple-500/30 hover:border-purple-400/60 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-cyan-500/10 border border-cyan-300/30 hover:bg-cyan-500/20 hover:border-cyan-300/60 transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                     whileHover={{ scale: 1.05, rotate: 90 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label="Close menu"
                   >
                     <svg
-                      className="w-6 h-6 text-violet-400 drop-shadow-[0_0_6px_rgba(168,85,247,0.5)]"
+                      className="w-6 h-6 text-cyan-100"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

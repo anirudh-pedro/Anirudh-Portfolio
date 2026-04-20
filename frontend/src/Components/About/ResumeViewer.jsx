@@ -29,9 +29,9 @@ const ResumeViewer = () => {
         y: 0
       }}
     >
-        <h3 className="text-xl font-bold mb-3 text-white flex items-center justify-center">
-          <span className="mr-2 p-1.5 rounded-full bg-purple-500/20">
-            <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <h3 className="display-font text-xl font-semibold mb-3 text-slate-100 flex items-center justify-center">
+          <span className="mr-2 p-1.5 rounded-full bg-cyan-500/15">
+            <svg className="w-4 h-4 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </span>
@@ -39,13 +39,13 @@ const ResumeViewer = () => {
         </h3>
 
         <div className="flex flex-col items-center justify-center gap-4 mt-3">
-          <div className="text-gray-300 text-sm text-center max-w-md">
+          <div className="text-slate-300 text-sm text-center max-w-md">
             View or download my professional resume to learn more about my experience.
           </div>
           <div className="flex flex-wrap gap-2 justify-center">
             <button
               onClick={toggleModal}
-              className="px-4 py-2 bg-purple-600/20 hover:bg-purple-600/30 backdrop-blur-sm border border-purple-500/30 rounded-full text-white text-sm font-medium flex items-center transition-all hover:shadow-lg hover:shadow-purple-500/10"
+              className="px-4 py-2 bg-slate-700/30 hover:bg-slate-600/35 backdrop-blur-sm border border-slate-300/25 rounded-full text-slate-100 text-sm font-medium flex items-center transition-all"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -56,7 +56,7 @@ const ResumeViewer = () => {
             
             <button
               onClick={handleDownload}
-              className="px-4 py-2 bg-gradient-to-r from-purple-600/50 to-purple-600/50 hover:from-purple-600/60 hover:to-purple-600/60 backdrop-blur-sm rounded-full text-white text-sm font-medium flex items-center transition-all hover:shadow-lg hover:shadow-purple-500/20"
+              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 backdrop-blur-sm rounded-full text-slate-950 text-sm font-semibold flex items-center transition-all"
             >
               <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -96,7 +96,7 @@ const ResumeViewer = () => {
             <div className="p-3 border-t border-white/20 flex justify-end items-center">
               <button
                 onClick={handleDownload}
-                className="px-3 py-1.5 bg-gradient-to-r from-blue-600/80 to-purple-600/80 hover:from-blue-700/90 hover:to-purple-700/90 rounded-md text-white text-sm font-medium flex items-center transition-all shadow-lg" 
+                className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-400 hover:to-sky-400 rounded-md text-slate-950 text-sm font-semibold flex items-center transition-all shadow-lg" 
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

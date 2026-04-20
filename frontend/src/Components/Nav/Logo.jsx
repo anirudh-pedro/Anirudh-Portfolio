@@ -58,15 +58,18 @@ const Logo = ({ onLogoClick }) => {
         className="inline-block"
         aria-label="Go to home section"
       >
-        <motion.span 
-          className="text-lg sm:text-xl lg:text-2xl font-bold text-violet-400"
-          whileHover={{
-            scale: 1.05,
-            transition: { duration: 0.3 }
-          }}
-        >
-          Anirudh
-        </motion.span>
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-cyan-300"></span>
+          <motion.span 
+            className="display-font text-lg sm:text-xl lg:text-2xl font-semibold text-slate-100 tracking-wide"
+            whileHover={{
+              scale: 1.03,
+              transition: { duration: 0.25 }
+            }}
+          >
+            Anirudh T
+          </motion.span>
+        </div>
       </a>
     </motion.div>
   );

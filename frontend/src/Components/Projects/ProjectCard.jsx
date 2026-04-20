@@ -14,7 +14,7 @@ const ProjectCard = ({ project }) => {
   return (
     <motion.div
       id={`project-${project.id}`}
-      className="rounded-xl overflow-hidden bg-white/10 backdrop-blur-xl border border-white/25 h-full flex flex-col md:flex-row shadow-xl shadow-black/50"
+      className="rounded-2xl overflow-hidden professional-card h-full flex flex-col md:flex-row shadow-xl shadow-black/30"
       variants={cardVariants}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
     >
@@ -31,7 +31,7 @@ const ProjectCard = ({ project }) => {
             tag !== 'featured' && (
               <span 
                 key={index}
-                className="text-xs px-2 py-1 rounded-full bg-black/70 backdrop-blur-sm text-white"
+                  className="text-xs px-2 py-1 rounded-full bg-slate-950/80 backdrop-blur-sm text-slate-100"
               >
                 {tag}
               </span>
@@ -42,7 +42,7 @@ const ProjectCard = ({ project }) => {
         {/* "Featured" badge for highlighted projects */}
         {project.tags.includes('featured') && (
           <div className="absolute top-3 right-3">
-            <span className="text-xs px-2 py-1 rounded-full bg-violet-600 text-white font-medium">
+            <span className="text-xs px-2 py-1 rounded-full bg-cyan-500 text-slate-950 font-semibold">
               Featured
             </span>
           </div>
@@ -51,20 +51,20 @@ const ProjectCard = ({ project }) => {
       
       {/* Project Content - Right side on md+ screens, bottom on smaller screens */}
       <div className="md:w-3/5 p-5 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
+        <h3 className="display-font text-xl font-semibold text-slate-100 mb-2">{project.title}</h3>
         
         {/* New: Project subtitle for better description */}
         {project.subtitle && (
-          <p className="text-sm text-blue-400 mb-3">{project.subtitle}</p>
+          <p className="text-sm text-cyan-300 mb-3">{project.subtitle}</p>
         )}
         
-        <p className="text-gray-200 text-sm mb-4 line-clamp-3">{project.description}</p>
+        <p className="text-slate-300 text-sm mb-4 line-clamp-3">{project.description}</p>
         
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.map((tech, index) => (
             <span 
               key={index}
-              className="text-xs px-2 py-1 bg-purple-900/30 text-purple-300 rounded-full"
+              className="text-xs px-2 py-1 bg-slate-700/35 text-slate-200 rounded-full border border-slate-200/20"
             >
               {tech}
             </span>
@@ -77,7 +77,7 @@ const ProjectCard = ({ project }) => {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1.5 bg-violet-600 hover:bg-violet-700 rounded-full text-white text-sm font-medium flex items-center flex-1 justify-center"
+              className="px-4 py-1.5 bg-cyan-500 hover:bg-cyan-400 rounded-full text-slate-950 text-sm font-semibold flex items-center flex-1 justify-center"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
@@ -93,7 +93,7 @@ const ProjectCard = ({ project }) => {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1.5 bg-white/10 hover:bg-white/15 rounded-full text-white text-sm font-medium flex items-center flex-1 justify-center"
+              className="px-4 py-1.5 bg-slate-700/40 hover:bg-slate-700/65 rounded-full text-slate-100 text-sm font-medium flex items-center flex-1 justify-center"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >

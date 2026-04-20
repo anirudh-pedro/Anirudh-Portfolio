@@ -5,9 +5,9 @@ import SocialIcons from './SocialIcons';
 
 const HomeContent = ({ scrollToSection }) => {
   const phrases = [
-    "Web Developer",
-    "Machine Learning Enthusiast",
-    "CSE Student",
+    'Full-Stack Developer',
+    'MERN Engineer',
+    'Machine Learning Practitioner',
   ];
 
   const containerVariants = {
@@ -44,11 +44,17 @@ const HomeContent = ({ scrollToSection }) => {
       className="w-full md:w-1/2 flex flex-col items-center md:items-start md:order-1"
       variants={containerVariants}
     >
+      <motion.p
+        className="mb-3 text-sm tracking-[0.22em] uppercase text-cyan-200/80"
+        variants={itemVariants}
+      >
+        Computer Science Engineer
+      </motion.p>
       <motion.h1 
-        className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 whitespace-nowrap text-violet-400 drop-shadow-[0_1.2px_1.2px_rgba(255,255,255,0.3)]"
+        className="display-font text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 text-slate-50 leading-tight"
         variants={itemVariants}
         >
-        Hi, I'm Anirudh T
+        Building reliable web products that people enjoy using.
       </motion.h1>
       
       <motion.div 
@@ -59,10 +65,10 @@ const HomeContent = ({ scrollToSection }) => {
       </motion.div>
       
       <motion.p 
-        className="text-lg text-gray-200 mb-8 max-w-lg"
+        className="text-base sm:text-lg text-slate-300 mb-8 max-w-xl leading-relaxed"
         variants={itemVariants}
       >
-        I build full-stack web applications and solve real-world problems with code.
+        I am Anirudh T, a full-stack developer focused on shipping clean interfaces, scalable backend services, and thoughtful user experiences from idea to deployment.
       </motion.p>
       
       <motion.div 
@@ -71,21 +77,21 @@ const HomeContent = ({ scrollToSection }) => {
       >
         <motion.button 
             onClick={() => scrollToSection('contact')}
-            className="px-6 py-3 bg-violet-500 hover:bg-violet-600 rounded-full text-white font-medium transition-all duration-300 shadow-lg"
+            className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 rounded-full text-slate-950 font-semibold transition-all duration-300 shadow-lg shadow-cyan-500/25"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
         >
-            Contact Me
+            Let us Work Together
         </motion.button>
         <motion.button 
           onClick={() => scrollToSection('projects')}
-          className="px-6 py-3 bg-transparent border-2 border-purple-500 hover:bg-purple-500/20 rounded-full text-white font-medium transition-all duration-300"
+          className="px-6 py-3 bg-transparent border border-slate-300/30 hover:bg-slate-300/10 rounded-full text-slate-100 font-medium transition-all duration-300"
           variants={buttonVariants}
           whileHover="hover"
           whileTap="tap"
         >
-          View My Work
+          View Selected Projects
         </motion.button>
       </motion.div>
     <SocialIcons />

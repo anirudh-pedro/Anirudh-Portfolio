@@ -33,10 +33,10 @@ const ProfileImage = ({ imageSrc }) => {
     >
       <div className="relative w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80">
         <motion.div 
-          className="absolute inset-0 rounded-full bg-violet-500 blur-xl opacity-50"
+          className="absolute inset-0 rounded-full bg-cyan-400/35 blur-2xl"
           animate={{ 
             scale: [1, 1.1, 1],
-            opacity: [0.5, 0.7, 0.5]
+            opacity: [0.3, 0.45, 0.3]
           }}
           transition={{
             duration: 3,
@@ -47,7 +47,7 @@ const ProfileImage = ({ imageSrc }) => {
         <motion.img
           src={imageSrc}
           alt="Anirudh T"
-          className="relative rounded-full w-full h-full object-cover border-4 border-white/10 shadow-2xl"
+          className="relative rounded-[2rem] w-full h-full object-cover border border-slate-200/25 shadow-2xl shadow-black/40"
           whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
         />
       </div>

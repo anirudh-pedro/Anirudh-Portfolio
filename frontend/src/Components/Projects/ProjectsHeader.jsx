@@ -16,11 +16,11 @@ const ProjectsHeader = () => {
 
   return (
     <motion.div variants={headerVariants} className="text-center mb-12">
-      <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-violet-400">
+      <h2 className="display-font text-4xl sm:text-5xl font-semibold mb-6 text-slate-100">
         Featured Projects
       </h2>
-      <div className="w-24 h-1 bg-violet-500 mx-auto rounded-full"></div>
-      <p className="text-lg text-gray-200 mt-8 max-w-3xl mx-auto leading-relaxed">
+      <div className="w-24 h-1 bg-cyan-400 mx-auto rounded-full"></div>
+      <p className="text-lg text-slate-300 mt-8 max-w-3xl mx-auto leading-relaxed">
         Showcasing my expertise across full-stack development, real-time applications, and machine learning.
         Each project represents a unique solution to real-world challenges, demonstrating both technical skills
         and thoughtful user experience design.

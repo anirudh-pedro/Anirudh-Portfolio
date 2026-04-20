@@ -51,7 +51,7 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             <motion.button
               key={item.id}
               onClick={() => handleNavClick(item.id)}
-              className="relative px-5 py-2.5 rounded-lg text-sm font-medium group"
+              className="relative px-4 py-2 rounded-md text-sm font-medium group"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
@@ -62,8 +62,8 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
               <motion.div
                 className={`absolute inset-0 rounded-lg transition-all duration-300 ${
                   isActive
-                    ? 'bg-purple-500/30 border border-purple-400/40 shadow-lg shadow-purple-500/20 backdrop-blur-sm'
-                    : 'bg-purple-500/0 border border-transparent group-hover:bg-purple-500/10 group-hover:border-purple-400/20'
+                    ? 'bg-cyan-400/10 border border-cyan-200/30 shadow-lg shadow-cyan-500/10 backdrop-blur-sm'
+                    : 'bg-transparent border border-transparent group-hover:bg-slate-700/30 group-hover:border-slate-200/15'
                 }`}
                 layoutId={isActive ? "navbar-indicator" : undefined}
                 transition={isActive ? { type: 'spring', bounce: 0.2, duration: 0.6 } : { duration: 0.3 }}
@@ -73,8 +73,8 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
               <span 
                 className={`relative z-10 transition-all duration-300 ${
                   isActive 
-                    ? 'text-violet-400 font-semibold' 
-                    : 'text-gray-200 group-hover:text-white group-hover:font-medium'
+                    ? 'text-cyan-200 font-semibold' 
+                    : 'text-slate-200 group-hover:text-white group-hover:font-medium'
                 }`}
               >
                 {item.label}
@@ -99,7 +99,7 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             className={`relative w-full text-left px-6 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
               isActive
                 ? 'text-white'
-                : 'text-gray-200'
+                : 'text-slate-200'
             }`}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -112,21 +112,21 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
             <div
               className={`absolute inset-0 rounded-xl transition-all duration-300 ${
                 isActive
-                  ? 'bg-purple-500/30 border border-purple-400/40 shadow-lg shadow-purple-500/20'
-                  : 'bg-white/5 border border-white/10 hover:bg-purple-500/10 hover:border-purple-400/20'
+                  ? 'bg-cyan-400/10 border border-cyan-200/40 shadow-lg shadow-cyan-500/10'
+                  : 'bg-slate-800/40 border border-slate-200/10 hover:bg-slate-700/40 hover:border-slate-100/20'
               }`}
             />
 
             {/* Content */}
             <div className="relative z-10 flex items-center gap-4">
-              <span className={`flex-1 ${isActive ? 'text-violet-400 font-semibold' : ''}`}>
+              <span className={`flex-1 ${isActive ? 'text-cyan-200 font-semibold' : ''}`}>
                 {item.label}
               </span>
               
               {/* Arrow indicator */}
               <motion.svg
                 className={`w-5 h-5 transition-colors duration-300 ${
-                  isActive ? 'text-violet-400' : 'text-gray-400'
+                  isActive ? 'text-cyan-200' : 'text-slate-400'
                 }`}
                 fill="none"
                 stroke="currentColor"
@@ -162,13 +162,13 @@ const NavItems = ({ activeSection, setActiveSection, isMobile, onItemClick }) =>
 
       {/* Decorative element at bottom */}
       <motion.div
-        className="mt-8 pt-8 border-t border-white/10"
+        className="mt-8 pt-8 border-t border-slate-200/10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
       >
-        <p className="text-center text-gray-400 text-sm">
-          Crafted with 🤍 by Anirudh
+        <p className="text-center text-slate-400 text-sm">
+          Crafted by Anirudh T
         </p>
       </motion.div>
     </>

@@ -1,7 +1,36 @@
-/* Add this to your existing CSS */
-.triangle {
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+:root {
+  --bg-950: #080d16;
+  --bg-900: #0f1726;
+  --surface-800: rgba(18, 28, 45, 0.7);
+  --surface-border: rgba(148, 163, 184, 0.24);
+  --text-strong: #f3f7ff;
+  --text-soft: #a9b7ce;
+  --accent: #22c1c3;
+  --accent-deep: #118ab2;
+  --section-spacing: clamp(4rem, 8vw, 7rem);
 }
-body {
-  background-color: #000000; /* Changed to pure black */
+
+.App {
+  color: var(--text-strong);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(34, 193, 195, 0.16), transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(17, 138, 178, 0.18), transparent 35%),
+    linear-gradient(160deg, var(--bg-950), var(--bg-900));
+}
+
+.App::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at center, black 42%, transparent 100%);
+  z-index: 0;
+}
+
+section {
+  scroll-margin-top: 84px;
 }

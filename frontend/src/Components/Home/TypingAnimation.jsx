@@ -32,9 +32,9 @@ const TypingAnimation = ({ phrases }) => {
   }, [text, isDeleting, loopNum, typingSpeed, phrases]);
 
   return (
-    <h2 className="text-xl md:text-2xl font-semibold text-cyan-200">
+    <h2 className="text-xl md:text-2xl font-semibold text-cyan-200/90">
       <span className="inline-block min-h-[28px]">{text}</span>
-      <span className="animate-blink ml-1">|</span>
+      <span className="animate-blink ml-1 text-cyan-300">|</span>
     </h2>
   );
 };
